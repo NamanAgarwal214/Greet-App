@@ -6,6 +6,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const expressSession = require('express-session');
 const connectDB = require('./utils/mongo');
 const app = express();
+require('dotenv').config()
 
 const User = require('./models/userModel');
 const userRouter = require('./routes/userRoutes');
