@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(expressSession)({
-  secret: 'keyboard cat',
+  secret: process.env.SECRET_KEY,
   resave: true,
   saveUninitialized: true
 });
