@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+* {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  max-height: 100vh;
+  background-color: #ffffff;
+}
+
+.form_details {
+  max-width: 40%;
+  padding: 60px;
+}
+
+.sideImg {
+  max-width: 60%;
+  max-height: 100vh;
+}
+
+.img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+h1 {
+  font-weight: 800;
+  color: #070928;
+}
+
+.google {
+  border-radius: 25px;
+  background-color: #f8f8f8;
+  border: 1px solid #070928;
+  font-weight: 600;
+  margin-bottom: 20px;
+  margin-left: 1rem;
+}
+
+.google:hover {
+  background-color: #070928;
+  color: #f8f8f8;
+  border-color: #ffffff;
+}
+
+.google > img {
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+}
+
+button {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid grey;
+}
+
+.login {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  border-radius: 25px;
+  background-color: #3456ff;
+  color: #f8f8f8;
+  width: 90%;
+  letter-spacing: 3px;
+}
+
+.login:hover {
+  color: #3456ff;
+  background-color: #f8f8f8;
+  border-color: #3456ff;
+}
+
+h4 {
+  margin-top: 15px;
+  font-weight: 600;
+  color: #070928;
+}
+
+.mail,
+.pass {
+  width: 90%;
+  border-radius: 25px;
+  height: 6vh;
+  margin-bottom: 10px;
+  border: 1px solid grey;
+  padding: 0 15px;
+}
+
+.mail:focus,
+.pass:focus {
+  box-shadow: 10px 10px 10px 1px #070928;
+  border: 1px solid #070928;
+}
+
+.right_span {
+  margin-left: 120px;
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.check {
+  margin: 5px;
+  font-size: 1rem;
+  accent-color: #3456ff;
+  margin-top: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #3456ff;
+}
+
+.register_info {
+  font-size: 0.9rem;
+}
+
+.separate {
+  display: flex;
+  flex-direction: row;
+  color: grey;
+}
+.separate:before,
+.separate:after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid;
+  margin: auto;
+}
+.separate:before {
+  margin-right: 2px;
+}
+.separate:after {
+  margin-left: 2px;
+}
