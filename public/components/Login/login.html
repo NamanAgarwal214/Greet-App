@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- External CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href=".\login.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="d-flex flex-row row g-0">
+        <div class="form_details col">
+            <h1>Login</h1>
+            <p style="color: gray;margin-top: 10px;margin-bottom: 20px;">Lorem ipsum</p>
+            <button class="btn google">
+                <img src="https://cdn-icons-png.flaticon.com/128/2875/2875331.png" alt="google_logo" class="img-fluid">
+                <span>Sign in with Google</span>
+            </button>
+
+            <p class="separate">or Sign in with Email</p>
+
+            <form action="">
+                <div class="form-floating mb-4">
+                    <input id="floatingInput" type="email" placeholder="mail@website.com" class="mail form-control" />
+                    <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="password" placeholder="Min. 8 characters" class="pass form-control" id="floatingPass"/>
+                    <label for="floatingPass">Password</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="check" type="checkbox" class="form-check-input" />
+                    <label class="form-check-label" for="check">Remember me</label>
+                </div>
+                <div>
+                    <span class="right_span"><a href="#">forgot password?</a></span>
+                </div>
+                <br>
+                <button class="btn login">Login</button>
+                <p class="register_info">Not registered yet? <a href="#">Register here</a></p>
+            </form>
+        </div>
+        <div class="col sideImg">
+                <img src="https://t4.ftcdn.net/jpg/01/19/11/55/360_F_119115529_mEnw3lGpLdlDkfLgRcVSbFRuVl6sMDty.jpg" alt="login_img"
+                    class="img-fluid img">
+        </div>
+            
+    </div>
+</body>
+</html>
