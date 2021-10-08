@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap");
 
 * {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -13,17 +13,20 @@ body {
 .form_details {
   max-width: 40%;
   padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
 }
 
 .sideImg {
   max-width: 60%;
-  max-height: 100vh;
 }
 
 .img {
   height: 100vh;
   width: 100%;
-  object-fit: cover;
+  object-fit: fill;
 }
 
 h1 {
@@ -31,7 +34,7 @@ h1 {
   color: #070928;
 }
 
-.google {
+/* .google {
   border-radius: 25px;
   background-color: #f8f8f8;
   border: 1px solid #070928;
@@ -50,7 +53,7 @@ h1 {
   width: 20px;
   height: 20px;
   justify-content: center;
-}
+} */
 
 button {
   width: 80%;
@@ -58,9 +61,9 @@ button {
   border: 1px solid grey;
 }
 
-.login {
+.register {
   margin-top: 20px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   font-weight: 600;
   border-radius: 25px;
   background-color: #3456ff;
@@ -69,45 +72,33 @@ button {
   letter-spacing: 3px;
 }
 
-.login:hover {
+.register:hover {
   color: #3456ff;
   background-color: #f8f8f8;
   border-color: #3456ff;
 }
 
-h4 {
-  margin-top: 15px;
-  font-weight: 600;
-  color: #070928;
-}
-
 .mail,
-.pass {
+.pass,
+.name {
   width: 90%;
   border-radius: 25px;
   height: 6vh;
   margin-bottom: 10px;
   border: 1px solid grey;
   padding: 0 15px;
+  color: #3456ff;
+}
+
+input[type="text"] {
+  color: #f8f8f8;
 }
 
 .mail:focus,
-.pass:focus {
+.pass:focus,
+.name:focus {
   box-shadow: 10px 10px 10px 1px #070928;
   border: 1px solid #070928;
-}
-
-.right_span {
-  margin-left: 120px;
-  margin-top: 10px;
-  font-size: 1rem;
-}
-
-.check {
-  margin: 5px;
-  font-size: 1rem;
-  accent-color: #3456ff;
-  margin-top: 10px;
 }
 
 a {
@@ -115,25 +106,6 @@ a {
   color: #3456ff;
 }
 
-.register_info {
+.login_info {
   font-size: 0.9rem;
-}
-
-.separate {
-  display: flex;
-  flex-direction: row;
-  color: grey;
-}
-.separate:before,
-.separate:after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid;
-  margin: auto;
-}
-.separate:before {
-  margin-right: 2px;
-}
-.separate:after {
-  margin-left: 2px;
 }
