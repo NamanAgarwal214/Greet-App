@@ -15,11 +15,30 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a password'],
     minlength: 8
+    // select: false
   },
-  salt: String
-  // googleId: String
+  salt: String,
+  hash: String,
+  passwordChangedAt: Date // googleId: String
 });
 
-const User = new mongoose.model('User', userSchema)
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+userSchema.methods.passwordChangedAfter = async function (JWTtimeStamp) {
+  if (this.passwordChangedAt) {
+    const changedAt = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+
+    return JWTtimeStamp < changedAt;
+  }
+
+  return false;
+};
+
+const User = new mongoose.model('User', userSchema);
 
 module.exports = User;
