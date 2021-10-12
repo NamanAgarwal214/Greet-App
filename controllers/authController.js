@@ -1,4 +1,3 @@
-const fs = require('fs');
 const mongoose = require('mongoose');
 const path = require('path');
 const {promisify} = require('util');
@@ -8,18 +7,12 @@ const User = require('./../models/userModel');
 const authUtils = require('./../utils/authentication');
 const AppError = require('./../utils/appError');
 
-const pathTopubKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
-const PUB_KEY = fs.readFileSync(pathTopubKey, 'utf8');
-
 exports.signup = async (req, res, next) => {
   try {
-    const salthash = authUtils.genHashSalt(req.body.password);
     const user = new User({
       name: req.body.name,
       email: req.body.email,
-      password: salthash.hash,
-      salt: salthash.salt,
-      hash: salthash.hash
+      password: req.body.password,
     });
     await user.save();
     // console.log(user);
@@ -43,13 +36,11 @@ exports.login = async (req, res, next) => {
 
     const user = await User.findOne({ email });
 
-    if (!user || !authUtils.validPassword(password, user.hash, user.salt)) {
+    if (!user || !await user.verifyPassword(password, user.password)) {
       return next(new AppError('Incorrect email or password!', 401));
     }
 
     user.password = undefined;
-    user.salt = undefined;
-    user.hash = undefined;
 
     const token = authUtils.issueJWT(req, res, user);
     res.status(200).json({
@@ -67,10 +58,9 @@ exports.protect = async (req, res, next) => {
     let token;
     // Extract token from the headers
     if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith('Bearer')
+      req.cookies && req.cookies.jwt
     ) {
-      token = req.headers.authorization.split(' ')[1];
+      token = req.cookies.jwt;
     }
 
     if(!token){
@@ -79,12 +69,10 @@ exports.protect = async (req, res, next) => {
 
     // Verifying the token and decrypting it with the public key
     //will return the payload associated with the JWT
-    const decodedUser = await promisify(jwt.verify)(token, PUB_KEY, {
-      algorithms: ['RS256']
-    });
+    const decodedUser = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
     // finding user from the database with the decoded id
-    const user = await User.findById(decodedUser.sub);
+    const user = await User.findOne({_id: decodedUser.sub});
     if(!user){
       return next(new AppError('The user belonging to this token does no longer exist.', 401));
     }
