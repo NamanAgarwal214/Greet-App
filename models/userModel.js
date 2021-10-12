@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const findOrCreate = require('mongoose-findorcreate');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -13,13 +14,20 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Please provide a password'],
     minlength: 8
     // select: false
   },
   salt: String,
   hash: String,
-  passwordChangedAt: Date // googleId: String
+  photo: {
+    type: String,
+    default: ''
+  },
+  passwordChangedAt: Date,
+  googleId: String
+},
+{
+  timestamps: true
 });
 
 userSchema.pre('save', function (next) {
@@ -38,6 +46,8 @@ userSchema.methods.passwordChangedAfter = async function (JWTtimeStamp) {
 
   return false;
 };
+
+userSchema.plugin(findOrCreate);
 
 const User = new mongoose.model('User', userSchema);
 

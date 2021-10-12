@@ -51,10 +51,11 @@ exports.login = async (req, res, next) => {
     user.salt = undefined;
     user.hash = undefined;
 
-    authUtils.issueJWT(req, res, user);
+    const token = authUtils.issueJWT(req, res, user);
     res.status(200).json({
       status: 'success',
-      user
+      user,
+      token
     });
   } catch (err) {
     console.log(err);
