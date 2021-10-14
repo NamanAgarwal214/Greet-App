@@ -1,0 +1,53 @@
+doctype html
+html
+    block head
+      meta(charset='UTF-8')
+      meta(name='viewport' content='width=device-width, initial-scale=1.0')
+      link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous")
+      style
+       include ../public/components/Login/login.css
+      //- link(rel='stylesheet', href='./public/components/Login/login.css', type='text/css')
+      title Login
+    
+    body 
+        div.d-flex.flex-row.row.g-0
+            div.form_details.col
+                h1 Login
+                p.para Lorem ipsum
+                button.btn.google
+                    img.img-fluid(src="https://cdn-icons-png.flaticon.com/128/2875/2875331.png", alt="google_logo")
+                    span Sign in with Google
+                
+                p.separate or Sign in with Email
+
+                form.form
+                    div.form-floating.mb-4
+                        label(for="floatingInput") Email address
+                        input.mail.form-control#floatingInput(type="email", placeholder="mail@website.com")
+                        
+                    
+                    div.form-floating.mb-4
+                        label(for="floatingPass") Password
+                        input.pass.form-control#floatingPass(type="password", placeholder="Min. 8 characters")
+                        
+                    
+                    div.form-check.form-check-inline
+                        input.form-check-input#check(type="checkbox")
+                        label.form-check-label(for="check") Remember me
+                    
+                    div
+                        span.right_span
+                            a(href="#") forgot password?
+                    
+                    br
+                    a(href = '/')
+                        button.btn.login Login
+                    p.register_info Not registered yet? 
+                        a(href="/register") Register here
+                
+            
+            div.col.sideImg
+                    img.img-fluid.img(src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=820&q=80", alt="login_img")
+        
+        script(src = 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
+        script(src = '/public/js/login.js')

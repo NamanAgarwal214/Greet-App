@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    block head      
+      meta(charset='UTF-8')
+      meta(name='viewport' content='width=device-width, initial-scale=1.0')
+      title Greetings
+
+  body
+    // HEADER
+    //- include _header
+    a(href = '/login') Login
+    a(href = '/register') Register
+
+    // CONTENT
+    block content
+      h1 This is a placeholder heading
+
+    // FOOTER
+    //- include _footer
+
+    script(src = 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
+    script(src = '../public/js/login.js')

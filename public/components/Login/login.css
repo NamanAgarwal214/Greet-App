@@ -15,6 +15,12 @@ body {
   padding: 60px;
 }
 
+.para {
+  color: gray;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 .sideImg {
   max-width: 60%;
   max-height: 100vh;
