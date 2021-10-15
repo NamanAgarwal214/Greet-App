@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const findOrCreate = require('mongoose-findorcreate');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      unique: true,
       required: [true, 'Please provide your name']
     },
     email: {
       type: String,
+      unique: true,
       required: [true, 'Please provide your email'],
       validate: [validator.isEmail, 'Please provide a valid email']
     },
@@ -65,7 +66,6 @@ userSchema.methods.verifyPassword = async function (
 //   return false;
 // };
 
-userSchema.plugin(findOrCreate);
 
 const User = new mongoose.model('User', userSchema);
 
