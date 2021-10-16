@@ -35,7 +35,7 @@ app.get('/home', (req, res) => {
 app.get('/error', (req, res) => {
   res.send('You are on the error page');
 })
-// app.use('/', googleAuthRouter);
+app.use('/', googleAuthRouter);
 app.use('/', viewRouter);
 app.use('/api', userRouter);
 app.use(globalErrorHandler);
