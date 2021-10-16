@@ -7,12 +7,16 @@
 
 body {
   max-height: 100vh;
-  background-color: #ffffff;
+  background-color: #3340E4;
 }
 
 .form_details {
-  max-width: 40%;
-  padding: 60px;
+  height: 99.9vh;
+  background-color: #ffffff;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  max-width: 60%;
+  padding: 50px 150px 0;
 }
 
 .para {
@@ -22,7 +26,7 @@ body {
 }
 
 .sideImg {
-  max-width: 60%;
+  max-width: 40%;
   max-height: 100vh;
 }
 
@@ -38,16 +42,20 @@ h1 {
 }
 
 .google {
-  border-radius: 25px;
+  width: 60%;
+  border-radius: 10px;
   background-color: #f8f8f8;
-  border: 1px solid #070928;
+  color: #3456ff;
+  border: 1px solid #3456ff;
   font-weight: 600;
   margin-bottom: 20px;
-  margin-left: 1rem;
+  margin-left: 3rem;
+  transform: translateX(10%);
+  transition: 0.5s all;
 }
 
 .google:hover {
-  background-color: #070928;
+  background-color: #3456ff;
   color: #f8f8f8;
   border-color: #ffffff;
 }
@@ -55,6 +63,7 @@ h1 {
 .google > img {
   width: 20px;
   height: 20px;
+  margin-right: 10px;
   justify-content: center;
 }
 
@@ -68,17 +77,18 @@ button {
   margin-top: 20px;
   margin-bottom: 15px;
   font-weight: 600;
-  border-radius: 25px;
-  background-color: #3456ff;
-  color: #f8f8f8;
-  width: 90%;
-  letter-spacing: 3px;
-}
-
-.login:hover {
+  border-radius: 10px;
   color: #3456ff;
   background-color: #f8f8f8;
   border-color: #3456ff;
+  width: 90%;
+  letter-spacing: 1px;
+  transition: 0.5s all;
+}
+
+.login:hover {
+  background-color: #3456ff;
+  color: #f8f8f8;
 }
 
 h4 {
@@ -90,21 +100,23 @@ h4 {
 .mail,
 .pass {
   width: 90%;
-  border-radius: 25px;
+  border-radius: 10px;
   height: 6vh;
   margin-bottom: 10px;
-  border: 1px solid grey;
+  border: 0.5px solid grey;
   padding: 0 15px;
+  transition: 1s all;
 }
 
 .mail:focus,
 .pass:focus {
-  box-shadow: 10px 10px 10px 1px #070928;
-  border: 1px solid #070928;
+  transition: 1s all;
+  box-shadow: 0.5px 0.5px 5px 0.1px #3340E4;
+  border: 1px solid #3340E4;
 }
 
 .right_span {
-  margin-left: 120px;
+  margin-left: 260px;
   margin-top: 10px;
   font-size: 1rem;
 }
@@ -122,6 +134,7 @@ a {
 }
 
 .register_info {
+  margin-top: 10px;
   font-size: 0.9rem;
 }
 
