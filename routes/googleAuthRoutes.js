@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
-const { issueJWT } = require('../utils/authentication');
+const { issueJWT } = require('../utils/jwtIssue');
 
 router.get(
   '/auth/google',

@@ -4,7 +4,7 @@ const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 
 const User = require('./../models/userModel');
-const authUtils = require('./../utils/authentication');
+const {issueJWT} = require('../utils/jwtIssue');
 const AppError = require('./../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
 
@@ -16,7 +16,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   });
   await user.save();
   // console.log(user);
-  authUtils.issueJWT(req, res, user);
+  issueJWT(req, res, user);
   res.status(200).json({
     status: 'success',
     user
@@ -38,7 +38,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   user.password = undefined;
 
-  const token = authUtils.issueJWT(req, res, user);
+  const token = issueJWT(req, res, user);
   res.status(200).json({
     status: 'success',
     user,

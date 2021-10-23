@@ -37,7 +37,9 @@ app.get('/error', (req, res) => {
 })
 app.use('/', googleAuthRouter);
 app.use('/', viewRouter);
-app.use('/api', userRouter);
+app.use('/api/user', userRouter);
+
+//Error Handler
 app.use(globalErrorHandler);
 
 module.exports = app;
