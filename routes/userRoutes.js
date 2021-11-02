@@ -20,7 +20,7 @@ router.get(
 // User Routes
 // Only accessed by admin
 router.use(authController.protect);
-router.use(ensureAuth);
+// router.use(ensureAuth);
 router.route('/').get(userController.getAllUsers);
 
 router

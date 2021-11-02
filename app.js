@@ -8,6 +8,7 @@ const passport = require('passport');
 const app = express();
 
 const userRouter = require('./routes/userRoutes');
+const friendRouter = require('./routes/friendRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const googleAuthRouter = require('./routes/googleAuthRoutes');
 const globalErrorHandler = require('./controllers/errorController');
@@ -29,15 +30,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get('/home', (req, res) => {
-  res.send('You are on the home page');
-})
-app.get('/error', (req, res) => {
-  res.send('You are on the error page');
-})
+
+//Routes
 app.use('/', googleAuthRouter);
 app.use('/', viewRouter);
 app.use('/api/user', userRouter);
+app.use('/api/friend', friendRouter);
 
 //Error Handler
 app.use(globalErrorHandler);

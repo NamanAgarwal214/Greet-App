@@ -29,7 +29,8 @@ const userSchema = new mongoose.Schema(
       default: false
     },
     passwordChangedAt: Date,
-    googleId: String
+    googleId: String,
+    friends: [{ type: mongoose.Schema.ObjectId, ref: 'Friend' }]
   },
   {
     timestamps: true
@@ -70,7 +71,12 @@ userSchema.methods.verifyPassword = async function (
 //   return false;
 // };
 
+userSchema.pre(/^find/, function (next) {
+  this.populate('friends');
+
+  next();
+});
 
 const User = new mongoose.model('User', userSchema);
 
-module.exports = User;
+module.exports = User
