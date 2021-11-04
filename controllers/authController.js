@@ -7,6 +7,7 @@ const User = require('./../models/userModel');
 const {issueJWT} = require('../utils/jwtIssue');
 const AppError = require('./../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
+const email = require('./../utils/email')
 
 exports.signup = catchAsync(async (req, res, next) => {
   const user = new User({
@@ -17,7 +18,9 @@ exports.signup = catchAsync(async (req, res, next) => {
   await user.save();
   // console.log(user);
   issueJWT(req, res, user);
-  res.status(200).json({
+
+  await email('welcome', user, 'Welcome to the family!');
+  return res.status(200).json({
     status: 'success',
     user
   });
@@ -39,7 +42,7 @@ exports.login = catchAsync(async (req, res, next) => {
   user.password = undefined;
 
   const token = issueJWT(req, res, user);
-  res.status(200).json({
+  return res.status(200).json({
     status: 'success',
     user,
     token
