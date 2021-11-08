@@ -9,6 +9,7 @@ const app = express();
 
 const userRouter = require('./routes/userRoutes');
 const friendRouter = require('./routes/friendRoutes');
+const emailRouter = require('./routes/emailRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const googleAuthRouter = require('./routes/googleAuthRoutes');
 const globalErrorHandler = require('./controllers/errorController');
@@ -36,6 +37,7 @@ app.use('/', googleAuthRouter);
 app.use('/', viewRouter);
 app.use('/api/user', userRouter);
 app.use('/api/friend', friendRouter);
+app.use('/api/email', emailRouter);
 
 //Error Handler
 app.use(globalErrorHandler);

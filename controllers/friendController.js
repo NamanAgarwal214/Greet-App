@@ -26,7 +26,7 @@ exports.addFriend = catchAsync(async (req, res, next) => {
   await user.friends.push(newFriend)
   await user.save()
   // console.log(newFriend);
-  console.log(user);
+  // console.log(user);
   res.status(200).json({
     status: 'success',
     friend: newFriend
