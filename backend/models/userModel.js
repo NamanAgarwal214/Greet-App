@@ -1,65 +1,62 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcrypt');
+const mongoose = require('mongoose')
+const validator = require('validator')
+const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      unique: true,
-      required: [true, 'Please provide your name']
-    },
-    email: {
-      type: String,
-      unique: true,
-      required: [true, 'Please provide your email'],
-      validate: [validator.isEmail, 'Please provide a valid email']
-    },
-    password: {
-      type: String,
-      minlength: 8
-      // select: false
-    },
-    photo: {
-      type: String,
-      default: ''
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false
-    },
-    passwordChangedAt: Date,
-    googleId: String,
-    friends: [{ type: mongoose.Schema.ObjectId, ref: 'Friend' }]
-  },
-  {
-    timestamps: true
-  }
-);
+	{
+		name: {
+			type: String,
+			unique: true,
+			required: [true, 'Please provide your name']
+		},
+		email: {
+			type: String,
+			unique: true,
+			required: [true, 'Please provide your email'],
+			validate: [validator.isEmail, 'Please provide a valid email']
+		},
+		password: {
+			type: String,
+			minlength: 8
+			// select: false
+		},
+		photo: {
+			type: String,
+			default: ''
+		},
+		isAdmin: {
+			type: Boolean,
+			default: false
+		},
+		passwordChangedAt: Date,
+		googleId: String,
+		friends: [{ type: mongoose.Schema.ObjectId, ref: 'Friend' }]
+	},
+	{
+		timestamps: true
+	}
+)
 
 userSchema.pre('save', async function (next) {
-  // Only run this function if password was actually modified
-  if (!this.isModified('password')) return next();
+	// Only run this function if password was actually modified
+	if (!this.isModified('password')) return next()
 
-  // Hash the password with cost of 12
-  this.password = await bcrypt.hash(this.password, 12);
+	// Hash the password with cost of 12
+	this.password = await bcrypt.hash(this.password, 12)
 
-  next();
-});
+	next()
+})
 
 userSchema.pre('save', function (next) {
-  if (!this.isModified('password') || this.isNew) return next();
+	if (!this.isModified('password') || this.isNew) return next()
 
-  this.passwordChangedAt = Date.now() - 1000;
-  next();
-});
+	this.passwordChangedAt = Date.now() - 1000
+	next()
+})
 
-userSchema.methods.verifyPassword = async function (
-  candidatePassword,
-  userPassword
-) {
-  return await bcrypt.compare(candidatePassword, userPassword);
-};
+userSchema.methods.verifyPassword = async function (candidatePassword, userPassword) {
+	return await bcrypt.compare(candidatePassword, userPassword)
+}
 
 // userSchema.methods.passwordChangedAfter = async function (JWTtimeStamp) {
 //   if (this.passwordChangedAt) {
@@ -72,11 +69,11 @@ userSchema.methods.verifyPassword = async function (
 // };
 
 userSchema.pre(/^find/, function (next) {
-  this.populate('friends');
+	this.populate('friends')
 
-  next();
-});
+	next()
+})
 
-const User = new mongoose.model('User', userSchema);
+const User = new mongoose.model('User', userSchema)
 
 module.exports = User
