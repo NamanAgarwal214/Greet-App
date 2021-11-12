@@ -1,10 +1,9 @@
 import React, {Fragment} from 'react'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './App.css';
-import Login from './components/Layout/auth/Login';
-import Register from './components/Layout/auth/Register';
-import Home from './components/Layout/Home';
-import Navbar from './components/Layout/Navbar';
+import LandingPage from './pages/LandingPage';
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 
 const App = () => {
@@ -25,8 +24,7 @@ const App = () => {
             <Register />
           </Route>
           <Route path = '/'>
-            <Navbar />
-            <Home />
+            <LandingPage />
           </Route>
         </Switch>
 
