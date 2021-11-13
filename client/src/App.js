@@ -1,4 +1,6 @@
 import React, {Fragment} from 'react'
+import { Provider } from 'react-redux';
+import store from './store';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './App.css';
 import LandingPage from './pages/LandingPage';
@@ -6,16 +8,12 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 
 
+
 const App = () => {
   return (
+    <Provider store = {store}>
     <Router>
       <Fragment>
-          {/* <Navbar />
-          <Route exact path="/" component={Home} />
-        <Switch>
-					<Route path="/register" component={Register} />
-					<Route path="/login" component={Login} />
-				</Switch> */}
         <Switch>
           <Route exact path = '/login'>
             <Login />
@@ -30,6 +28,7 @@ const App = () => {
 
       </Fragment>
     </Router>
+    </Provider>
   );
 }
 

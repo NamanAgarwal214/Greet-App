@@ -1,50 +1,71 @@
-import React from 'react'
+import React, {Fragment, useState} from 'react'
+import {connect} from 'react-redux'
 import { Link } from 'react-router-dom'
-import './Login.css'
+import { login } from '../actions/auth';
+import PropTypes from 'prop-types'
 
-export default function Login() {
-	return
-	// (
-	//     <div className="d-flex flex-row row g-0">
-	//         <div className="col sideImg">
-	//             <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=820&q=80" alt="login_img"
-	//                 className="img-fluid img" />
+const Login = ({login}) => {
 
-	//         </div>
-	//         <div className="form_details col">
-	//             <h1>Login</h1>
-	//             {/* style={'color': 'gray',margin-top: 10px,margin-bottom: 20px} */}
-	//             <p >Lorem ipsum</p>
-	//             <button className="btn google">
-	//                 <img src="https://cdn-icons-png.flaticon.com/128/2875/2875331.png" alt="google_logo" className="img-fluid" />
-	//                 <span>Sign in with Google</span>
-	//             </button>
+	const [logData, setLogData] = useState({
+        email: '',
+        password: ''
+    });
 
-	//             <p className="separate">or Sign in with Email</p>
+    const {email, password} = logData;
 
-	//             <form action="">
-	//                 <div className="form-floating">
-	//                     <label for="floatingInput">Email address</label>
-	//                     <input id="floatingInput" type="email" placeholder="mail@website.com" className="mail form-control" />
+    const change = e => setLogData({ 
+        ...logData, [e.target.name]: e.target.value 
+    });
 
-	//                 </div>
-	//                 <div className="form-floating mb-4">
-	//                     <label for="floatingPass">Password</label>
-	//                     <input type="password" placeholder="Min. 8 characters" className="pass form-control" id="floatingPass"/>
+    const submit = async e => {
+        e.preventDefault();
+        login({email, password});
+    }
 
-	//                 </div>
-	//                 <div className="form-check form-check-inline">
-	//                     <input id="check" type="checkbox" className="form-check-input" />
-	//                     <label className="form-check-label" for="check">Remember me</label>
-	//                 </div>
-	//                 <div>
-	//                     <span className="right_span"><a href="#!">forgot password?</a></span>
-	//                 </div>
-	//                 <br />
-	//                 <button className="btn login">Login</button>
-	//                 <p className="register_info">Not registered yet? <Link to="/register">Register here</Link></p>
-	//             </form>
-	//         </div>
-	//     </div>
-	// )
+	return <Fragment>
+		<div className="row gx-0">
+        <div className="col cols detail col-lg-5 col-md-6 col-sm-6">
+            <div className="mx-5 my-4 p-3 main">
+                <h1 className="mb-3 h1">Login</h1>
+                <p className="tagline">Lorem ipsum dolor sit amet</p>
+            </div>
+            
+            <form className="d-flex">
+                <button type="submit" className="btnG border border-1 m-auto rounded-pill p-4">
+                    <i className="fa fa-google fa-2x"></i>
+                    <h2 className = "h2">Sign in with Google</h2>
+                </button>
+            </form>
+            <p className="separate">or Sign in with Email</p>
+           <form className="contain" onSubmit = {e => submit(e)}>
+                    <div className="mb-3 mx-auto">
+                        <label for="exampleFormControlInput1" className="form-label">Email address*</label>
+                        <input type="email" className="rounded-pill input form-control" id="exampleFormControlInput1" placeholder="name@example.com" name = "email" value = {email} onChange = {e => change(e)} required />
+                    </div>
+                    <div className="mb-3 mx-auto">
+                        <label for="exampleFormControlInput2" className="form-label">Password*</label>
+                        <input type="password" className="rounded-pill input form-control" id="exampleFormControlInput2" name = "password" value = {password} onChange = {e => change(e)} required />
+                        <a className = "pass" href="">forgot password?</a>
+                    </div>
+                </form>
+                <form className="d-flex">
+                    <button type="submit" className="btn-log border border-2 m-auto rounded-pill p-4">
+                        <h2 className = "h2">Login</h2>
+                    </button>
+                </form>
+                <p className="my-4 mx-4 last">
+                    Not registered yet? <Link to = "/register"><a className="signup">Sign Up</a></Link>
+                </p>
+        </div>
+        <div className="col cols col-lg-7 col-md-6 col-sm-6">
+            <img src="https://images.unsplash.com/photo-1563089145-599997674d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80" alt="side_img" className="img img-fluid" />
+        </div>
+    </div>
+	</Fragment>	
 }
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired
+}
+
+export default connect(null, {login})(Login)
