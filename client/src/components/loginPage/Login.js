@@ -21,8 +21,6 @@ const Login = () => {
 			const res = await axios.post('http://localhost:8000/api/user/login', { email, password })
 			if(res.data) {
         console.log(res.data)
-      } else{
-        console.log('Invalid Email or Password')
       }
 		} catch (e) {
       console.log('There was an error')

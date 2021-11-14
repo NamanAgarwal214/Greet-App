@@ -12,7 +12,6 @@ const userRouter = require('./routes/userRoutes')
 const friendRouter = require('./routes/friendRoutes')
 const emailRouter = require('./routes/emailRoutes')
 const googleAuthRouter = require('./routes/googleAuthRoutes')
-const globalErrorHandler = require('./controllers/errorController')
 
 require('./config/passport')(passport)
 connectDB()
@@ -38,7 +37,5 @@ app.use('/api/user', userRouter)
 app.use('/api/friend', friendRouter)
 app.use('/api/email', emailRouter)
 
-//Error Handler
-app.use(globalErrorHandler)
 
 module.exports = app
