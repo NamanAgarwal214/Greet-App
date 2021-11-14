@@ -1,11 +1,11 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import { Provider } from 'react-redux';
 import store from './store';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './App.css';
-import LandingPage from './pages/LandingPage';
-import Login from './pages/Login'
-import Register from './pages/Register'
+import LandingPage from './components/landingPage/LandingPage';
+import Login from './components/loginPage/Login'
+import Register from './components/registerPage/Register'
 
 
 
@@ -13,7 +13,6 @@ const App = () => {
   return (
     <Provider store = {store}>
     <Router>
-      <Fragment>
         <Switch>
           <Route exact path = '/login'>
             <Login />
@@ -25,8 +24,6 @@ const App = () => {
             <LandingPage />
           </Route>
         </Switch>
-
-      </Fragment>
     </Router>
     </Provider>
   );

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import logo from './../img/logo1.png'
-import illus from './../img/2.png' 
+import logo from '../../assets/logo1.png'
+import illus from '../../assets/2.png' 
 
 export default function LandingPage() {
 	return (

@@ -2,165 +2,85 @@
 
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   font-family: "Poppins", sans-serif;
 }
 
 /* Login css */
 
-.row {
-  max-width: 100%;
-  margin: 0px 0px !important;
+.row{
+  margin: 0 0;
 }
 
-.col,
-.img {
-  height: 100vh;
-}
-
-.cols {
-  padding-right: 0;
-}
-
-.detail {
+.form_details {
+  max-height: 100vh;
+  background-color: #ffffff;
+  max-width: 400px;
   margin: auto;
+  padding: 50px 10px;
 }
 
-.img {
-  object-position: center center;
-  width: 100%;
+.para {
+  color: gray;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
-.contain {
-  margin: auto;
-  /* overflow: hidden; */
-  padding: 0 2rem;
-  margin-top: 1.8rem;
-  margin-bottom: 1rem;
+.btn {
+  width: 150px;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  color: #3a3161;
+  border: 1px solid #3a3161;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 20px;
+  margin-left: 100px;
+  transform: translateX(10%);
+  transition: 0.5s all;
+  text-align: center;
 }
 
-.main {
-  margin-left: 6.5rem !important;
-  margin-right: 7rem !important;
-}
-
-.btnG,
-.btn-log {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 1.8rem;
-  width: 60%;
-}
-
-.btnG {
-  background-color: #fb527a;
-}
-
-.btnG > h2 {
-  color: #fff;
-}
-
-.btnG:hover {
-  opacity: 0.8;
-}
-
-.btn-log {
-  width: 65%;
+.btn:hover {
   background-color: #3a3161;
+  color: #f8f8f8;
+  border-color: #ffffff;
 }
 
-.btn-log:hover {
-  opacity: 0.95;
-}
-
-.h1 {
-  font-weight: 600;
-  font-size: 2.7rem;
-  color: #42424a;
-}
-
-.my-3 {
-  margin-top: 1rem !important;
-  margin-bottom: 0 !important;
-}
-
-.tagline {
-  color: #aab3d2;
-  font-weight: 400;
-  opacity: 0.9;
-}
-
-.input {
+.btn > img {
+  width: 15px;
+  height: 15px;
   margin: auto;
-  width: 70%;
-  height: 7vh;
-  color: #42424a;
-  font-weight: 500;
+  margin-left: 10px;
+  justify-content: center;
 }
 
-input:focus {
-  box-shadow: 8px 5px 10px #3a3161 !important;
-  color: #42424a;
-  font-weight: 500;
-}
-
-.h2 {
-  font-size: 1.2rem;
-  color: #fff;
+h4 {
+  margin-top: 15px;
   font-weight: 600;
-  letter-spacing: 2px;
+  color: #070928;
 }
 
-label {
-  color: #42424a;
-  font-weight: 600;
-  margin-left: 5rem;
+.right_span {
+  text-align: end;
+  margin-top: 10px;
+  font-size: 0.8rem;
 }
 
-.last {
-  margin-left: 7rem !important;
-}
-
-.signup {
-  text-decoration: none;
-  color: #fb527a !important;
-  font-weight: 600;
-}
-
-.signup:hover,
-.pass:hover {
-  text-decoration: underline !important;
-  opacity: 0.8;
-  cursor: pointer;
-  color: #fb527a;
-}
-
-.pass {
-  text-decoration: none;
-  color: #fb527a;
-  font-weight: 600;
-  display: flex;
-  /* position: absolute; */
-  justify-content: right;
-  margin-right: 4rem;
-  margin-top: 0.5rem;
+.register_info {
+  margin-top: 10px;
+  font-size: 0.8rem;
 }
 
 .separate {
   display: flex;
   flex-direction: row;
-  color: #aab3d2;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
+  color: grey;
 }
 .separate:before,
 .separate:after {
-  content: "";
+  content: '';
   flex: 1;
   border-bottom: 1px solid;
-  max-width: 20%;
   margin: auto;
 }
 .separate:before {
@@ -170,17 +90,52 @@ label {
   margin-left: 2px;
 }
 
-i {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 1rem;
+.form__input {
+  display: block;
+  font-family: inherit;
+  font-size: 1rem;
+  color: inherit;
+  padding: 1rem 1.75rem;
+  border: none;
+  width: 100%;
+  background-color: #fff;
+  background-color: #f2f2f2;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  /* Pseudo element (a visible thing that isn't really in the DOM).
+      Also needs -ms- */
+}
+.form__input:focus {
+  outline: none;
+  border-bottom: 3px solid #55c57a;
+}
+.form__input:focus:invalid {
+  border-bottom: 3px solid rgb(238, 16, 16);
+}
+.form__input::-webkit-input-placeholder {
+  color: #bbb;
+}
+
+.form__group:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+.form__label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
 }
 
 /* Landing Page */
 
 .landing-main {
-  background-image: url("./img/landingBackdrop.png");
+  background-image: url("./assets/landingBackdrop.png");
   height: 100vh;
   width: 100vw;
   background-repeat: no-repeat;

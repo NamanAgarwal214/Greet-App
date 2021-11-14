@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
 const connectDB = require('./config/mongo')
 const passport = require('passport')
+const cors = require('cors')
 const app = express()
 
 const userRouter = require('./routes/userRoutes')
@@ -24,6 +25,7 @@ app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
 
 app.use(passport.initialize())
+app.use(cors())
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
