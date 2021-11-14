@@ -2,25 +2,23 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import {loginAction} from '../../redux/actions/authActions'
 
 const Login = () => {
 	const dispatch = useDispatch()
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
-  // const config = {
-  //   headers: {
-  //     "Access-Control-Allow-Origin": "*",
-  //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-  //   }
-  // };
 
 	const handleSubmit = async e => {
 		e.preventDefault()
 
 		try {
 			const res = await axios.post('http://localhost:8000/api/user/login', { email, password })
-			if(res.data) {
+			if(res.data && res.data.status === 'success') {
+        dispatch(loginAction(res.data))
         console.log(res.data)
+      } else{
+        console.log('Incorrect Email or Password!');
       }
 		} catch (e) {
       console.log('There was an error')
