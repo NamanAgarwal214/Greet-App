@@ -5,9 +5,23 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* Register css */
+
+.reg {
+  padding: 0.6rem 1.75rem !important;
+}
+
+.register {
+  margin-bottom: 15px !important;
+}
+
+.form_item {
+  margin-bottom: 1rem !important;
+}
+
 /* Login css */
 
-.row{
+.row {
   margin: 0 0;
 }
 
@@ -78,7 +92,7 @@ h4 {
 }
 .separate:before,
 .separate:after {
-  content: '';
+  content: "";
   flex: 1;
   border-bottom: 1px solid;
   margin: auto;
