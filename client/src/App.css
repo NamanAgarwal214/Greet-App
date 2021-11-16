@@ -5,6 +5,89 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* Alert message */
+.alert--success {
+  background-color: #20bf6b;
+  visibility: visible;
+}
+.alert--error {
+  background-color: #eb4d4b;
+  visibility: visible;
+} 
+
+.floating-alert {
+	display: none;
+	position: absolute;
+	z-index: 999;
+  color: #fff;
+	top: 38px;
+	left: 50%;
+	transform: translateX(-50%);
+	-moz-animation: floatingAlert ease-in 3s forwards;
+	-webkit-animation: floatingAlert ease-in 3s forwards;
+	-o-animation: floatingAlert ease-in 3s forwards;
+	animation: floatingAlert ease-in 3s forwards;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+.floating-alerts .floating-alert:last-of-type {
+	display: block;
+}
+
+@keyframes floatingAlert {
+	0% {
+		opacity: 0;
+		visibility: hidden;
+		transform: translateX(-50%) scale(1.2);
+	}
+
+	19% {
+		opacity: 1;
+		visibility: visible;
+		transform: translateX(-50%) scale(1);
+	}
+
+	81% {
+		opacity: 1;
+		visibility: visible;
+		transform: translateX(-50%) scale(1);
+	}
+
+	100% {
+		opacity: 0;
+		visibility: hidden;
+		transform: translateX(-50%) scale(1.2);
+	}
+}
+
+@-webkit-keyframes floatingAlert {
+	0% {
+		opacity: 0;
+		visibility: hidden;
+		transform: translateX(-50%) scale(1.2);
+	}
+
+	19% {
+		opacity: 1;
+		visibility: visible;
+		transform: translateX(-50%) scale(1);
+	}
+
+	81% {
+		opacity: 1;
+		visibility: visible;
+		transform: translateX(-50%) scale(1);
+	}
+
+	100% {
+		opacity: 0;
+		visibility: hidden;
+		transform: translateX(-50%) scale(1.2);
+	}
+}
+
+
 /* Register css */
 
 .reg {

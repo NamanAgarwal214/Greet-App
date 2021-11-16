@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { registerAction, registerFail } from '../../redux/actions/authActions'
 
-const Register = () => {
+export default function Register() {
 
 	const dispatch = useDispatch();
 	const [name, setName] = useState('')
@@ -82,5 +82,3 @@ const Register = () => {
 			</div>
 		</>
 }
-
-export default Register

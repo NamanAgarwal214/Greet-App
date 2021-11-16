@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {loginAction} from '../../redux/actions/authActions'
+import {flashMessage} from '../../redux/actions/flashMessage'
 
 const Login = () => {
 	const dispatch = useDispatch()
@@ -15,9 +16,11 @@ const Login = () => {
 		try {
 			const res = await axios.post('http://localhost:8000/api/user/login', { email, password })
 			if(res.data && res.data.status === 'success') {
+        dispatch(flashMessage({success: true, message: 'You logged in successfully!'}))
         dispatch(loginAction(res.data))
         console.log(res.data)
       } else{
+        dispatch(flashMessage({success: false, message: 'Incorrect Email or Password!'}))
         console.log('Incorrect Email or Password!');
       }
 		} catch (e) {

@@ -1,6 +1,8 @@
 import {combineReducers} from "redux"
 import AuthReducer from "./authReducer"
+import AlertReducer from "./alertReducer"
 
 export const rootReducer = combineReducers({
-  Auth: AuthReducer
+  Auth: AuthReducer,
+  Alert: AlertReducer
 })
