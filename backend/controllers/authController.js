@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const path = require('path')
+const crypto = require('crypto')
 const { promisify } = require('util')
 const jsonwebtoken = require('jsonwebtoken')
 
@@ -33,7 +34,7 @@ exports.signup = async (req, res, next) => {
 		// console.log(user);
 		issueJWT(res, user)
 
-		// await email('welcome', user, 'Welcome to the family!');
+		await email('welcome', user, 'Welcome to the family!');
 		return res.status(200).json({
 			status: 'success',
 			user
@@ -115,5 +116,59 @@ exports.logout = (req, res) => {
 		status: 'success'
 	})
 }
+
+exports.forgotPassword = async (req, res, next) => {
+	try {
+		const user = await User.findOne({ email: req.body.email })
+		if (!user) {
+			throw new Error('There is no user with that email. Please signup.')
+		}
+
+		const resetToken = user.createPasswordResetToken()
+		await user.save({ validateBeforeSave: false })
+
+		try {
+			await email('resetPassword', user, resetToken)
+
+			res.status(200).json({
+				status: 'success',
+				message: 'Token sent to email!',
+				user
+			})
+		} catch (err) {
+			user.passwordResetToken = undefined
+			user.passwordResetExpires = undefined
+			await user.save({ validateBeforeSave: false })
+			throw new Error('There was an error sending the email. Try again later!')
+		}
+	} catch (error) {
+		res.json(error.message)
+	}
+}
+
+exports.resetPassword = async (req, res, next) => {
+	try {
+		const hashedToken = crypto.createHash('sha256').update(req.body.token).digest('hex')
+		const user = await User.findOne({ passwordResetToken: hashedToken })
+    if (!user) {
+      throw new Error('Token is invalid or has expired')
+    }
+    user.password = req.body.password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    const token = issueJWT(res, user)
+		return res.status(200).json({
+			status: 'success',
+			user,
+			token
+		})
+
+	} catch (error) {
+		res.json(error.message)
+	}
+}
+
 
 module.exports.issueJWT = issueJWT

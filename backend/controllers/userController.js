@@ -1,5 +1,35 @@
 const User = require('./../models/userModel')
 
+//Update User
+exports.updateMe = async (req, res, next) => {
+	try {
+		if (req.body && req.body.password) {
+			throw new Error('You cannot update password here.')
+		}
+		const newObj = {}
+		Object.keys(req.body).forEach(el => {
+			if (el != 'password') {
+				newObj[el] = req.body[el]
+			}
+		})
+
+		const updatedUser = await User.findByIdAndUpdate(req.user.id, newObj, {
+			new: true,
+			runValidators: true
+		})
+
+		res.status(200).json({
+			status: 'success',
+			data: {
+				user: updatedUser
+			}
+		})
+	} catch (error) {
+		res.json(error.message)
+	}
+}
+
+/** Admin Routes */
 exports.getAllUsers = async (rea, res, next) => {
 	try {
 		const users = await User.find()

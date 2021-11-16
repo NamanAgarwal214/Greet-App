@@ -14,7 +14,7 @@ async function SendEmail(template, user, subject) {
 
 	const html = pug.renderFile(`${__dirname}/../views/emails/${template}.pug`, {
 		firstName: user.name,
-		subject: 'Welcome'
+		subject: subject
 	})
 	// Step 2
 	let mailOptions = {
