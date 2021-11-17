@@ -6,11 +6,11 @@ const cookieParser = require('cookie-parser')
 const connectDB = require('./config/mongo')
 const passport = require('passport')
 const cors = require('cors')
+const cron = require('node-cron')
 const app = express()
-
+const sendEmails = require('./controllers/emailsController')
 const userRouter = require('./routes/userRoutes')
 const friendRouter = require('./routes/friendRoutes')
-const emailRouter = require('./routes/emailRoutes')
 const googleAuthRouter = require('./routes/googleAuthRoutes')
 
 require('./config/passport')(passport)
@@ -31,11 +31,15 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
+cron.schedule("* */23 * * *", function() {
+  // sendEmails();
+  console.log('Hello')
+});
+
 //Routes
 app.use('/', googleAuthRouter)
 app.use('/api/user', userRouter)
 app.use('/api/friend', friendRouter)
-app.use('/api/email', emailRouter)
 
 
 module.exports = app

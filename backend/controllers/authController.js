@@ -34,7 +34,7 @@ exports.signup = async (req, res, next) => {
 		// console.log(user);
 		issueJWT(res, user)
 
-		await email('welcome', user, 'Welcome to the family!');
+		await email('welcome', user, {title: 'Welcome to the family!'});
 		return res.status(200).json({
 			status: 'success',
 			user
@@ -128,7 +128,7 @@ exports.forgotPassword = async (req, res, next) => {
 		await user.save({ validateBeforeSave: false })
 
 		try {
-			await email('resetPassword', user, resetToken)
+			await email('resetPassword', user, {title: 'Reset Password', resetToken})
 
 			res.status(200).json({
 				status: 'success',

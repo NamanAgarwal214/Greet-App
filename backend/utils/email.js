@@ -20,7 +20,7 @@ async function SendEmail(template, user, subject) {
 	let mailOptions = {
 		from: `Greetings App <greetingsapp15@gmail.com>`,
 		to: to,
-		subject: subject,
+		subject: subject.title,
 		html
 	}
 
