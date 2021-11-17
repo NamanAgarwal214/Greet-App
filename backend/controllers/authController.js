@@ -47,9 +47,6 @@ exports.signup = async (req, res, next) => {
 exports.login = async (req, res, next) => {
 	try {
 		const { email, password } = req.body
-		// if (!email || !password) {
-		// 	return next(new AppError('Please provide email and password!', 400))
-		// }
 
 		const user = await User.findOne({ email })
 
@@ -66,7 +63,6 @@ exports.login = async (req, res, next) => {
 			token
 		})
 	} catch (error) {
-		// console.log(error.message);
 		res.json(error.message)
 	}
 }

@@ -1,41 +1,38 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { registerAction, registerFail } from '../../redux/actions/authActions'
 
 export default function Register() {
-
-	const dispatch = useDispatch();
+	const history = useHistory()
+	const dispatch = useDispatch()
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [password2, setPassword2] = useState('')
 
 	const handleSubmit = async e => {
-		e.preventDefault();
-		if(password !== password2){
-			console.log('Passwords do not match');
-		}else{
+		e.preventDefault()
+		if (password !== password2) {
+			console.log('Passwords do not match')
+		} else {
 			try {
-			const config = {
-				headers: {
-					'Content-Type': 'application/json'
-				}
+				const res = await axios.post('http://localhost:8000/api/user/register', { name, email, password })
+				dispatch(registerAction(res.data))
+
+				history.push('/')
+				console.log(res.data)
+			} catch (err) {
+				dispatch(registerFail())
+				console.error(err.response.data)
 			}
-			const body = JSON.stringify({name, email, password});
-			const res = await axios.post('http://localhost:8000/api/user/register', body, config);
-			dispatch(registerAction(res.data))
-			console.log(res.data)
-		} catch (err) {
-			dispatch(registerFail());
-      		console.error(err.response.data)
 		}
-		}
-		
 	}
 
-	return <>
+	return (
+		<>
 			<div className="d-flex flex-row row g-0">
 				<div className="form_details col">
 					<button className="btn">
@@ -60,15 +57,13 @@ export default function Register() {
 							<label htmlFor="password" className="form__label">
 								Password
 							</label>
-							<input onChange={e => setPassword(e.target.value)} type="password" placeholder="Password"
-               className="form__input reg" id="password" required minLength="8" />
+							<input onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" className="form__input reg" id="password" required minLength="8" />
 						</div>
 						<div className="form__group form_item">
 							<label htmlFor="password2" className="form__label">
 								Confirm Password
 							</label>
-							<input onChange={e => setPassword2(e.target.value)} type="password" placeholder="Password"
-               className="form__input reg" id="password2" required minLength="8" />
+							<input onChange={e => setPassword2(e.target.value)} type="password" placeholder="Password" className="form__input reg" id="password2" required minLength="8" />
 						</div>
 						<br />
 						<button className="btn register" onClick={handleSubmit}>
@@ -81,4 +76,5 @@ export default function Register() {
 				</div>
 			</div>
 		</>
+	)
 }

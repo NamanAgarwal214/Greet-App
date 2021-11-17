@@ -1,12 +1,14 @@
 import React from 'react'
-import { Provider } from 'react-redux'
+import { Provider} from 'react-redux'
 import store from './redux/store'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css'
-import LandingPage from './components/landingPage/LandingPage'
+// import LandingPage from './components/landingPage-LoggedOut/LandingPage'
+import Home from './pages/Home'
 import Login from './components/loginPage/Login'
 import Register from './components/registerPage/Register'
 import FlashMessage from './components/flashMessage/FlashMessage'
+import { IsUserRedirect } from './helpers/routes'
 
 const App = () => {
 	return (
@@ -14,14 +16,14 @@ const App = () => {
 			<Router>
 				<FlashMessage />
 				<Switch>
-					<Route exact path="/login">
+					<IsUserRedirect exact loggedInPath={'/'} path={'/login'}>
 						<Login />
-					</Route>
-					<Route exact path="/register">
+					</IsUserRedirect>
+					<IsUserRedirect exact loggedInPath={'/'} path={'/register'}>
 						<Register />
-					</Route>
+					</IsUserRedirect>
 					<Route path="/">
-						<LandingPage />
+						<Home />
 					</Route>
 				</Switch>
 			</Router>

@@ -158,10 +158,15 @@ h4 {
 }
 
 .right_span {
+  cursor: pointer;
   text-align: end;
   margin-top: 10px;
   font-size: 0.8rem;
 }
+
+.right_span span:hover {
+  text-decoration: underline;
+} 
 
 .register_info {
   margin-top: 10px;
@@ -266,7 +271,7 @@ h4 {
 }
 
 .landing-main .btn {
-  transform: translateX(100%);
+  transform: translateX(0%);
   background-color: #fb527a;
   color: #fff;
   font-weight: 600 !important;
