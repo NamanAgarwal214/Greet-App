@@ -5,7 +5,6 @@ export default function HomeLoggedIn() {
   return (
     <>
       <Navbar />
-      Hello
     </>
   )
 }
