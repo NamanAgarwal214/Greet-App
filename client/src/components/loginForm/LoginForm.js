@@ -2,8 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
-import {loginAction} from '../../redux/actions/authActions'
+import {loginAction, authFail} from '../../redux/actions/authActions'
 import {flashMessage} from '../../redux/actions/flashMessage'
 
 export default function LoginForm({setForgotPassword}) {
@@ -17,7 +16,10 @@ export default function LoginForm({setForgotPassword}) {
 
 		try {
 			const res = await axios.post('/api/user/login', { email, password })
-			if(res.data && res.data.status === 'success') {
+      if(!email || !password) {
+        dispatch(flashMessage({success: false, message: 'Please fill the form completely!'}))
+      }
+			else if(res.data && res.data.status === 'success') {
         dispatch(flashMessage({success: true, message: 'You logged in successfully!'}))
         dispatch(loginAction(res.data))
         console.log(res.data)
@@ -29,6 +31,7 @@ export default function LoginForm({setForgotPassword}) {
         console.log('Incorrect Email or Password!');
       }
 		} catch (e) {
+      dispatch(authFail())
       console.log('There was an error')
 		}
 	}
@@ -38,7 +41,10 @@ export default function LoginForm({setForgotPassword}) {
 
 		try {
 			const res = await axios.post('/api/user/forgotpassword', { email })
-			if(res.data && res.data.status === 'success') {
+      if(!email){
+        dispatch(flashMessage({success: false, message: 'Please enter your !'}))
+      }
+			else if(res.data && res.data.status === 'success') {
         setForgotPassword(true)
         dispatch(flashMessage({success: true, message: 'A mail has been sent to you with a token!'}))
         console.log(res.data);

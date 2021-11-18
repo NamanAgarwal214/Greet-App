@@ -1,30 +1,30 @@
-import { LOGIN_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT } from '../constants'
-const initialState = {
-	token: localStorage.getItem('token'),
-	isAuthenticated: false,
-	user: localStorage.getItem('user')
-}
+import { LOGIN_SUCCESS, REGISTER_SUCCESS, LOGOUT, AUTH_FAIL } from '../constants'
+const user = JSON.parse(localStorage.getItem('user'))
+const initialState = user ? {
+	loggedIn: false,
+	user: JSON.parse(localStorage.getItem('user'))
+} : {}
 
 export default function AuthReducer(state = initialState, action) {
 	switch (action.type) {
 		case REGISTER_SUCCESS:
+      localStorage.setItem('user', JSON.stringify(action.payload))
+      return {
+        ...state,
+				...action.payload,
+				loggedIn: true
+      }
 		case LOGIN_SUCCESS:
-			localStorage.setItem('token', action.payload.token)
-			localStorage.setItem('user', action.payload.user)
+      localStorage.setItem('user', JSON.stringify(action.payload))
 			return {
 				...state,
 				...action.payload,
-				isAuthenticated: true
+				loggedIn: true
 			}
-		case LOGOUT:
-		case REGISTER_FAIL:
-			localStorage.removeItem('token')
-			localStorage.removeItem('user')
-			return {
-				...state,
-				token: null,
-				isAuthenticated: false
-			}
+    case AUTH_FAIL: 
+      return {}
+    case LOGOUT:
+      return {}
 		default:
 			return state
 	}

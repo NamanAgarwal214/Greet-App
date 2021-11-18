@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { registerAction, registerFail } from '../../redux/actions/authActions'
+import { registerAction, authFail } from '../../redux/actions/authActions'
+import {flashMessage} from '../../redux/actions/flashMessage'
 
 export default function RegisterForm() {
 	const history = useHistory()
@@ -15,13 +16,20 @@ export default function RegisterForm() {
 		e.preventDefault()
 			try {
 				const res = await axios.post('/api/user/register', { name, email, password })
-				dispatch(registerAction(res.data))
+        dispatch(flashMessage({success: true, message: 'You signed in successfully!'}))
+        if(!email || !name || !password){
+          dispatch(flashMessage({success: false, message: 'Please fill the form completely!'}))
+        }
+				else{
+          dispatch(registerAction(res.data))
+				  history.push('/')
+        }
 
-				history.push('/')
-				console.log(res.data)
+				// console.log(res.data)
 			} catch (err) {
-				dispatch(registerFail())
-				console.error(err.response.data)
+        dispatch(flashMessage({success: false, message: 'There was an error!'}))
+				dispatch(authFail())
+        console.log(err.message)
 			}
 	}
 

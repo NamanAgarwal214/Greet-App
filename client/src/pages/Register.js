@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../components/navbar/Navbar' 
+import Navbar from '../components/navbarLoggedout/Navbar' 
 import RegisterForm from '../components/registerForm.js/RegisterForm'
 
 export default function Register() {
