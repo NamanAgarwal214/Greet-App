@@ -5,6 +5,76 @@
   font-family: "Poppins", sans-serif;
 }
 
+body{
+  background-image: url("./assets/landingBackdrop.png");
+  height: 100vh;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Navber */
+.nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.nav__el,
+.nav__el:link,
+.nav__el:visited {
+  color: #f7f7f7;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  text-decoration: none;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  font-weight: 400;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.nav__el:hover,
+.nav__el:active {
+  -webkit-transform: translateY(-2px);
+  transform: translateY(-2px);
+  text-shadow: 0 0.7rem 1rem black;
+}
+.nav__el:not(:last-child) {
+  margin-right: 3rem;
+}
+@media only screen and (max-width: 37.5em) {
+  .nav__el:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+.nav__el:focus {
+  outline: none;
+}
+
+.header__logo img {
+  height: 3.5rem;
+}
+@media only screen and (max-width: 62.5em) {
+  .header__logo {
+    -webkit-box-ordinal-group: 0;
+    -ms-flex-order: -1;
+    order: -1;
+    margin-bottom: 1.5rem;
+  }
+}
+
+
 /* Alert message */
 .alert--success {
   background-color: #20bf6b;
@@ -94,12 +164,9 @@
   padding: 0.6rem 1.75rem !important;
 }
 
-.register {
-  margin-bottom: 15px !important;
-}
 
 .form_item {
-  margin-bottom: 1rem !important;
+  margin-bottom: 0.8rem !important;
 }
 
 /* Login css */
@@ -109,11 +176,15 @@
 }
 
 .form_details {
-  max-height: 100vh;
-  background-color: #ffffff;
-  max-width: 400px;
-  margin: auto;
-  padding: 50px 10px;
+  /* max-height: 100%; */
+  background-color: #fff;
+  max-width: 420px;
+  margin: 0 auto;
+  /* margin-top: auto; */
+  padding: 20px 20px;
+  -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
 }
 
 .para {
@@ -151,6 +222,22 @@
   justify-content: center;
 }
 
+
+@media only screen and (max-width: 430px) {
+  .form_details{
+    max-width: 320px;
+  }
+
+  .btn {
+    transform: translateX(-20%);
+  }
+
+  .header__logo img {
+    height: 3rem;
+  }
+}
+
+
 h4 {
   margin-top: 15px;
   font-weight: 600;
@@ -167,11 +254,6 @@ h4 {
 .right_span span:hover {
   text-decoration: underline;
 } 
-
-.register_info {
-  margin-top: 10px;
-  font-size: 0.8rem;
-}
 
 .separate {
   display: flex;
@@ -237,11 +319,6 @@ h4 {
 /* Landing Page */
 
 .landing-main {
-  background-image: url("./assets/landingBackdrop.png");
-  height: 100vh;
-  width: 100vw;
-  background-repeat: no-repeat;
-  background-size: cover;
   color: #fff;
 }
 
@@ -251,8 +328,8 @@ h4 {
 }
 
 .landing-header img {
-  height: 100%;
-  width: 15%;
+  height: 5rem;
+  margin: 0 50px;
 }
 
 .landing-header h1 {

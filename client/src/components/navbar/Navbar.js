@@ -1,24 +1,25 @@
 import React from 'react'
-import logo from '../../img/logo.png'
+import logo from '../../assets/logo1.png'
 import { Link } from 'react-router-dom'
 
 export default function Navbar() {
 	return (
-		<nav class="navbar bg-dark">
+		<div className="container">
+      <nav className="navbar nav">
 			<h1>
-				<Link to="/">
-					<img className="logo" src={logo} alt="logo" />
-					<span className="title"> Greetings</span>
+				<Link className="header__logo" to="/">
+					<img className="" src={logo} alt="logo" />
 				</Link>
 			</h1>
-			<div class="buttons">
-				<Link to="/register" class="btn btn-primary">
+			<div className="">
+				<Link to="/signup" className="nav__el">
 					Sign Up
 				</Link>
-				<Link to="/login" class="btn btn-light">
+				<Link to="/login" className="nav__el">
 					Login
 				</Link>
 			</div>
 		</nav>
+    </div>
 	)
 }

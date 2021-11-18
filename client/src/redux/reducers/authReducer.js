@@ -2,7 +2,7 @@ import { LOGIN_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT } from '../const
 const initialState = {
 	token: localStorage.getItem('token'),
 	isAuthenticated: false,
-	user: null
+	user: localStorage.getItem('user')
 }
 
 export default function AuthReducer(state = initialState, action) {
@@ -10,6 +10,7 @@ export default function AuthReducer(state = initialState, action) {
 		case REGISTER_SUCCESS:
 		case LOGIN_SUCCESS:
 			localStorage.setItem('token', action.payload.token)
+			localStorage.setItem('user', action.payload.user)
 			return {
 				...state,
 				...action.payload,
@@ -18,6 +19,7 @@ export default function AuthReducer(state = initialState, action) {
 		case LOGOUT:
 		case REGISTER_FAIL:
 			localStorage.removeItem('token')
+			localStorage.removeItem('user')
 			return {
 				...state,
 				token: null,
