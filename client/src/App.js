@@ -7,6 +7,7 @@ import LandingPage from './components/landingPage/LandingPage'
 import Login from './components/loginPage/Login'
 import Register from './components/registerPage/Register'
 import FlashMessage from './components/flashMessage/FlashMessage'
+import CreateEvent from './components/landingPage/CreateEvent'
 
 const App = () => {
 	return (
@@ -14,6 +15,9 @@ const App = () => {
 			<Router>
 				<FlashMessage />
 				<Switch>
+					<Route exact path="/createEvent">
+						<CreateEvent />
+					</Route>
 					<Route exact path="/login">
 						<Login />
 					</Route>

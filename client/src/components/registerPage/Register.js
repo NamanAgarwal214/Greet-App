@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { registerAction, registerFail } from '../../redux/actions/authActions'
+import { flashMessage } from '../../redux/actions/flashMessage'
 
 export default function Register() {
 
@@ -15,6 +16,7 @@ export default function Register() {
 	const handleSubmit = async e => {
 		e.preventDefault();
 		if(password !== password2){
+			dispatch(flashMessage({success: false, message: 'Password do not match'}))
 			console.log('Passwords do not match');
 		}else{
 			try {
@@ -25,9 +27,11 @@ export default function Register() {
 			}
 			const body = JSON.stringify({name, email, password});
 			const res = await axios.post('http://localhost:8000/api/user/register', body, config);
+			dispatch(flashMessage({success: true, message: 'You are Registered successfully!'}))
 			dispatch(registerAction(res.data))
 			console.log(res.data)
 		} catch (err) {
+			dispatch(flashMessage({success: false, message: 'Some error occured'}))
 			dispatch(registerFail());
       		console.error(err.response.data)
 		}
