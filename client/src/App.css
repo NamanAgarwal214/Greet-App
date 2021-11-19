@@ -148,80 +148,79 @@ body{
 .alert--error {
   background-color: #eb4d4b;
   visibility: visible;
-} 
+}
 
 .floating-alert {
-	display: none;
-	position: absolute;
-	z-index: 999;
+  display: none;
+  position: absolute;
+  z-index: 999;
   color: #fff;
-	top: 38px;
-	left: 50%;
-	transform: translateX(-50%);
-	-moz-animation: floatingAlert ease-in 3s forwards;
-	-webkit-animation: floatingAlert ease-in 3s forwards;
-	-o-animation: floatingAlert ease-in 3s forwards;
-	animation: floatingAlert ease-in 3s forwards;
-	-webkit-animation-fill-mode: forwards;
-	animation-fill-mode: forwards;
+  top: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  -moz-animation: floatingAlert ease-in 3s forwards;
+  -webkit-animation: floatingAlert ease-in 3s forwards;
+  -o-animation: floatingAlert ease-in 3s forwards;
+  animation: floatingAlert ease-in 3s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .floating-alerts .floating-alert:last-of-type {
-	display: block;
+  display: block;
 }
 
 @keyframes floatingAlert {
-	0% {
-		opacity: 0;
-		visibility: hidden;
-		transform: translateX(-50%) scale(1.2);
-	}
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) scale(1.2);
+  }
 
-	19% {
-		opacity: 1;
-		visibility: visible;
-		transform: translateX(-50%) scale(1);
-	}
+  19% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
 
-	81% {
-		opacity: 1;
-		visibility: visible;
-		transform: translateX(-50%) scale(1);
-	}
+  81% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
 
-	100% {
-		opacity: 0;
-		visibility: hidden;
-		transform: translateX(-50%) scale(1.2);
-	}
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) scale(1.2);
+  }
 }
 
 @-webkit-keyframes floatingAlert {
-	0% {
-		opacity: 0;
-		visibility: hidden;
-		transform: translateX(-50%) scale(1.2);
-	}
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) scale(1.2);
+  }
 
-	19% {
-		opacity: 1;
-		visibility: visible;
-		transform: translateX(-50%) scale(1);
-	}
+  19% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
 
-	81% {
-		opacity: 1;
-		visibility: visible;
-		transform: translateX(-50%) scale(1);
-	}
+  81% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
 
-	100% {
-		opacity: 0;
-		visibility: hidden;
-		transform: translateX(-50%) scale(1.2);
-	}
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) scale(1.2);
+  }
 }
-
 
 /* Register css */
 
@@ -455,6 +454,94 @@ h4 {
   }
 }
 
+<<<<<<< HEAD
+/* Create event */
+
+.contain {
+  max-width: 80vw;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 2rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.large {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  font-weight: 900;
+  color: #3a3161;
+}
+
+.lead {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.inputField {
+  padding: 1rem 1.75rem;
+  border: none;
+  transition: border 2s;
+  width: 100%;
+  background-color: #fff;
+  background-color: #f2f2f2;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+}
+
+.form-text {
+  display: block;
+  margin-top: 1.5rem;
+  color: #888;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.inputField:focus {
+  top: -2rem;
+  animation-name: example;
+  animation-duration: 3s;
+  /* animation-iteration-count: 2; */
+  /* animation-direction: alternate; */
+  outline-color: #9789ac;
+  animation-timing-function: ease-in-out;
+  box-shadow: 5px 5px #fb527a;
+}
+
+@keyframes example {
+  0% {
+    border: 2px solid #fb527a;
+  }
+  50% {
+    border: 2px solid #fb527a;
+  }
+  100% {
+    border: 2px solid #fb527a;
+  }
+}
+
+.btn-1 {
+  width: 150px;
+  border-radius: 10px;
+  outline: none;
+  background-color: #3a3161;
+  color: #f8f8f8;
+  border-color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.5s all;
+  margin-right: 2rem;
+  text-align: center;
+}
+
+.btn-1:hover {
+  background-color: #f8f8f8;
+  outline: none;
+  color: #3a3161;
+  border: 1px solid #3a3161;
+}
+=======
 
 /* Profile page */
 .main {
@@ -602,3 +689,4 @@ h4 {
   -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
 }
+>>>>>>> 2412b0f5a39603766b243d9cc49b55d3bcb12e65
