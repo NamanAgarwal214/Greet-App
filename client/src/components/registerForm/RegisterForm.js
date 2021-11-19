@@ -2,14 +2,8 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-<<<<<<< HEAD:client/src/components/registerPage/Register.js
-import { Link } from 'react-router-dom'
-import { registerAction, registerFail } from '../../redux/actions/authActions'
-import { flashMessage } from '../../redux/actions/flashMessage'
-=======
 import { registerAction, authFail } from '../../redux/actions/authActions'
 import {flashMessage} from '../../redux/actions/flashMessage'
->>>>>>> 2412b0f5a39603766b243d9cc49b55d3bcb12e65:client/src/components/registerForm.js/RegisterForm.js
 
 export default function RegisterForm() {
 	const history = useHistory()
@@ -19,15 +13,7 @@ export default function RegisterForm() {
 	const [password, setPassword] = useState('')
 
 	const handleSubmit = async e => {
-<<<<<<< HEAD:client/src/components/registerPage/Register.js
-		e.preventDefault();
-		if(password !== password2){
-			dispatch(flashMessage({success: false, message: 'Password do not match'}))
-			console.log('Passwords do not match');
-		}else{
-=======
 		e.preventDefault()
->>>>>>> 2412b0f5a39603766b243d9cc49b55d3bcb12e65:client/src/components/registerForm.js/RegisterForm.js
 			try {
 				const res = await axios.post('/api/user/register', { name, email, password })
         dispatch(flashMessage({success: true, message: 'You signed in successfully!'}))
@@ -45,21 +31,6 @@ export default function RegisterForm() {
 				dispatch(authFail())
         console.log(err.message)
 			}
-<<<<<<< HEAD:client/src/components/registerPage/Register.js
-			const body = JSON.stringify({name, email, password});
-			const res = await axios.post('http://localhost:8000/api/user/register', body, config);
-			dispatch(flashMessage({success: true, message: 'You are Registered successfully!'}))
-			dispatch(registerAction(res.data))
-			console.log(res.data)
-		} catch (err) {
-			dispatch(flashMessage({success: false, message: 'Some error occured'}))
-			dispatch(registerFail());
-      		console.error(err.response.data)
-		}
-		}
-		
-=======
->>>>>>> 2412b0f5a39603766b243d9cc49b55d3bcb12e65:client/src/components/registerForm.js/RegisterForm.js
 	}
 
 	return (

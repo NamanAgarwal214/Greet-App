@@ -454,7 +454,6 @@ h4 {
   }
 }
 
-<<<<<<< HEAD
 /* Create event */
 
 .contain {
@@ -464,6 +463,7 @@ h4 {
   padding: 0 2rem;
   margin-top: 3rem;
   margin-bottom: 3rem;
+  background-color: #fff;
 }
 
 .large {
@@ -541,7 +541,6 @@ h4 {
   color: #3a3161;
   border: 1px solid #3a3161;
 }
-=======
 
 /* Profile page */
 .main {
@@ -689,4 +688,3 @@ h4 {
   -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
 }
->>>>>>> 2412b0f5a39603766b243d9cc49b55d3bcb12e65
