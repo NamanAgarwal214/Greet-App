@@ -1,30 +1,51 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+<<<<<<< HEAD:client/src/components/registerPage/Register.js
 import { Link } from 'react-router-dom'
 import { registerAction, registerFail } from '../../redux/actions/authActions'
 import { flashMessage } from '../../redux/actions/flashMessage'
+=======
+import { registerAction, authFail } from '../../redux/actions/authActions'
+import {flashMessage} from '../../redux/actions/flashMessage'
+>>>>>>> 2412b0f5a39603766b243d9cc49b55d3bcb12e65:client/src/components/registerForm.js/RegisterForm.js
 
-export default function Register() {
-
-	const dispatch = useDispatch();
+export default function RegisterForm() {
+	const history = useHistory()
+	const dispatch = useDispatch()
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
-	const [password2, setPassword2] = useState('')
 
 	const handleSubmit = async e => {
+<<<<<<< HEAD:client/src/components/registerPage/Register.js
 		e.preventDefault();
 		if(password !== password2){
 			dispatch(flashMessage({success: false, message: 'Password do not match'}))
 			console.log('Passwords do not match');
 		}else{
+=======
+		e.preventDefault()
+>>>>>>> 2412b0f5a39603766b243d9cc49b55d3bcb12e65:client/src/components/registerForm.js/RegisterForm.js
 			try {
-			const config = {
-				headers: {
-					'Content-Type': 'application/json'
-				}
+				const res = await axios.post('/api/user/register', { name, email, password })
+        dispatch(flashMessage({success: true, message: 'You signed in successfully!'}))
+        if(!email || !name || !password){
+          dispatch(flashMessage({success: false, message: 'Please fill the form completely!'}))
+        }
+				else{
+          dispatch(registerAction(res.data))
+				  history.push('/')
+        }
+
+				// console.log(res.data)
+			} catch (err) {
+        dispatch(flashMessage({success: false, message: 'There was an error!'}))
+				dispatch(authFail())
+        console.log(err.message)
 			}
+<<<<<<< HEAD:client/src/components/registerPage/Register.js
 			const body = JSON.stringify({name, email, password});
 			const res = await axios.post('http://localhost:8000/api/user/register', body, config);
 			dispatch(flashMessage({success: true, message: 'You are Registered successfully!'}))
@@ -37,10 +58,13 @@ export default function Register() {
 		}
 		}
 		
+=======
+>>>>>>> 2412b0f5a39603766b243d9cc49b55d3bcb12e65:client/src/components/registerForm.js/RegisterForm.js
 	}
 
-	return <>
-			<div className="d-flex flex-row row g-0">
+	return (
+		<>
+			<div className="d-flex row g-0">
 				<div className="form_details col">
 					<button className="btn">
 						Sign in with
@@ -64,25 +88,15 @@ export default function Register() {
 							<label htmlFor="password" className="form__label">
 								Password
 							</label>
-							<input onChange={e => setPassword(e.target.value)} type="password" placeholder="Password"
-               className="form__input reg" id="password" required minLength="8" />
-						</div>
-						<div className="form__group form_item">
-							<label htmlFor="password2" className="form__label">
-								Confirm Password
-							</label>
-							<input onChange={e => setPassword2(e.target.value)} type="password" placeholder="Password"
-               className="form__input reg" id="password2" required minLength="8" />
+							<input onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" className="form__input reg" id="password" required minLength="8" />
 						</div>
 						<br />
-						<button className="btn register" onClick={handleSubmit}>
+						<button className="btn" onClick={handleSubmit}>
 							Register
 						</button>
-						<p className="register_info">
-							Already registered? <Link to="/login">Login here</Link>
-						</p>
 					</form>
 				</div>
 			</div>
 		</>
+	)
 }

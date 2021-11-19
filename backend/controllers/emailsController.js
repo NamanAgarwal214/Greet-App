@@ -26,27 +26,3 @@ exports.sendEmails = async (req, res, next) => {
 		console.log(error)
 	}
 }
-
-// exports.sendEmails = () => cron.schedule(
-//   `1 * * * *`,
-//   catchAsync(async (req, res, next) => {
-//     const users = await User.find();
-//     users.forEach((user) => {
-//       if (user.friends) {
-//         const friends = user.friends;
-//         friends.map(async (friend) => {
-//           // console.log(friend);
-//           const date = new Date(friend.dateOfEvent);
-//           const currDate = new Date().getDate();
-//           // console.log(date.getDate())
-//           // console.log(currDate)
-//           if (date.getDate() === currDate) {
-//             console.log(`Today is the day for the friend ${friend.name}.`);
-//             await email(`${friend.event}`, friend, 'abcdefgh');
-//           }
-//         });
-//         res.json(friends);
-//       }
-//     });
-//   })
-// );

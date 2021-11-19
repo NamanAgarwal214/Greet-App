@@ -34,7 +34,7 @@ exports.signup = async (req, res, next) => {
 		// console.log(user);
 		issueJWT(res, user)
 
-		await email('welcome', user, 'Welcome to the family!');
+		await email('welcome', user, {title: 'Welcome to the family!'});
 		return res.status(200).json({
 			status: 'success',
 			user
@@ -47,9 +47,6 @@ exports.signup = async (req, res, next) => {
 exports.login = async (req, res, next) => {
 	try {
 		const { email, password } = req.body
-		// if (!email || !password) {
-		// 	return next(new AppError('Please provide email and password!', 400))
-		// }
 
 		const user = await User.findOne({ email })
 
@@ -66,7 +63,6 @@ exports.login = async (req, res, next) => {
 			token
 		})
 	} catch (error) {
-		// console.log(error.message);
 		res.json(error.message)
 	}
 }
@@ -128,7 +124,7 @@ exports.forgotPassword = async (req, res, next) => {
 		await user.save({ validateBeforeSave: false })
 
 		try {
-			await email('resetPassword', user, resetToken)
+			await email('resetPassword', user, {title: 'Reset Password', resetToken})
 
 			res.status(200).json({
 				status: 'success',
