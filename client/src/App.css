@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=lato:wght@400;500;700;900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
 
 * {
   box-sizing: border-box;
@@ -7,14 +7,14 @@
   font-weight: 400;
 }
 
-body{
+body {
   background-image: url("./assets/landingBackdrop.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-size: cover;
   line-height: 1.6;
   font-weight: 300;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   color: #777;
   min-height: 100vh;
   display: -webkit-box;
@@ -76,7 +76,7 @@ body{
   .nav--tours {
     margin-bottom: 0;
   }
-  .header{
+  .header {
     padding: 2rem 2rem;
   }
 }
@@ -138,7 +138,6 @@ body{
     margin-bottom: 1.5rem;
   }
 }
-
 
 /* Alert message */
 .alert--success {
@@ -228,7 +227,6 @@ body{
   padding: 0.6rem 1.75rem !important;
 }
 
-
 .form_item {
   margin-bottom: 0.8rem !important;
 }
@@ -286,9 +284,8 @@ body{
   justify-content: center;
 }
 
-
 @media only screen and (max-width: 430px) {
-  .form_details{
+  .form_details {
     max-width: 320px;
   }
 
@@ -300,7 +297,6 @@ body{
     height: 3rem;
   }
 }
-
 
 h4 {
   margin-top: 15px;
@@ -317,7 +313,7 @@ h4 {
 
 .right_span span:hover {
   text-decoration: underline;
-} 
+}
 
 .separate {
   display: flex;
@@ -500,16 +496,16 @@ h4 {
 
 .inputField:focus {
   top: -2rem;
-  animation-name: example;
-  animation-duration: 3s;
+  /* animation-name: example; */
+  /* animation-duration: 3s; */
   /* animation-iteration-count: 2; */
   /* animation-direction: alternate; */
   outline-color: #9789ac;
-  animation-timing-function: ease-in-out;
+  /* animation-timing-function: ease-in-out; */
   box-shadow: 5px 5px #fb527a;
 }
 
-@keyframes example {
+/* @keyframes example {
   0% {
     border: 2px solid #fb527a;
   }
@@ -519,7 +515,7 @@ h4 {
   100% {
     border: 2px solid #fb527a;
   }
-}
+} */
 
 .btn-1 {
   width: 150px;
@@ -630,7 +626,7 @@ h4 {
 }
 
 @media (max-width: 852px) {
-  .main{
+  .main {
     padding: 3rem 1rem;
   }
 
@@ -641,11 +637,11 @@ h4 {
     padding: 4rem 0;
   }
 
-  .side-nav{
+  .side-nav {
     padding: 0 0.9rem;
   }
 
-  .side-nav li{
+  .side-nav li {
     font-size: 1rem;
     padding: 1rem 0.5rem;
   }
@@ -658,7 +654,7 @@ h4 {
 }
 
 @media (max-width: 652px) {
-  .main{
+  .main {
     padding: 3rem 0.5rem;
   }
 
@@ -669,11 +665,11 @@ h4 {
     padding: 3rem 0;
   }
 
-  .side-nav{
+  .side-nav {
     padding: 0 0.5rem;
   }
 
-  .side-nav li{
+  .side-nav li {
     font-size: 0.8rem;
     padding: 1rem 0.3rem;
   }
@@ -684,7 +680,7 @@ h4 {
     padding: 4rem 0;
   }
 
-  .heading-secondary{
+  .heading-secondary {
     font-size: 1.5rem;
   }
 }
