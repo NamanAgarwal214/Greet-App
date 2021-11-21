@@ -6,7 +6,7 @@ const friendSchema = new mongoose.Schema({
 		required: true
 	},
 	dateOfEvent: {
-		type: String,
+		type: Date,
 		required: true
 	},
 	event: {

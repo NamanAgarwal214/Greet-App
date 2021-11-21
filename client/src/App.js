@@ -19,9 +19,9 @@ const App = () => {
 			<Router>
 				<FlashMessage />
 				<Switch>
-					<Route exact path="/createEvent">
+					{/* <Route exact path="/createEvent">
 						<CreateEvent />
-					</Route>
+					</Route> */}
 					<IsUserRedirect exact loggedInPath={'/'} path={'/login'}>
 						<Login />
 					</IsUserRedirect>
