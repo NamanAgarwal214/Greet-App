@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import userImg from '../../assets/default.png'
+import CreateEvent from '../createEvent/CreateEvent'
 
 export default function Profile() {
 	const [profileView, setProfileView] = useState(true)
 	const [updateprofileView, setUpdateProfileView] = useState(false)
 	const [passwordView, setPasswordView] = useState(false)
 	const [photoView, setPhotoView] = useState(false)
+	const [createEventView, setCreateEventView] = useState(false)
 
 	return (
 		<>
@@ -18,6 +20,7 @@ export default function Profile() {
 									setPasswordView(false)
 									setPhotoView(false)
 									setUpdateProfileView(false)
+									setCreateEventView(false)
 									setProfileView(true)
 								}}>
 								Profile
@@ -28,6 +31,7 @@ export default function Profile() {
 									setPhotoView(false)
 									setUpdateProfileView(true)
 									setProfileView(false)
+									setCreateEventView(false)
 								}}>
 								Update Profile
 							</li>
@@ -37,6 +41,7 @@ export default function Profile() {
 									setPhotoView(false)
 									setUpdateProfileView(false)
 									setProfileView(false)
+									setCreateEventView(false)
 								}}>
 								Update Password
 							</li>
@@ -46,8 +51,19 @@ export default function Profile() {
 									setPhotoView(true)
 									setUpdateProfileView(false)
 									setProfileView(false)
+									setCreateEventView(false)
 								}}>
 								Upload Image
+							</li>
+							<li
+								onClick={() => {
+									setPasswordView(false)
+									setPhotoView(false)
+									setUpdateProfileView(false)
+									setProfileView(false)
+									setCreateEventView(true)
+								}}>
+								Create Event
 							</li>
 						</ul>
 					</nav>
@@ -115,6 +131,9 @@ export default function Profile() {
 										</div>
 									</form>
 								</>
+							)}
+							{createEventView && (
+								<CreateEvent />
 							)}
 						</div>
 					</div>

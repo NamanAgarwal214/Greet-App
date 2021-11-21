@@ -24,7 +24,7 @@ const CreateEvent = ({addEvent}) => {
 		addEvent({formData});
 		setFormData({
 			person: '',
-			date: '',
+			date: new Date(0),
 			eventName: ''
 		})
     }
