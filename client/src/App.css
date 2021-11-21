@@ -619,6 +619,7 @@ h4 {
 }
 .side-nav--active,
 .side-nav li:hover {
+  cursor: pointer;
   border-left: 4px solid #fb527a !important;
   color: #fb527a;
   -webkit-transform: translateX(3px);

@@ -22,7 +22,7 @@ export default function LoginForm({setForgotPassword}) {
 			else if(res.data && res.data.status === 'success') {
         dispatch(flashMessage({success: true, message: 'You logged in successfully!'}))
         dispatch(loginAction(res.data))
-        console.log(res.data)
+        // console.log(res.data)
 
         history.push('/')
         

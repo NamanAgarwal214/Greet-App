@@ -9,7 +9,7 @@ const router = express.Router()
 router.post('/register', authController.signup)
 router.post('/login', authController.login)
 router.get('/logout', authController.protect, authController.logout)
-router.post('/updateMe', authController.protect, userController.updateMe)
+router.post('/updateMe', userController.updateMe)
 router.post('/forgotPassword', authController.forgotPassword)
 router.post('/resetPassword', authController.resetPassword)
 

@@ -3,17 +3,18 @@ const User = require('./../models/userModel')
 //Update User
 exports.updateMe = async (req, res, next) => {
 	try {
+    const user = req.body.user
 		if (req.body && req.body.password) {
 			throw new Error('You cannot update password here.')
 		}
 		const newObj = {}
 		Object.keys(req.body).forEach(el => {
-			if (el != 'password') {
+			if (el != 'password' && el != 'user') {
 				newObj[el] = req.body[el]
 			}
 		})
 
-		const updatedUser = await User.findByIdAndUpdate(req.user.id, newObj, {
+		const updatedUser = await User.findByIdAndUpdate(user._id, newObj, {
 			new: true,
 			runValidators: true
 		})

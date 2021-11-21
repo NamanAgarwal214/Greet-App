@@ -18,11 +18,11 @@ const Navbar = ({logoutAction}) => {
 			</nav>
       <div className="nav--user">
 					<Link to="/me" className="nav__el">
-						<img src={userimg} alt="User" class="nav__user-img" />
+						<img src={userimg} alt="User" className="nav__user-img" />
 						<span>User</span>
 					</Link>
 					<Link to="/login" onClick = {logoutAction} className="nav__el">
-						<img src={userimg} alt="User" class="nav__user-img" />
+						<img src={userimg} alt="User" className="nav__user-img" />
 						<span>Logout</span>
 					</Link>
 				</div>

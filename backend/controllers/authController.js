@@ -69,32 +69,36 @@ exports.login = async (req, res, next) => {
 
 exports.protect = async (req, res, next) => {
 	try {
-		let token
-		// Extract token from the cookies
-		if (req.cookies && req.cookies.jwt) {
-			token = req.cookies.jwt
-		}
-
-		if (!token) {
-			throw new Error('You are not logged in! Please Log in again!')
-		}
-
-		// Verifying the token and decrypting it with the public key
-		//will return the payload associated with the JWT
-		const decodedUser = await promisify(jsonwebtoken.verify)(token, process.env.JWT_SECRET)
-
-		// finding user from the database with the decoded id
-		const user = await User.findOne({ _id: decodedUser.sub })
-		if (!user) {
-			throw new Error('The user belonging to this token does no longer exist.')
-		}
-
-		// Checking if the user changed password after jwt was issued
-		// if(user.passwordChangedAfter(decodedUser.iat)){
-		//   return next(new AppError('The user recently changed their password! Please login again.', 401));
+		// let token
+		// // Extract token from the cookies
+		// if (req.cookies && req.cookies.jwt) {
+		// 	token = req.cookies.jwt
 		// }
 
-		//adding the user to the request
+    // console.log(token);
+
+		// if (!token) {
+		// 	throw new Error('You are not logged in! Please Log in again!')
+		// }
+
+		// // Verifying the token and decrypting it with the public key
+		// //will return the payload associated with the JWT
+		// const decodedUser = await promisify(jsonwebtoken.verify)(token, process.env.JWT_SECRET)
+    // console.log(decodedUser);
+
+		// // finding user from the database with the decoded id
+		// const user = await User.findOne({ _id: decodedUser.sub })
+		// if (!user) {
+		// 	throw new Error('The user belonging to this token does no longer exist.')
+		// }
+    // console.log(user);
+
+		// // Checking if the user changed password after jwt was issued
+		// // if(user.passwordChangedAfter(decodedUser.iat)){
+		// //   return next(new AppError('The user recently changed their password! Please login again.', 401));
+		// // }
+
+		// //adding the user to the request
 		req.user = user
 		next()
 	} catch (error) {
