@@ -16,7 +16,7 @@ export default function ResetFrom() {
 		e.preventDefault()
 
 		try {
-			const res = await axios.post('/api/user/resetPassword', { token, password: newPassword })
+			const res = await axios.patch('/api/user/resetPassword', { token, password: newPassword })
 			if(res.data && res.data.status === 'success') {
         dispatch(loginAction(res.data))
         dispatch(flashMessage({success: true, message: 'Your password was reseted!'}))

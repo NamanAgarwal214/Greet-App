@@ -9,9 +9,10 @@ const router = express.Router()
 router.post('/register', authController.signup)
 router.post('/login', authController.login)
 router.get('/logout', authController.protect, authController.logout)
-router.post('/updateMe', userController.updateMe)
+router.patch('/updateMe', userController.updateMe)
+router.patch('/uploadPhoto', userController.upload.single('photo'), userController.uploadPhoto)
 router.post('/forgotPassword', authController.forgotPassword)
-router.post('/resetPassword', authController.resetPassword)
+router.patch('/resetPassword', authController.resetPassword)
 
 // User Routes
 // Only accessed by admin

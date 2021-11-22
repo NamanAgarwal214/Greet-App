@@ -23,7 +23,7 @@ export default function Profile() {
 		e.preventDefault()
 		try {
       console.log(user);
-			const res = await axios.post('/api/user/updateMe', { user: user, name: newName, email: newEmail })
+			const res = await axios.patch('/api/user/updateMe', { user: user, name: newName, email: newEmail })
 			if(res.data.status === 'success'){
         dispatch(flashMessage({ success: true, message: 'You profile was updated successfully!' }))
         dispatch(loginAction(res.data))
@@ -35,7 +35,22 @@ export default function Profile() {
 			console.log(err.message)
 		}
 	}
-	const handlePhotoSubmit = () => {}
+	const handlePhotoSubmit = async(e) => {
+    e.preventDefault()
+		try {
+      console.log(user);
+			const res = await axios.patch('/api/user/updateMe', { user: user, name: newName, email: newEmail })
+			if(res.data.status === 'success'){
+        dispatch(flashMessage({ success: true, message: 'You profile was updated successfully!' }))
+        dispatch(loginAction(res.data))
+      } else{
+        dispatch(flashMessage({ success: false, message: 'There was an error!' }))
+      }
+		} catch (err) {
+			dispatch(flashMessage({ success: false, message: 'There was an error!' }))
+			console.log(err.message)
+		}
+  }
 
 	return (
 		<>
@@ -102,9 +117,8 @@ export default function Profile() {
 									<form onSubmit={handlePhotoSubmit}>
 										<div className="form__group form__photo-upload">
 											<img className="form__user-photo" src={userImg} alt="User" />
-											<a className="btn-text" href="/">
-												Choose new photo
-											</a>
+											<input class="form__upload" type="file" accept="image/*" id="photo" name="photo" />
+                      <label className="form__label" htmlFor="photo">Choose new photo</label>
 										</div>
 										<div className="form__group right">
 											<button className="btn btn--small btn--green">Update Photo</button>

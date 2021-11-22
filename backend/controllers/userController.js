@@ -1,4 +1,42 @@
+const multer = require('multer')
 const User = require('./../models/userModel')
+
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/img/users');
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split('/')[1];
+    cb(null, `user-${req.body.user.id}-${Date.now()}.${ext}`);
+  },
+});
+
+exports.upload = multer({
+  storage: multerStorage
+});
+
+exports.uploadPhoto = async (req, res, next) => {
+	try {
+    const user = req.body.user
+
+    if(req.file) newObj.photo = req.file.filename;
+
+		const updatedUser = await User.findByIdAndUpdate(user._id, newObj, {
+			new: true,
+			runValidators: true
+		})
+
+		res.status(200).json({
+			status: 'success',
+			data: {
+				user: updatedUser
+			}
+		})
+	} catch (error) {
+		res.json(error.message)
+	}
+}
 
 //Update User
 exports.updateMe = async (req, res, next) => {
@@ -13,6 +51,8 @@ exports.updateMe = async (req, res, next) => {
 				newObj[el] = req.body[el]
 			}
 		})
+
+    if(req.body.file) newObj.photo = req.body.file.filename;
 
 		const updatedUser = await User.findByIdAndUpdate(user._id, newObj, {
 			new: true,
