@@ -556,7 +556,7 @@ h4 {
 }
 
 .user-view {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.9);
   max-width: 80rem;
   margin: 0 auto;
   min-height: 100vh;
@@ -586,20 +586,24 @@ h4 {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  padding: 7rem 0;
+  padding: 5rem 0;
 }
 .user-view__form-container {
-  max-width: 78rem;
+  max-width: 48rem;
   margin: 0 auto;
   padding: 0 5rem;
 }
 
-.side-nav {
+.updateProfile{
+  cursor: pointer;
+}
+
+/* .side-nav {
   list-style: none;
 }
 .side-nav li {
   margin: 1rem 0;
-  border-left: 0 solid #fff;
+  border-left: 0 solid #fb527a;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
   padding: 1rem 1rem;
@@ -624,7 +628,7 @@ h4 {
   color: #fb527a;
   -webkit-transform: translateX(3px);
   transform: translateX(3px);
-}
+} */
 
 @media (max-width: 852px) {
   .main {
@@ -638,14 +642,14 @@ h4 {
     padding: 4rem 0;
   }
 
-  .side-nav {
+  /* .side-nav {
     padding: 0 0.9rem;
   }
 
   .side-nav li {
     font-size: 1rem;
     padding: 1rem 0.5rem;
-  }
+  } */
   .user-view__form-container {
     padding: 0 3rem;
   }
@@ -666,14 +670,14 @@ h4 {
     padding: 3rem 0;
   }
 
-  .side-nav {
+  /* .side-nav {
     padding: 0 0.5rem;
   }
 
   .side-nav li {
     font-size: 0.8rem;
     padding: 1rem 0.3rem;
-  }
+  } */
   .user-view__form-container {
     padding: 0 1rem;
   }
@@ -700,7 +704,7 @@ h4 {
   height: 7.5rem;
   width: 7.5rem;
   border-radius: 50%;
-  margin-right: 2rem;
+  /* margin-right: 2rem; */
 }
 
 .form__upload {
@@ -713,22 +717,22 @@ h4 {
 }
 
 .form__upload:focus + label {
-  outline: 3px solid #55c57a;
+  outline: 3px solid #3a3161;
   outline-offset: 3px;
 }
 
 .form__upload + label {
-  color: #55c57a;
+  color: #3a3161;
   display: inline-block;
   text-decoration: none;
-  border-bottom: 1px solid #55c57a;
+  border-bottom: 1px solid #3a3161;
   padding: 3px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
   cursor: pointer;
 }
 .form__upload + label:hover {
-  background-color: #55c57a;
+  background-color: #3a3161;
   color: #fff;
   -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);

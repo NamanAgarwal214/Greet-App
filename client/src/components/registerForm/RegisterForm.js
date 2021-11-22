@@ -1,34 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { registerAction, authFail } from '../../redux/actions/authActions'
-import {flashMessage} from '../../redux/actions/flashMessage'
+import DispatchContext from '../../context/DispatchContext'
 
 export default function RegisterForm() {
 	const history = useHistory()
-	const dispatch = useDispatch()
+  const appDispatch = useContext(DispatchContext)
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
 	const handleSubmit = async e => {
 		e.preventDefault()
+    if(!email || !name || !password){
+      appDispatch({type: 'flashMessage', value: 'Please fill the form completely!', status: false})
+    }
 			try {
 				const res = await axios.post('/api/user/register', { name, email, password })
-        dispatch(flashMessage({success: true, message: 'You signed in successfully!'}))
-        if(!email || !name || !password){
-          dispatch(flashMessage({success: false, message: 'Please fill the form completely!'}))
-        }
-				else{
-          dispatch(registerAction(res.data))
-				  history.push('/')
-        }
-
-				// console.log(res.data)
+        appDispatch({type: 'flashMessage', value: 'You signed in successfully!', status: true})
+        appDispatch({type: 'login', data: res.data})
+				history.push('/')
 			} catch (err) {
-        dispatch(flashMessage({success: false, message: 'There was an error!'}))
-				dispatch(authFail())
+        appDispatch({type: 'flashMessage', value: 'There was an error!', status: false})
         console.log(err.message)
 			}
 	}

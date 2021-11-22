@@ -16,9 +16,9 @@ function issueJWT(res, user) {
 		expiresIn: expiresIn
 	})
 
-	res.cookie('jwt', signedToken, {
-		expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000)
-	})
+	// res.cookie('jwt', signedToken, {
+	// 	expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000)
+	// })
 	// console.log(signedToken);
 	return signedToken
 }
@@ -32,12 +32,13 @@ exports.signup = async (req, res, next) => {
 		})
 		await user.save()
 		// console.log(user);
-		issueJWT(res, user)
-
+		const token = issueJWT(res, user)
+    
 		await email('welcome', user, {title: 'Welcome to the family!'});
 		return res.status(200).json({
-			status: 'success',
-			user
+			username: user.name,
+      token,
+      email: user.email
 		})
 	} catch (error) {
 		res.json(error.message)
@@ -58,9 +59,9 @@ exports.login = async (req, res, next) => {
 
 		const token = issueJWT(res, user)
 		return res.status(200).json({
-			status: 'success',
-			user,
-			token
+			username: user.name,
+      token,
+      email: user.email
 		})
 	} catch (error) {
 		res.json(error.message)
@@ -69,36 +70,36 @@ exports.login = async (req, res, next) => {
 
 exports.protect = async (req, res, next) => {
 	try {
-		// let token
-		// // Extract token from the cookies
-		// if (req.cookies && req.cookies.jwt) {
-		// 	token = req.cookies.jwt
-		// }
+		let token
+		// Extract token from the cookies
+		if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith('Bearer')
+    ) {
+      token = req.headers.authorization.split(' ')[1];
+    }
 
-    // console.log(token);
+		if (!token) {
+			throw new Error('You are not logged in! Please Log in again!')
+		}
 
-		// if (!token) {
-		// 	throw new Error('You are not logged in! Please Log in again!')
-		// }
-
-		// // Verifying the token and decrypting it with the public key
-		// //will return the payload associated with the JWT
-		// const decodedUser = await promisify(jsonwebtoken.verify)(token, process.env.JWT_SECRET)
+		// Verifying the token and decrypting it with the public key
+		//will return the payload associated with the JWT
+		const decodedUser = await promisify(jsonwebtoken.verify)(token, process.env.JWT_SECRET)
     // console.log(decodedUser);
 
-		// // finding user from the database with the decoded id
-		// const user = await User.findOne({ _id: decodedUser.sub })
-		// if (!user) {
-		// 	throw new Error('The user belonging to this token does no longer exist.')
+		// finding user from the database with the decoded id
+		const user = await User.findOne({ _id: decodedUser.sub })
+		if (!user) {
+			throw new Error('The user belonging to this token does no longer exist.')
+		}
+
+		// Checking if the user changed password after jwt was issued
+		// if(user.passwordChangedAfter(decodedUser.iat)){
+		//   return next(new AppError('The user recently changed their password! Please login again.', 401));
 		// }
-    // console.log(user);
 
-		// // Checking if the user changed password after jwt was issued
-		// // if(user.passwordChangedAfter(decodedUser.iat)){
-		// //   return next(new AppError('The user recently changed their password! Please login again.', 401));
-		// // }
-
-		// //adding the user to the request
+		//adding the user to the request
 		req.user = user
 		next()
 	} catch (error) {
@@ -132,7 +133,6 @@ exports.forgotPassword = async (req, res, next) => {
 
 			res.status(200).json({
 				status: 'success',
-				message: 'Token sent to email!',
 				user
 			})
 		} catch (err) {
@@ -160,9 +160,9 @@ exports.resetPassword = async (req, res, next) => {
 
     const token = issueJWT(res, user)
 		return res.status(200).json({
-			status: 'success',
-			user,
-			token
+			username: user.name,
+			token,
+      email: user.email
 		})
 
 	} catch (error) {

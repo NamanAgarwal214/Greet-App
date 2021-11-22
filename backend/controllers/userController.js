@@ -1,7 +1,6 @@
 const multer = require('multer')
 const User = require('./../models/userModel')
 
-
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'public/img/users');
@@ -16,32 +15,10 @@ exports.upload = multer({
   storage: multerStorage
 });
 
-exports.uploadPhoto = async (req, res, next) => {
-	try {
-    const user = req.body.user
-
-    if(req.file) newObj.photo = req.file.filename;
-
-		const updatedUser = await User.findByIdAndUpdate(user._id, newObj, {
-			new: true,
-			runValidators: true
-		})
-
-		res.status(200).json({
-			status: 'success',
-			data: {
-				user: updatedUser
-			}
-		})
-	} catch (error) {
-		res.json(error.message)
-	}
-}
-
 //Update User
 exports.updateMe = async (req, res, next) => {
 	try {
-    const user = req.body.user
+    console.log(req.file);
 		if (req.body && req.body.password) {
 			throw new Error('You cannot update password here.')
 		}
@@ -52,18 +29,15 @@ exports.updateMe = async (req, res, next) => {
 			}
 		})
 
-    if(req.body.file) newObj.photo = req.body.file.filename;
+    if(req.file) newObj.photo = req.file.filename;
 
-		const updatedUser = await User.findByIdAndUpdate(user._id, newObj, {
+		const updatedUser = await User.findByIdAndUpdate(req.user._id, newObj, {
 			new: true,
 			runValidators: true
 		})
 
 		res.status(200).json({
-			status: 'success',
-			data: {
-				user: updatedUser
-			}
+			photo: updatedUser.photo
 		})
 	} catch (error) {
 		res.json(error.message)

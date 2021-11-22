@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import axios from 'axios'
+import {useImmerReducer} from 'use-immer'
 import { Provider} from 'react-redux'
 import store from './redux/store'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css'
+import StateContext from './context/StateContext'
+import DispatchContext from './context/DispatchContext'
 
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -13,19 +16,64 @@ import CreateEvent from './components/createEvent/CreateEvent'
 import { IsUserRedirect } from './helpers/routes'
 axios.defaults.baseURL = 'http://localhost:8000';
 
-const App = () => {
+function App() {
+
+  const initialState = {
+    loggedIn: Boolean(localStorage.getItem('greetToken')),
+    flashMessages: [],
+    user: {
+      token: localStorage.getItem('greetToken'),
+      username: localStorage.getItem('greetUserName'),
+      email: localStorage.getItem('greetEmail')
+    },
+  }
+
+  function ourReducer(draft, action) {
+		switch (action.type) {
+			case 'login':
+				draft.loggedIn = true
+				draft.user = action.data
+				return
+			case 'logout':
+				draft.loggedIn = false
+				return
+			case 'flashMessage':
+				draft.flashMessages.push({message: action.value, status: action.status})
+				return
+      default:
+        return
+		}
+	}
+
+	const [state, dispatch] = useImmerReducer(ourReducer, initialState)
+
+	useEffect(() => {
+		if (state.loggedIn) {
+			localStorage.setItem('greetToken', state.user.token)
+			localStorage.setItem('greetUsername', state.user.username)
+			localStorage.setItem('greetEmail', state.user.email)
+		} else {
+			localStorage.removeItem('greetToken')
+			localStorage.removeItem('greetUsername')
+			localStorage.removeItem('greetEmail')
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [state.loggedIn])
+
 	return (
     <Provider store={store}>
+    <StateContext.Provider value={state}>
+    <DispatchContext.Provider value={dispatch}>
 			<Router>
-				<FlashMessage />
+				<FlashMessage flashMessages={state.flashMessages} />
 				<Switch>
-					{/* <Route exact path="/createEvent">
+					<Route exact path="/createEvent">
 						<CreateEvent />
-					</Route> */}
-					<IsUserRedirect exact loggedInPath={'/'} path={'/login'}>
+					</Route>
+					<IsUserRedirect exact loggedIn={state.loggedIn} loggedInPath={'/'} path={'/login'}>
 						<Login />
 					</IsUserRedirect>
-					<IsUserRedirect exact loggedInPath={'/'} path={'/signup'}>
+					<IsUserRedirect exact loggedIn={state.loggedIn} loggedInPath={'/'} path={'/signup'}>
 						<Register />
 					</IsUserRedirect>
 					<Route path="/">
@@ -33,7 +81,9 @@ const App = () => {
 					</Route>
 				</Switch>
 			</Router>
-		</Provider>
+      </DispatchContext.Provider>
+		</StateContext.Provider>
+    </Provider>
 	)
 }
 

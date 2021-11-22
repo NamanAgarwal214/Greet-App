@@ -1,37 +1,31 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import {loginAction, authFail} from '../../redux/actions/authActions'
-import {flashMessage} from '../../redux/actions/flashMessage'
+import DispatchContext from '../../context/DispatchContext'
 
 export default function LoginForm({setForgotPassword}) {
+  const appDispatch = useContext(DispatchContext)
   const history = useHistory()
-	const dispatch = useDispatch()
+	// const dispatch = useDispatch()
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
   const handleSubmit = async e => {
 		e.preventDefault()
-
+    if(!email || !password) {
+      appDispatch({type: 'flashMessage', value: 'Please fill the form completely!', status: false})
+    }
 		try {
 			const res = await axios.post('/api/user/login', { email, password })
-      if(!email || !password) {
-        dispatch(flashMessage({success: false, message: 'Please fill the form completely!'}))
-      }
-			else if(res.data && res.data.status === 'success') {
-        dispatch(flashMessage({success: true, message: 'You logged in successfully!'}))
-        dispatch(loginAction(res.data))
-        // console.log(res.data)
-
+			if(res.data && res.data.token) {
+        appDispatch({type: 'flashMessage', value: 'You logged in successfully!', status: true})
+        appDispatch({type: 'login', data: res.data})
         history.push('/')
-        
       } else{
-        dispatch(flashMessage({success: false, message: 'Incorrect Email or Password!'}))
-        console.log('Incorrect Email or Password!');
+        appDispatch({type: 'flashMessage', value: 'Incorrect Email or Password!', status: false})
+        console.log(res.data);
       }
 		} catch (e) {
-      dispatch(authFail())
       console.log('There was an error')
 		}
 	}
@@ -42,14 +36,14 @@ export default function LoginForm({setForgotPassword}) {
 		try {
 			const res = await axios.post('/api/user/forgotpassword', { email })
       if(!email){
-        dispatch(flashMessage({success: false, message: 'Please enter your !'}))
+        appDispatch({type: 'flashMessage', value: 'Please enter your email!', status: false})
       }
 			else if(res.data && res.data.status === 'success') {
         setForgotPassword(true)
-        dispatch(flashMessage({success: true, message: 'A mail has been sent to you with a token!'}))
+        appDispatch({type: 'flashMessage', value: 'A mail has been sent to you with a token!', status: true})
         console.log(res.data);
       } else{
-        dispatch(flashMessage({success: false, message: 'This email is not registered with us!'}))
+        appDispatch({type: 'flashMessage', value: 'This email is not registered with us!', status: false})
       }
 		} catch (e) {
       console.log('There was an error')

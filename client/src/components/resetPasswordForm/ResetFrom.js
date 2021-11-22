@@ -1,14 +1,11 @@
-import React, {useState} from 'react'
-import { useDispatch } from 'react-redux'
+import React, {useState, useContext} from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
-
-import {loginAction} from '../../redux/actions/authActions'
-import {flashMessage} from '../../redux/actions/flashMessage'
+import DispatchContext from '../../context/DispatchContext'
 
 export default function ResetFrom() {
+  const appDispatch = useContext(DispatchContext)
   const history = useHistory()
-  const dispatch = useDispatch()
   const [token, setToken] = useState('')
   const [newPassword, setNewpassword] = useState('')
 
@@ -17,16 +14,13 @@ export default function ResetFrom() {
 
 		try {
 			const res = await axios.patch('/api/user/resetPassword', { token, password: newPassword })
-			if(res.data && res.data.status === 'success') {
-        dispatch(loginAction(res.data))
-        dispatch(flashMessage({success: true, message: 'Your password was reseted!'}))
-        console.log(res.data);
+			if(res.data && res.data.token) {
+        appDispatch({type: 'flashMessage', value: 'Your password was reseted!', status: true})
+        appDispatch({type: 'login', data: res.data})
 
         history.push('/')        
-        // setForgotPassword(false)
       } else{
-        // console.log(res);
-        dispatch(flashMessage({success: false, message: 'There was an error!'}))
+        appDispatch({type: 'flashMessage', value: 'There was an error!', status: false})
       }
 		} catch (e) {
       console.log('There was an error')
