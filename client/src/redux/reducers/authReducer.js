@@ -24,10 +24,10 @@ export default function AuthReducer(state = initialState, action) {
     case AUTH_FAIL: 
       return {}
     case LOGOUT:
-		localStorage.removeItem('user')
+		// localStorage.removeItem('user')
       return {
-		  ...state,
-		  loggedIn: false
+		//   ...state,
+		//   loggedIn: false
 	  }
 	default:
 		return state
