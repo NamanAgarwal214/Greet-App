@@ -20,13 +20,10 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-app.set("view engine", "pug");
-app.set("views", path.join(__dirname, "views"));
-
 app.use(passport.initialize());
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use('/public' ,express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

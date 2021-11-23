@@ -12,10 +12,11 @@ export default function Profile() {
 
   const [newName, setNewName] = useState(appState.user.username);
   const [newEmail, setNewEmail] = useState(appState.user.email);
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState({photo: ''});
 
   const handleInputFile = (e) => {
-    setImage({ file: e.target.files[0] });
+    console.log(e.target.files[0])
+    setImage({photo: e.target.files[0]});
   };
 
   const handleProfileSubmit = async (e) => {
@@ -23,7 +24,7 @@ export default function Profile() {
     const data = new FormData();
     data.append("email", newEmail);
     data.append("name", newName);
-    data.append("photo", image);
+    data.append("photo", image.photo);
     console.log(data);
     try {
       const res = await axios.patch("/api/user/updateMe", data, {

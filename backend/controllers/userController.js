@@ -7,7 +7,7 @@ const multerStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split('/')[1];
-    cb(null, `user-${req.body.user.id}-${Date.now()}.${ext}`);
+    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
   },
 });
 
@@ -18,7 +18,6 @@ exports.upload = multer({
 //Update User
 exports.updateMe = async (req, res, next) => {
 	try {
-    console.log(req.file);
 		if (req.body && req.body.password) {
 			throw new Error('You cannot update password here.')
 		}
@@ -29,7 +28,8 @@ exports.updateMe = async (req, res, next) => {
 			}
 		})
 
-    if(req.file) newObj.photo = req.file.filename;
+    const url =`${req.protocol}://${req.get('host')}/public/img/users/${req.file.filename}`
+    if(req.file) newObj.photo = url;
 
 		const updatedUser = await User.findByIdAndUpdate(req.user._id, newObj, {
 			new: true,
@@ -38,6 +38,7 @@ exports.updateMe = async (req, res, next) => {
 
 		res.status(200).json({
 			photo: updatedUser.photo
+      // hello: 'hello'
 		})
 	} catch (error) {
 		res.json(error.message)
