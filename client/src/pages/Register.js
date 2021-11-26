@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../components/navbarLoggedout/Navbar' 
-import RegisterForm from '../components/registerForm/RegisterForm'
+import Navbar from '../components/navbar/Navbar' 
+import RegisterForm from '../components/register/RegisterForm'
 
 export default function Register() {
   return (

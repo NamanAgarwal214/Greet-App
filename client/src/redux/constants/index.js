@@ -1,8 +1,0 @@
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
-export const AUTH_FAIL = 'AUTH_FAIL'
-export const LOGOUT = 'LOGOUT'
-export const FLASHMESSAGE = 'FLASHMESSAGE'
-export const REMOVEFLASHMESSAGE = 'REMOVEFLASHMESSAGE'
-export const GET_EVENT = 'GET_EVENT'
-export const EVENT_ERROR = 'EVENT_ERROR'

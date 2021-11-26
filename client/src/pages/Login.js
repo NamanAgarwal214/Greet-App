@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import LoginForm from '../components/loginForm/LoginForm'
-import Navbar from '../components/navbarLoggedout/Navbar'
+import LoginForm from '../components/login/LoginForm'
+import Navbar from '../components/navbar/Navbar'
 import ResetFrom from '../components/resetPasswordForm/ResetFrom'
 
 export default function Login() {

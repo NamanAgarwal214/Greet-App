@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../navbarLoggedin/Navbar'
+import Navbar from '../navbar/Navbar'
 import Profile from '../profile/Profile'
 
 export default function HomeLoggedIn() {

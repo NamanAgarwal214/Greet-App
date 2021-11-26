@@ -37,7 +37,9 @@ exports.updateMe = async (req, res, next) => {
 		})
 
 		res.status(200).json({
-			photo: updatedUser.photo
+			photo: updatedUser.photo,
+      username: updatedUser.name,
+      email: updatedUser.email
       // hello: 'hello'
 		})
 	} catch (error) {

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import userImg from "../../assets/default.png";
-import { useHistory } from "react-router-dom";
 import StateContext from "../../context/StateContext";
 import DispatchContext from "../../context/DispatchContext";
 
@@ -33,14 +32,14 @@ export default function Profile() {
         },
       });
       if (res.data && res.data.photo !== "") {
-        // dispatch(flashMessage({ success: true, message: 'You profile was updated successfully!' }))
-        // dispatch(loginAction(res.data))
-        console.log(res.data);
+        appDispatch({type: 'flashMessage', value: 'You profile was updated successfully!', status: true})
+        appDispatch({type: 'login', data: res.data})
+        appDispatch({type: 'photoChange', value: res.data.photo})
+
       } else {
-        // dispatch(flashMessage({ success: false, message: 'There was an error!' }))
+        appDispatch({type: 'flashMessage', value: 'There was an error!', status: false})
       }
     } catch (err) {
-      // dispatch(flashMessage({ success: false, message: 'There was an error!' }))
       console.log(err.message);
     }
   };
@@ -118,7 +117,7 @@ export default function Profile() {
                   <div className="form__group form__photo-upload">
                     <img
                       className="form__user-photo"
-                      src={userImg}
+                      src={appState.photoUrl}
                       alt="User"
                     />
                     <input
