@@ -12,6 +12,7 @@ import Register from './pages/Register';
 import FlashMessage from './components/flashMessage/FlashMessage';
 import CreateEvent from './components/createEvent/CreateEvent';
 import { IsUserRedirect } from './helpers/routes';
+import ProfilePage from './pages/Profile';
 axios.defaults.baseURL = 'http://localhost:8000';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
 				return;
 			case 'photoChange':
 				draft.hasphotoUrl = true;
+        draft.photoUrl = action.value
 				return;
 			case 'flashMessage':
 				draft.flashMessages.push({
@@ -69,7 +71,7 @@ function App() {
 		if (state.hasphotoUrl) {
 			localStorage.setItem('greetUserPhoto', state.photoUrl);
 		} else {
-			localStorage.removeItem('greetToken');
+			localStorage.removeItem('greetUserPhoto');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state.hasphotoUrl]);
@@ -88,6 +90,9 @@ function App() {
 						</IsUserRedirect>
 						<IsUserRedirect exact loggedIn={state.loggedIn} loggedInPath={'/'} path={'/signup'}>
 							<Register />
+						</IsUserRedirect>
+						<IsUserRedirect exact loggedIn={state.loggedIn} loggedInPath={'/'} path={'/profile'}>
+							<ProfilePage />
 						</IsUserRedirect>
 						<Route path="/">
 							<Home />

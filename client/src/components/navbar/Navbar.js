@@ -28,12 +28,12 @@ export default function Navbar() {
 			{appState.loggedIn && (
 				<div className="nav--user">
 					<Link to="/me" className="nav__el">
-						<img src={userimg} alt="User" className="nav__user-img" />
+						<img src={appState.photoUrl} alt="User" className="nav__user-img" />
 						<span>User</span>
 					</Link>
 					<Link to="/login" onClick={logout} className="nav__el">
-						<img src={userimg} alt="User" className="nav__user-img" />
-						<span>Logout</span>
+						{/* <img src={userimg} alt="User" className="nav__user-img" /> */}
+						<span className="mb-2">Logout</span>
 					</Link>
 				</div>
 			)}

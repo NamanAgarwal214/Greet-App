@@ -32,6 +32,7 @@ export default function Profile() {
         },
       });
       if (res.data && res.data.photo !== "") {
+        console.log(res.data);
         appDispatch({type: 'flashMessage', value: 'You profile was updated successfully!', status: true})
         appDispatch({type: 'login', data: res.data})
         appDispatch({type: 'photoChange', value: res.data.photo})
