@@ -3,7 +3,8 @@ import axios from "axios";
 import StateContext from "../../context/StateContext";
 import DispatchContext from "../../context/DispatchContext";
 
-const CreateEvent = () => {
+
+export default function CreateEvent() {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const [display, setDisplay] = useState(false);
@@ -121,5 +122,3 @@ const CreateEvent = () => {
 // CreateEvent.propTypes = {
 //   addEvent: PropTypes.func.isRequired,
 // };
-
-export default CreateEvent;

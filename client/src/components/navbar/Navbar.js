@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import logo from '../../assets/logo1.png';
 import { Link } from 'react-router-dom';
-import userimg from '../../assets/default.png';
 import DispatchContext from '../../context/DispatchContext';
 import StateContext from '../../context/StateContext';
 
