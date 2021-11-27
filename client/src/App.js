@@ -17,35 +17,33 @@ axios.defaults.baseURL = 'http://localhost:8000';
 
 function App() {
 	const initialState = {
-		loggedIn: Boolean(localStorage.getItem('greetToken')),
+		loggedIn: Boolean(localStorage.getItem('GreetToken')),
 		flashMessages: [],
-    hasphotoUrl: Boolean(localStorage.getItem('greetUserPhoto')),
+		token: localStorage.getItem('GreetToken'),
 		user: {
-			token: localStorage.getItem('greetToken'),
-			username: localStorage.getItem('greetUserName'),
-			email: localStorage.getItem('greetEmail')
-		},
-    photoUrl: localStorage.getItem('greetUserPhoto')
+			username: localStorage.getItem('GreetAppUsername'),
+			email: localStorage.getItem('GreetAppEmail'),
+			photo: localStorage.getItem('GreetAppPhoto')
+		}
 	};
 
 	function ourReducer(draft, action) {
 		switch (action.type) {
 			case 'login':
 				draft.loggedIn = true;
-				draft.user = action.data;
+				draft.token = action.data;
 				return;
 			case 'logout':
 				draft.loggedIn = false;
-				return;
-			case 'photoChange':
-				draft.hasphotoUrl = true;
-        draft.photoUrl = action.value
 				return;
 			case 'flashMessage':
 				draft.flashMessages.push({
 					message: action.value,
 					status: action.status
 				});
+				return;
+			case 'updateProfile':
+				draft.user = action.value;
 				return;
 			default:
 				return;
@@ -56,25 +54,40 @@ function App() {
 
 	useEffect(() => {
 		if (state.loggedIn) {
-			localStorage.setItem('greetToken', state.user.token);
-			localStorage.setItem('greetUsername', state.user.username);
-			localStorage.setItem('greetEmail', state.user.email);
+			localStorage.setItem('GreetToken', state.token);
 		} else {
-			localStorage.removeItem('greetToken');
-			localStorage.removeItem('greetUsername');
-			localStorage.removeItem('greetEmail');
+			localStorage.removeItem('GreetToken');
+			localStorage.removeItem('GreetAppUsername');
+			localStorage.removeItem('GreetAppEmail');
+			localStorage.removeItem('GreetAppPhoto');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [state.loggedIn]);
 
-  useEffect(() => {
-		if (state.hasphotoUrl) {
-			localStorage.setItem('greetUserPhoto', state.photoUrl);
+	useEffect(() => {
+		if (state.token) {
+			axios
+				.get('/api/user/getUser', {
+					headers: {
+						Authorization: `Bearer ${state.token}`
+					}
+				})
+				.then(res => {
+					state.user = res.data;
+				})
+				.catch(e => {
+					console.log('There was an error');
+				});
+			localStorage.setItem('GreetAppUsername', state.user.username);
+			localStorage.setItem('GreetAppEmail', state.user.email);
+			localStorage.setItem('GreetAppPhoto', state.user.photo);
 		} else {
-			localStorage.removeItem('greetUserPhoto');
+			localStorage.removeItem('GreetAppUsername');
+			localStorage.removeItem('GreetAppEmail');
+			localStorage.removeItem('GreetAppPhoto');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [state.hasphotoUrl]);
+	}, [state.token, state.user]);
 
 	return (
 		<StateContext.Provider value={state}>
@@ -85,15 +98,23 @@ function App() {
 						<Route exact path="/create-event">
 							<CreateEvent />
 						</Route>
-						<IsUserRedirect exact loggedIn={state.loggedIn} loggedInPath={'/'} path={'/login'}>
+						<IsUserRedirect
+							exact
+							loggedIn={state.loggedIn}
+							loggedInPath={'/'}
+							path={'/login'}>
 							<Login />
 						</IsUserRedirect>
-						<IsUserRedirect exact loggedIn={state.loggedIn} loggedInPath={'/'} path={'/signup'}>
+						<IsUserRedirect
+							exact
+							loggedIn={state.loggedIn}
+							loggedInPath={'/'}
+							path={'/signup'}>
 							<Register />
 						</IsUserRedirect>
-						<IsUserRedirect exact loggedIn={state.loggedIn} loggedInPath={'/'} path={'/profile'}>
+						<Route path="/me" exact>
 							<ProfilePage />
-						</IsUserRedirect>
+						</Route>
 						<Route path="/">
 							<Home />
 						</Route>

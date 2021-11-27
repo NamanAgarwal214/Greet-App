@@ -16,7 +16,7 @@ export default function ResetFrom() {
 			const res = await axios.patch('/api/user/resetPassword', { token, password: newPassword })
 			if(res.data && res.data.token) {
         appDispatch({type: 'flashMessage', value: 'Your password was reseted!', status: true})
-        appDispatch({type: 'login', data: res.data})
+        appDispatch({type: 'login', data: res.data.token})
 
         history.push('/')        
       } else{

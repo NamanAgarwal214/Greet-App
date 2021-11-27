@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import StateContext from "../../context/StateContext";
+// import StateContext from "../../context/StateContext";
 import DispatchContext from "../../context/DispatchContext";
 
 
 export default function CreateEvent() {
-  const appState = useContext(StateContext);
+  // const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const [display, setDisplay] = useState(false);
   const [formData, setFormData] = useState({
@@ -44,6 +44,7 @@ export default function CreateEvent() {
         { name, dateOfEvent, event },
         config
       );
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }

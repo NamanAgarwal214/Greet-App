@@ -18,7 +18,7 @@ export default function RegisterForm() {
 			try {
 				const res = await axios.post('/api/user/register', { name, email, password })
         appDispatch({type: 'flashMessage', value: 'You signed in successfully!', status: true})
-        appDispatch({type: 'login', data: res.data})
+        appDispatch({type: 'login', data: res.data.token})
 				history.push('/')
 			} catch (err) {
         appDispatch({type: 'flashMessage', value: 'There was an error!', status: false})

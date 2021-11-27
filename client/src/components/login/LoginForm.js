@@ -18,8 +18,9 @@ export default function LoginForm({setForgotPassword}) {
 		try {
 			const res = await axios.post('/api/user/login', { email, password })
 			if(res.data && res.data.token) {
+        console.log(res.data)
         appDispatch({type: 'flashMessage', value: 'You logged in successfully!', status: true})
-        appDispatch({type: 'login', data: res.data})
+        appDispatch({type: 'login', data: res.data.token})
         history.push('/')
       } else{
         appDispatch({type: 'flashMessage', value: 'Incorrect Email or Password!', status: false})

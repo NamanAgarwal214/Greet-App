@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import logo from '../../assets/logo1.png';
+import userImg from "../../assets/default.png";
 import { Link } from 'react-router-dom';
 import DispatchContext from '../../context/DispatchContext';
 import StateContext from '../../context/StateContext';
@@ -27,7 +28,7 @@ export default function Navbar() {
 			{appState.loggedIn && (
 				<div className="nav--user">
 					<Link to="/me" className="nav__el">
-						<img src={appState.photoUrl} alt="User" className="nav__user-img" />
+						<img src={appState.user.photo ? appState.user.photo : userImg} alt="User" className="nav__user-img" />
 						<span>User</span>
 					</Link>
 					<Link to="/login" onClick={logout} className="nav__el">

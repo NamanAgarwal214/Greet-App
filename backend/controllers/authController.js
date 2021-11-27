@@ -36,9 +36,7 @@ exports.signup = async (req, res, next) => {
     
 		await email('welcome', user, {title: 'Welcome to the family!'});
 		return res.status(200).json({
-			username: user.name,
-      token,
-      email: user.email
+      token
 		})
 	} catch (error) {
 		res.json(error.message)
@@ -59,9 +57,7 @@ exports.login = async (req, res, next) => {
 
 		const token = issueJWT(res, user)
 		return res.status(200).json({
-			username: user.name,
       token,
-      email: user.email
 		})
 	} catch (error) {
 		res.json(error.message)
@@ -90,14 +86,10 @@ exports.protect = async (req, res, next) => {
 
 		// finding user from the database with the decoded id
 		const user = await User.findOne({ _id: decodedUser.sub })
+    // console.log(user)
 		if (!user) {
 			throw new Error('The user belonging to this token does no longer exist.')
 		}
-
-		// Checking if the user changed password after jwt was issued
-		// if(user.passwordChangedAfter(decodedUser.iat)){
-		//   return next(new AppError('The user recently changed their password! Please login again.', 401));
-		// }
 
 		//adding the user to the request
 		req.user = user
@@ -160,9 +152,7 @@ exports.resetPassword = async (req, res, next) => {
 
     const token = issueJWT(res, user)
 		return res.status(200).json({
-			username: user.name,
-			token,
-      email: user.email
+			token
 		})
 
 	} catch (error) {

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import userImg from "../../assets/default.png";
 import StateContext from "../../context/StateContext";
@@ -12,6 +12,7 @@ export default function Profile() {
   const [newName, setNewName] = useState(appState.user.username);
   const [newEmail, setNewEmail] = useState(appState.user.email);
   const [image, setImage] = useState({photo: ''});
+  const [friends, setFriends] = useState(0);
 
   const handleInputFile = (e) => {
     console.log(e.target.files[0])
@@ -28,15 +29,12 @@ export default function Profile() {
     try {
       const res = await axios.patch("/api/user/updateMe", data, {
         headers: {
-          Authorization: `Bearer ${appState.user.token}`,
+          Authorization: `Bearer ${appState.token}`,
         },
       });
       if (res.data && res.data.photo !== "") {
-        console.log(res.data);
         appDispatch({type: 'flashMessage', value: 'You profile was updated successfully!', status: true})
-        appDispatch({type: 'login', data: res.data})
-        appDispatch({type: 'photoChange', value: res.data.photo})
-
+        appDispatch({type: 'updateProfile', value: res.data})
       } else {
         appDispatch({type: 'flashMessage', value: 'There was an error!', status: false})
       }
@@ -44,6 +42,19 @@ export default function Profile() {
       console.log(err.message);
     }
   };
+  
+  useEffect(() => {
+    axios.get('/api/user/getFriends', {
+      headers: {
+        Authorization: `Bearer ${appState.token}`,
+      }
+    }).then(res => {
+      setFriends(res.data.friends)
+    }).catch(e => {
+      console.log('Error')
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -55,20 +66,20 @@ export default function Profile() {
                 <div className="userdetails text-center mb-5">
                   <img
                     className="form__user-photo mb-3"
-                    src={userImg}
+                    src={appState.user.photo ? appState.user.photo : userImg}
                     alt="User"
                   />
-                  <h2 className="heading-secondary">{newName}</h2>
+                  <h2 className="heading-secondary">{appState.user.username}</h2>
                 </div>
                 <div className="usersFriends text-center">
                   <div className="row">
                     <div className="col-6">
-                      <h2 className="heading-secondary">10</h2>
+                      <h2 className="heading-secondary">{friends}</h2>
                       <h5 className="heading-secondary">Friends</h5>
                     </div>
                     <div className="col-6">
                       <h2 className="heading-secondary">Email</h2>
-                      <h5 className="heading-secondary">{newEmail}</h5>
+                      <h5 className="heading-secondary">{appState.user.email}</h5>
                     </div>
                   </div>
                 </div>
@@ -118,7 +129,7 @@ export default function Profile() {
                   <div className="form__group form__photo-upload">
                     <img
                       className="form__user-photo"
-                      src={appState.photoUrl}
+                      src={appState.user.photo ? appState.user.photo : userImg}
                       alt="User"
                     />
                     <input
