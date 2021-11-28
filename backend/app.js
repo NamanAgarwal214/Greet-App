@@ -12,7 +12,7 @@ const sendEmails = require("./controllers/emailsController");
 const userRouter = require("./routes/userRoutes");
 const friendRouter = require("./routes/friendRoutes");
 const googleAuthRouter = require("./routes/googleAuthRoutes");
-const port = process.env.PORT
+const port = process.env.PORT;
 
 require("./config/passport")(passport);
 connectDB();
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(cors());
 app.use(passport.initialize());
-app.use('/public' ,express.static(path.join(__dirname, "public")));
+app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -39,13 +39,13 @@ app.use("/api/user", userRouter);
 app.use("/api/friend", friendRouter);
 
 const server = app.listen(port, () => {
-	console.log(`Server running on port ${port}...`)
-})
+  console.log(`Server running on port ${port}...`);
+});
 
-process.on('unhandledRejection', err => {
-	console.log('UNHANDLED REJECTION! SHUTTING DOWN...')
-	console.log(err.name, err.message)
-	server.close(() => {
-		process.exit(1)
-	})
-})
+process.on("unhandledRejection", (err) => {
+  console.log("UNHANDLED REJECTION! SHUTTING DOWN...");
+  console.log(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
+});

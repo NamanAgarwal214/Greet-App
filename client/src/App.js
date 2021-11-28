@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import FlashMessage from './components/flashMessage/FlashMessage';
 import CreateEvent from './components/createEvent/CreateEvent';
+import EventList from './components/eventList/EventList'
 import { IsUserRedirect } from './helpers/routes';
 import ProfilePage from './pages/Profile';
 axios.defaults.baseURL = 'http://localhost:8000';
@@ -25,6 +26,12 @@ function App() {
 			email: localStorage.getItem('GreetAppEmail'),
 			photo: localStorage.getItem('GreetAppPhoto')
 		}
+	};
+
+	const initialState2 = {
+  		occasion: null,
+  		occasions: [],
+  		error: {},
 	};
 
 	function ourReducer(draft, action) {
@@ -50,8 +57,21 @@ function App() {
 		}
 	}
 
-	const [state, dispatch] = useImmerReducer(ourReducer, initialState);
+	function ourReducer2(draft, action) {
+		switch (action.type){
+			case 'GET_EVENTS':
+				draft.occasions = action.payload;
+				return;
+			case 'ADD_EVENT':
+				draft.occasions.push(action.payload);
+				return;
+			default:
+				return;
+		}
+	}
 
+	const [state, dispatch] = useImmerReducer(ourReducer, initialState);
+	const [state2, dispatch2] = useImmerReducer(ourReducer2, initialState2);
 	useEffect(() => {
 		if (state.loggedIn) {
 			localStorage.setItem('GreetToken', state.token);
@@ -95,6 +115,9 @@ function App() {
 				<Router>
 					<FlashMessage flashMessages={state.flashMessages} />
 					<Switch>
+						<Route exact path="/view-events">
+							<EventList />
+						</Route>
 						<Route exact path="/create-event">
 							<CreateEvent />
 						</Route>
