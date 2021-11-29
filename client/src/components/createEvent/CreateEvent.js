@@ -25,10 +25,11 @@ export default function CreateEvent() {
 
   const submit = async (e) => {
     e.preventDefault();
-
+const token = localStorage.getItem('GreetToken')
     const config = {
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
     };
     if (!name || !dateOfEvent || !event) {
