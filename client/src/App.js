@@ -28,12 +28,6 @@ function App() {
 		}
 	};
 
-	const initialState2 = {
-  		occasion: null,
-  		occasions: [],
-  		error: {},
-	};
-
 	function ourReducer(draft, action) {
 		switch (action.type) {
 			case 'login':
@@ -57,21 +51,8 @@ function App() {
 		}
 	}
 
-	function ourReducer2(draft, action) {
-		switch (action.type){
-			case 'GET_EVENTS':
-				draft.occasions = action.payload;
-				return;
-			case 'ADD_EVENT':
-				draft.occasions.push(action.payload);
-				return;
-			default:
-				return;
-		}
-	}
-
 	const [state, dispatch] = useImmerReducer(ourReducer, initialState);
-	const [state2, dispatch2] = useImmerReducer(ourReducer2, initialState2);
+	
 	useEffect(() => {
 		if (state.loggedIn) {
 			localStorage.setItem('GreetToken', state.token);
