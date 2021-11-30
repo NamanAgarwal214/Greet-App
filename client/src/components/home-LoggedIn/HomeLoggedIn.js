@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from '../navbar/Navbar'
 import illus from '../../assets/2.png'
+import EventList from '../eventList/EventList'
 
 export default function HomeLoggedIn() {
   return (
@@ -18,10 +19,7 @@ export default function HomeLoggedIn() {
 					</div>
 				</div>
       </div>
-      {/* <Profile /> */}
-      <div>
-        <h1>Your Friends</h1>
-      </div>
+      <EventList />
     </>
   )
 }
