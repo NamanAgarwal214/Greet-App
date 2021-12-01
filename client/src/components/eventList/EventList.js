@@ -22,21 +22,21 @@ export default function EventList() {
   };
 
   const handleDelete = async (id) => {
-    try {const token = localStorage.getItem("GreetToken");
+    try {
+      const token = localStorage.getItem("GreetToken");
       await axios.delete(`/api/friend/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-      setOccasions(occasions.filter(el => el._id !== id))
+      });
+      setOccasions(occasions.filter((el) => el._id !== id));
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => getFriend(), []);
-  return (
-    occasions.length ? (
+  return occasions.length ? (
     <Fragment>
       <div className="user-view">
         <div className="user-view__content">
@@ -44,7 +44,7 @@ export default function EventList() {
             <div className="container">
               <div className="col-md-12">
                 <div className="heading text-center wow  slideInUp animated">
-                  <h3>Special Events</h3>
+                  <h2 className="headcards">Special Events</h2>
                 </div>
               </div>
               <div className="row">
@@ -52,16 +52,26 @@ export default function EventList() {
                   return (
                     <div className="col-md-4 col-sm-6">
                       <div className="feature-text text-center  wow  slideInLeft animated">
-                        <div className="img-hover1"></div>
+                        <div>
+                          <img
+                            className="eventimage"
+                            src="https://img.freepik.com/free-icon/important-person_318-10744.jpg?size=338&ext=jpg"
+                            alt=""
+                          ></img>{" "}
+                        </div>
                         <h4>{occasion.name}</h4>
                         <Moment format="YYYY/MM/DD">
                           {occasion.dateOfEvent}
                         </Moment>
                         <p>{occasion.event}</p>
+                        <button
+                          className="dltbtn"
+                          onClick={() => handleDelete(occasion._id)}
+                        >
+                          DELETE
+                        </button>
                       </div>
-                      <button onClick = {() => handleDelete(occasion._id)}>DELETE</button>
                     </div>
-                    
                   );
                 })}
               </div>
@@ -69,9 +79,8 @@ export default function EventList() {
           </section>
         </div>
       </div>
-    </Fragment>): (
-      <Link to = '/create-event'>
-      <button>Create events</button></Link>
-    )
+    </Fragment>
+  ) : (
+    <Link>{/* <button>Create events</button> */}</Link>
   );
 }
