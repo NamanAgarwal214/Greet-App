@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import logo from "../../assets/logo1.png";
 import DispatchContext from "../../context/DispatchContext";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -56,7 +55,7 @@ export default function CreateEvent() {
   return (
     <>
       <Link className="" to="/">
-        <img className="logo_create" src={logo} alt="logo" />
+        <img className="logo_create" src="/images/misc/logo.png" alt="logo" />
       </Link>
       <div className="contain">
         <h1 className="large">Create Your Event</h1>

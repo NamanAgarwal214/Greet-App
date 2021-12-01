@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../navbar/Navbar";
-import illus from "../../assets/2.png";
 import EventList from "../eventList/EventList";
 import { Link } from "react-router-dom";
 
@@ -26,7 +25,7 @@ export default function HomeLoggedIn() {
             </Link>
           </div>
           <div className="col-12 col-lg-7 col-md-7 col-sm-7 mt-4">
-            <img className="img-fluid" src={illus} alt="" />
+            <img className="img-fluid" src="/images/misc/email.png" alt="" />
           </div>
         </div>
       </div>

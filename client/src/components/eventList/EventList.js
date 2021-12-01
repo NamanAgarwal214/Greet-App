@@ -44,7 +44,7 @@ export default function EventList() {
             <div className="container">
               <div className="col-md-12">
                 <div className="heading text-center wow  slideInUp animated">
-                  <h2 className="headcards">Special Events</h2>
+                  <h2 className="headcards">Your Friends</h2>
                 </div>
               </div>
               <div className="row">
@@ -54,9 +54,9 @@ export default function EventList() {
                       <div className="feature-text text-center  wow  slideInLeft animated">
                         <div>
                           <img
-                            className="eventimage"
-                            src="https://img.freepik.com/free-icon/important-person_318-10744.jpg?size=338&ext=jpg"
-                            alt=""
+                            className="eventimage rounded-pill"
+                            src={`/images/users/${occasion.photo}.png`}
+                            alt="photu"
                           ></img>{" "}
                         </div>
                         <h4>{occasion.name}</h4>

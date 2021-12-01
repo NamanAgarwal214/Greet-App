@@ -1,6 +1,4 @@
 import React, { useContext } from 'react';
-import logo from '../../assets/logo1.png';
-import userImg from "../../assets/default.png";
 import { Link } from 'react-router-dom';
 import DispatchContext from '../../context/DispatchContext';
 import StateContext from '../../context/StateContext';
@@ -21,15 +19,15 @@ export default function Navbar() {
 			<nav className="nav nav--tour navbar">
 				<h1>
 					<Link className="header__logo" to="/">
-						<img className="" src={logo} alt="logo" />
+						<img className="" src="/images/misc/logo.png" alt="logo" />
 					</Link>
 				</h1>
 			</nav>
 			{appState.loggedIn && (
 				<div className="nav--user">
 					<Link to="/me" className="nav__el">
-						<img src={appState.user.photo ? appState.user.photo : userImg} alt="User" className="nav__user-img" />
-						<span>User</span>
+						<img src={appState.user.photo ? appState.user.photo : "/images/misc/default.png"} alt="User" className="nav__user-img" />
+						<span>{appState.user.username}</span>
 					</Link>
 					<Link to="/login" onClick={logout} className="nav__el">
 						{/* <img src={userimg} alt="User" className="nav__user-img" /> */}
