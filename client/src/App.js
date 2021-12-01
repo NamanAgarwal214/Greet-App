@@ -75,13 +75,14 @@ function App() {
 				})
 				.then(res => {
 					state.user = res.data;
+					localStorage.setItem('GreetAppUsername', state.user.username);
+					localStorage.setItem('GreetAppEmail', state.user.email);
+					localStorage.setItem('GreetAppPhoto', state.user.photo);
+					console.log(res.data)
 				})
 				.catch(e => {
 					console.log('There was an error');
 				});
-			localStorage.setItem('GreetAppUsername', state.user.username);
-			localStorage.setItem('GreetAppEmail', state.user.email);
-			localStorage.setItem('GreetAppPhoto', state.user.photo);
 		} else {
 			localStorage.removeItem('GreetAppUsername');
 			localStorage.removeItem('GreetAppEmail');

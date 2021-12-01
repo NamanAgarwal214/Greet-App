@@ -9,7 +9,7 @@ export default function HomeLoggedIn() {
       <Navbar />
       <div className="landing-main">
         <div className="row m-0">
-          <div className="col-12 col-lg-5 col-md-5 col-sm-5 mt-5">
+          <div className="col-12 col-lg-5 col-md-5 col-sm-5 mt-2">
             <h1>Forget to wish your loved ones...</h1>
             <h6>
               Do you forget to wish birthdays and anniversaries to your loved
