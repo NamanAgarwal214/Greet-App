@@ -19,7 +19,6 @@ exports.sendEmails = async (req, res, next) => {
 						// await email(`${friend.event}`, friend, 'abcdefgh');
 					}
 				})
-				// return res.json(friends);
 			}
 		})
 	} catch (error) {

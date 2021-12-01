@@ -13,6 +13,6 @@ router
 router
   .route("/:id")
   .put(friendController.updateFriend)
-  .delete(friendController.deleteFriend);
+  .delete(protect, friendController.deleteFriend);
 
 module.exports = router;
