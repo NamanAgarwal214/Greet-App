@@ -702,12 +702,22 @@ h4 {
   margin-bottom: 30px;
   transition: all 0.3s ease-in-out;
 }
-
+.feature-text:hover {
+  border-top: 6px solid #fb527a;
+  padding-top: 45px;
+  box-shadow: 0 5px 15px rgb(0 0 0 / 10%);
+}
 .img-hover1 {
   background: url("https://img.freepik.com/free-icon/important-person_318-10744.jpg?size=338&ext=jpg");
   height: 60px;
   background-repeat: no-repeat;
   background-position: 50%;
+}
+.slideInLeft {
+  animation-name: slideInLeft;
+}
+.text-center {
+  text-align: center;
 }
 
 .heading {
