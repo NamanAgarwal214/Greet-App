@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 cron.schedule('* */23 * * *', function () {
-	console.log('Hello');
+	// console.log('Hello');
 	sendEmails();
 });
 

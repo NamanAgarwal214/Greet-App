@@ -24,14 +24,23 @@ exports.addFriend = async (req, res, next) => {
 			name,
 			dateOfEvent,
 			event,
-      photo: Math.floor(Math.random()*5 + 1)
+			photo: Math.floor(Math.random() * 5 + 1),
 		});
 		await newFriend.save();
 
 		await user.friends.push(newFriend);
 		await user.save();
-		// console.log(newFriend);
-		// console.log(user);
+
+    const date = new Date(newFriend.dateOfEvent);
+		const curr = new Date();
+		const currDate = curr.getDate();
+		const currMonth = curr.getMonth();
+		if (date.getDate() === currDate && date.getMonth() === currMonth) {
+			console.log(`Today is the ${newFriend.event} of the friend ${newFriend.name}.`)
+			await email('Wish', user, { title: `Friend's ${newFriend.event}`, friend: newFriend });
+			console.log('email sent');
+		}
+
 		res.status(200).json({
 			status: 'success',
 			friend: newFriend,
