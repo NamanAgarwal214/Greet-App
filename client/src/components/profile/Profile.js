@@ -15,7 +15,12 @@ export default function Profile() {
 
   const handleInputFile = (e) => {
     console.log(e.target.files[0])
-    setImage({photo: e.target.files[0]});
+    const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = function () {
+        setImage(reader.result);
+      };
   };
 
   const handleProfileSubmit = async (e) => {
