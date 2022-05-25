@@ -7,12 +7,12 @@ const router = express.Router();
 // router.use(protect)
 router
   .route("/")
-  .get(friendController.getAllFriends)
-  .post(friendController.addFriend);
+  .get(protect, friendController.getAllFriends)
+  .post(protect, friendController.addFriend);
 
 router
   .route("/:id")
   .put(friendController.updateFriend)
-  .delete(friendController.deleteFriend);
+  .delete(protect, friendController.deleteFriend);
 
 module.exports = router;

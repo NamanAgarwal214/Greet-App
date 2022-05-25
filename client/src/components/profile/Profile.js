@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import userImg from "../../assets/default.png";
 import StateContext from "../../context/StateContext";
 import DispatchContext from "../../context/DispatchContext";
 
@@ -16,7 +15,12 @@ export default function Profile() {
 
   const handleInputFile = (e) => {
     console.log(e.target.files[0])
-    setImage({photo: e.target.files[0]});
+    const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = function () {
+        setImage(reader.result);
+      };
   };
 
   const handleProfileSubmit = async (e) => {
@@ -66,7 +70,7 @@ export default function Profile() {
                 <div className="userdetails text-center mb-5">
                   <img
                     className="form__user-photo mb-3"
-                    src={appState.user.photo ? appState.user.photo : userImg}
+                    src={appState.user.photo ? appState.user.photo : "/images/misc/default.png"}
                     alt="User"
                   />
                   <h2 className="heading-secondary">{appState.user.username}</h2>
@@ -129,7 +133,7 @@ export default function Profile() {
                   <div className="form__group form__photo-upload">
                     <img
                       className="form__user-photo"
-                      src={appState.user.photo ? appState.user.photo : userImg}
+                      src={appState.user.photo ? appState.user.photo : "/images/misc/default.png"}
                       alt="User"
                     />
                     <input

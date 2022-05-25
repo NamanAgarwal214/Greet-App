@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import FlashMessage from "./components/flashMessage/FlashMessage";
 import CreateEvent from "./components/createEvent/CreateEvent";
+import EventList from "./components/eventList/EventList";
 import { IsUserRedirect } from "./helpers/routes";
 import ProfilePage from "./pages/Profile";
 axios.defaults.baseURL = "http://localhost:8000";
@@ -74,13 +75,14 @@ function App() {
         })
         .then((res) => {
           state.user = res.data;
+          localStorage.setItem("GreetAppUsername", state.user.username);
+          localStorage.setItem("GreetAppEmail", state.user.email);
+          localStorage.setItem("GreetAppPhoto", state.user.photo);
+          console.log(res.data);
         })
         .catch((e) => {
           console.log("There was an error");
         });
-      localStorage.setItem("GreetAppUsername", state.user.username);
-      localStorage.setItem("GreetAppEmail", state.user.email);
-      localStorage.setItem("GreetAppPhoto", state.user.photo);
     } else {
       localStorage.removeItem("GreetAppUsername");
       localStorage.removeItem("GreetAppEmail");
@@ -95,6 +97,9 @@ function App() {
         <Router>
           <FlashMessage flashMessages={state.flashMessages} />
           <Switch>
+            <Route exact path="/view-events">
+              <EventList />
+            </Route>
             <Route exact path="/create-event">
               <CreateEvent />
             </Route>

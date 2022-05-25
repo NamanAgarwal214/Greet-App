@@ -13,6 +13,9 @@ const friendSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  photo: {
+    type: Number
+  }
 });
 
 const friend = new mongoose.model("Friend", friendSchema);
