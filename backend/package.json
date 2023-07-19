@@ -4,7 +4,7 @@
   "description": "This is our practicum project",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon index.js"
   },
   "author": "Paras",
   "license": "ISC",
