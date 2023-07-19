@@ -10,17 +10,19 @@ export default function Profile() {
 
   const [newName, setNewName] = useState(appState.user.username);
   const [newEmail, setNewEmail] = useState(appState.user.email);
-  const [image, setImage] = useState({photo: ''});
+  const [image, setImage] = useState({ photo: "" });
   const [friends, setFriends] = useState(0);
 
   const handleInputFile = (e) => {
-    console.log(e.target.files[0])
-    const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = function () {
-        setImage(reader.result);
-      };
+    // console.log(e.target.files[0]);
+    // const file = e.target.files[0];
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onloadend = function () {
+    //   setImage({ photo: reader.result });
+    // };
+    // console.log(image);
+    setImage({ photo: e.target.files[0] });
   };
 
   const handleProfileSubmit = async (e) => {
@@ -37,28 +39,39 @@ export default function Profile() {
         },
       });
       if (res.data && res.data.photo !== "") {
-        appDispatch({type: 'flashMessage', value: 'You profile was updated successfully!', status: true})
-        appDispatch({type: 'updateProfile', value: res.data})
+        appDispatch({
+          type: "flashMessage",
+          value: "You profile was updated successfully!",
+          status: true,
+        });
+        appDispatch({ type: "updateProfile", value: res.data });
       } else {
-        appDispatch({type: 'flashMessage', value: 'There was an error!', status: false})
+        appDispatch({
+          type: "flashMessage",
+          value: "There was an error!",
+          status: false,
+        });
       }
     } catch (err) {
       console.log(err.message);
     }
   };
-  
+
   useEffect(() => {
-    axios.get('/api/user/getFriends', {
-      headers: {
-        Authorization: `Bearer ${appState.token}`,
-      }
-    }).then(res => {
-      setFriends(res.data.friends)
-    }).catch(e => {
-      console.log('Error')
-    })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    axios
+      .get("/api/user/getFriends", {
+        headers: {
+          Authorization: `Bearer ${appState.token}`,
+        },
+      })
+      .then((res) => {
+        setFriends(res.data.friends);
+      })
+      .catch((e) => {
+        console.log("Error");
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -70,10 +83,16 @@ export default function Profile() {
                 <div className="userdetails text-center mb-5">
                   <img
                     className="form__user-photo mb-3"
-                    src={appState.user.photo ? appState.user.photo : "/images/misc/default.png"}
+                    src={
+                      appState.user.photo
+                        ? appState.user.photo
+                        : "/images/misc/default.png"
+                    }
                     alt="User"
                   />
-                  <h2 className="heading-secondary">{appState.user.username}</h2>
+                  <h2 className="heading-secondary">
+                    {appState.user.username}
+                  </h2>
                 </div>
                 <div className="usersFriends text-center">
                   <div className="row">
@@ -83,7 +102,9 @@ export default function Profile() {
                     </div>
                     <div className="col-6">
                       <h2 className="heading-secondary">Email</h2>
-                      <h5 className="heading-secondary">{appState.user.email}</h5>
+                      <h5 className="heading-secondary">
+                        {appState.user.email}
+                      </h5>
                     </div>
                   </div>
                 </div>
@@ -133,7 +154,11 @@ export default function Profile() {
                   <div className="form__group form__photo-upload">
                     <img
                       className="form__user-photo"
-                      src={appState.user.photo ? appState.user.photo : "/images/misc/default.png"}
+                      src={
+                        appState.user.photo
+                          ? appState.user.photo
+                          : "/images/misc/default.png"
+                      }
                       alt="User"
                     />
                     <input

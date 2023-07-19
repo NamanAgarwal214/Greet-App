@@ -1,36 +1,36 @@
-const nodemailer = require('nodemailer')
-const pug = require('pug')
+const nodemailer = require("nodemailer");
+const pug = require("pug");
 
 async function SendEmail(template, user, subject) {
-	const to = user.email
+  const to = user.email;
 
-	let transporter = nodemailer.createTransport({
-		service: 'gmail',
-		auth: {
-			user: 'greetingsapp15@gmail.com',
-			pass: 'uqaezdlroviwrrwt'
-		}
-	})
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.USER_ADDRESS,
+      pass: process.env.PASSWORD,
+    },
+  });
 
-	const html = pug.renderFile(`${__dirname}/../views/emails/${template}.pug`, {
-		firstName: user.name,
-		subject: subject
-	})
-	// Step 2
-	let mailOptions = {
-		from: `Greetings App <greetingsapp15@gmail.com>`,
-		to: to,
-		subject: subject.title,
-		html
-	}
+  const html = pug.renderFile(`${__dirname}/../views/emails/${template}.pug`, {
+    firstName: user.name,
+    subject: subject,
+  });
+  // Step 2
+  let mailOptions = {
+    from: `Greetings App <greetingsapp15@gmail.com>`,
+    to: to,
+    subject: subject.title,
+    html,
+  };
 
-	// Step 3
-	await transporter.sendMail(mailOptions, (err, data) => {
-		if (err) {
-			return console.log(err)
-		}
-		return console.log('Email sent!!!')
-	})
+  // Step 3
+  await transporter.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      return console.log(err);
+    }
+    return console.log("Email sent!!!");
+  });
 }
 
-module.exports = SendEmail
+module.exports = SendEmail;
