@@ -12,7 +12,7 @@ router
 
 router
   .route("/:id")
-  .put(friendController.updateFriend)
+  .put(protect, friendController.updateFriend)
   .delete(protect, friendController.deleteFriend);
 
 module.exports = router;

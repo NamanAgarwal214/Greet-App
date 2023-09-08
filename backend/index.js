@@ -9,14 +9,17 @@ const cors = require("cors");
 const cron = require("node-cron");
 const app = express();
 const sendEmails = require("./controllers/emailsController");
-const userRouter = require("./routes/userRoutes");
-const friendRouter = require("./routes/friendRoutes");
+const authRoutes = require("./routes/authRoutes");
+// const adminRoutes = require("./routes/adminRoutes");
+const userRoutes = require("./routes/userRoutes");
+const friendRoutes = require("./routes/friendRoutes");
 const googleAuthRouter = require("./routes/googleAuthRoutes");
-const port = process.env.PORT;
 
 // require('./config/passport')(passport);
+// mongo connect
 connectDB();
 
+// middlewares
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
@@ -28,16 +31,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-cron.schedule("* */23 * * *", function () {
-  // console.log('Hello');
+cron.schedule("0 0 * * *", function () {
+  // console.log("Hello");
   sendEmails();
 });
 
 //Routes
 // app.use("/", googleAuthRouter);
-app.use("/api/user", userRouter);
-app.use("/api/friend", friendRouter);
+// app.use("/api/admin", adminRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/friend", friendRoutes);
 
+const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
   console.log(`Server running on port ${port}...`);
 });

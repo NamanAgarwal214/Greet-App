@@ -3,20 +3,22 @@ const mongoose = require("mongoose");
 const friendSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, "Please provide a name"],
   },
   dateOfEvent: {
     type: Date,
-    required: true,
+    required: [true, "Please provide a date of event"],
   },
   event: {
     type: String,
-    required: true,
+    required: [true, "Please provide an event name"],
   },
   photo: {
-    type: Number
-  }
+    type: Number,
+  },
 });
 
-const friend = new mongoose.model("Friend", friendSchema);
-module.exports = friend;
+const Friend =
+  mongoose.models.Friend || new mongoose.model("Friend", friendSchema);
+
+module.exports = Friend;

@@ -1,5 +1,6 @@
 const multer = require("multer");
 const User = require("./../models/userModel");
+const Friend = require("../models/friendModel");
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -48,7 +49,7 @@ exports.updateMe = async (req, res, next) => {
   }
 };
 
-exports.getUser = async (req, res, next) => {
+exports.getUser = async (req, res) => {
   try {
     // console.log(req.user)
     const user = req.user;
@@ -59,7 +60,10 @@ exports.getUser = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    res.json(error);
+    res.json({
+      status: "error",
+      message: error.message,
+    });
   }
 };
 
@@ -69,10 +73,28 @@ exports.getFriends = async (req, res, next) => {
     const user = req.user;
     res.status(200).json({
       friends: user.friends.length,
+      data: user.friends,
     });
   } catch (error) {
     console.log(error);
-    res.json(error);
+    res.json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
+exports.unsubscribe = async (req, res) => {
+  try {
+    const user = req.user;
+    user.emailSubscribed = false;
+    await user.save();
+    return res.status(204).json();
+  } catch (error) {
+    res.json({
+      status: "error",
+      message: error.message,
+    });
   }
 };
 
@@ -84,21 +106,32 @@ exports.getAllUsers = async (rea, res, next) => {
     res.status(200).json({
       status: "success",
       results: users.length,
-      data: users,
+      users,
     });
   } catch (error) {
-    res.json(error);
+    res.json({
+      status: "error",
+      message: error.message,
+    });
   }
 };
 
-exports.deleteUser = async (req, res, next) => {
+exports.deleteUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const user = await User.findById(req.user._id);
+    const friends = user.friends;
+    friends.forEach(async (f) => {
+      await Friend.findByIdAndDelete(f._id);
+    });
+    await User.findByIdAndDelete(req.user._id);
 
-    res.status(204).json({
+    res.status(202).json({
       status: "success",
     });
   } catch (error) {
-    res.json(error);
+    res.json({
+      status: "error",
+      message: error.message,
+    });
   }
 };

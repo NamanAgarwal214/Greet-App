@@ -1,12 +1,12 @@
 exports.ensureAuth = async (req, res, next) => {
-	try {
+  try {
     if (req.user.isAdmin) {
-      next()
+      next();
     } else {
       // console.log(req.user)
-      throw new Error('You donot have permission to perform this action!')
+      throw new Error("You do not have permission to perform this action!");
     }
   } catch (error) {
-    res.json(error.message)
+    res.json(error.message);
   }
-}
+};

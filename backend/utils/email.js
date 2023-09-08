@@ -18,14 +18,14 @@ async function SendEmail(template, user, subject) {
   });
   // Step 2
   let mailOptions = {
-    from: `Greetings App <greetingsapp15@gmail.com>`,
+    from: `Greetings App <${process.env.USER_ADDRESS}>`,
     to: to,
     subject: subject.title,
     html,
   };
 
   // Step 3
-  await transporter.sendMail(mailOptions, (err, data) => {
+  transporter.sendMail(mailOptions, (err, data) => {
     if (err) {
       return console.log(err);
     }

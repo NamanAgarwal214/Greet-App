@@ -14,7 +14,8 @@ import CreateEvent from "./components/createEvent/CreateEvent";
 import EventList from "./components/eventList/EventList";
 import { IsUserRedirect } from "./helpers/routes";
 import ProfilePage from "./pages/Profile";
-axios.defaults.baseURL = "https://greeting-twro.onrender.com";
+// axios.defaults.baseURL = "https://greeting-twro.onrender.com";
+axios.defaults.baseURL = "http://localhost:8000";
 
 function App() {
   const initialState = {

@@ -13,10 +13,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
       validate: [validator.isEmail, "Please provide a valid email"],
+      required: [true, "Please provide an email address"],
     },
     password: {
       type: String,
       minlength: 8,
+      select: "false",
+      required: [true, "Please provide a Password"],
     },
     photo: {
       type: String,
@@ -26,9 +29,13 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    emailSubscribed: {
+      type: Boolean,
+      default: true,
+    },
     passwordChangedAt: Date,
     googleId: String,
-    friends: [{ type: mongoose.Schema.ObjectId, ref: "Friend" }],
+    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "Friend" }],
     passwordResetToken: String,
     passwordResetExpires: Date,
   },
@@ -38,10 +45,8 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", async function (next) {
-  // Only run this function if password was actually modified
   if (!this.isModified("password")) return next();
 
-  // Hash the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
 
   next();
@@ -69,8 +74,6 @@ userSchema.methods.createPasswordResetToken = function () {
     .update(resetToken)
     .digest("hex");
 
-  // console.log({ resetToken }, this.passwordResetToken);
-
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
   return resetToken;
 };
@@ -91,6 +94,6 @@ userSchema.pre(/^find/, function (next) {
   next();
 });
 
-const User = new mongoose.model("User", userSchema);
+const User = mongoose.models.User || new mongoose.model("User", userSchema);
 
 module.exports = User;
