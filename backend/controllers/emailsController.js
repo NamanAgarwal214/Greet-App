@@ -1,4 +1,5 @@
 const Friend = require("../models/friendModel");
+const { sendSMS } = require("../utils/sms");
 const User = require("./../models/userModel");
 const email = require("./../utils/email");
 
@@ -52,7 +53,7 @@ const checkForEmail = async (user, id) => {
           title: `Friend's ${friend.event}`,
           friend,
         });
-        console.log("email sent");
+        // sendSMS(friend.phone, user.phone, "Happy birthday");
       }
     }
   } catch (error) {

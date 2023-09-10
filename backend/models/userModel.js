@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    phone: {
+      type: String,
+      // required: [true, "Please provide your phone number"],
+    },
     isAdmin: {
       type: Boolean,
       default: false,

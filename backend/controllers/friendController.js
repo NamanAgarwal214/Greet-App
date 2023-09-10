@@ -20,12 +20,13 @@ exports.getAllFriends = async (req, res, next) => {
 
 exports.addFriend = async (req, res) => {
   try {
-    const { name, dateOfEvent, event } = req.body;
+    const { name, dateOfEvent, event, phone } = req.body;
     const user = req.user;
     const newFriend = new Friend({
       name,
       dateOfEvent,
       event,
+      phone,
       photo: Math.floor(Math.random() * 5 + 1),
     });
     await newFriend.save();

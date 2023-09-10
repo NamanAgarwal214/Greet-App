@@ -16,6 +16,10 @@ const friendSchema = new mongoose.Schema({
   photo: {
     type: Number,
   },
+  phone: {
+    type: String,
+    // required: [true, "Please provide your phone number"],
+  },
 });
 
 const Friend =

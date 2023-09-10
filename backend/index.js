@@ -3,6 +3,7 @@ const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+const cookieSession = require("cookie-session");
 const connectDB = require("./config/mongo");
 const passport = require("passport");
 const cors = require("cors");
@@ -13,9 +14,9 @@ const authRoutes = require("./routes/authRoutes");
 // const adminRoutes = require("./routes/adminRoutes");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendRoutes");
-const googleAuthRouter = require("./routes/googleAuthRoutes");
+const googleAuthRoutes = require("./routes/googleAuthRoutes");
+require("./config/passport");
 
-// require('./config/passport')(passport);
 // mongo connect
 connectDB();
 
@@ -23,6 +24,16 @@ connectDB();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+app.use(
+  cookieSession({
+    name: "google-auth-session",
+    keys: [process.env.KEY_1, process.env.KEY_2],
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(cors());
 app.use(passport.initialize());
@@ -37,7 +48,7 @@ cron.schedule("0 0 * * *", function () {
 });
 
 //Routes
-// app.use("/", googleAuthRouter);
+app.use("/api", googleAuthRoutes);
 // app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);

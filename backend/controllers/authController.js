@@ -25,8 +25,8 @@ function issueJWT(res, user) {
 }
 
 exports.signup = async (req, res) => {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
+  const { name, email, password, phone } = req.body;
+  if (!name || !email || !password || !phone) {
     throw new Error("Missing Credentials");
   }
   try {
@@ -34,6 +34,7 @@ exports.signup = async (req, res) => {
       name,
       email,
       password,
+      phone,
     });
 
     await user.save();
