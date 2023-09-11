@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import DispatchContext from "../../context/DispatchContext";
+import { useNavigate } from "react-router-dom";
+import { DispatchContext } from "../../context/Context";
 
-export default function RegisterForm() {
-  const history = useHistory();
+const RegisterForm = () => {
+  const navigate = useNavigate();
   const appDispatch = useContext(DispatchContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,24 +20,48 @@ export default function RegisterForm() {
       });
     }
     try {
-      const res = await axios.post("/api/user/register", {
-        name,
-        email,
-        password,
-      });
-      appDispatch({
-        type: "flashMessage",
-        value: "You signed in successfully!",
-        status: true,
-      });
-      appDispatch({ type: "login", data: res.data.token });
-      history.push("/");
+      // const data = new FormData();
+      // data.append("name", name);
+      // data.append("email", email);
+      // data.append("password", password);
+
+      const res = await axios.post(
+        "/api/auth/register",
+        {
+          name,
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.data.status === "success") {
+        appDispatch({
+          type: "flashMessage",
+          value: "Signed in successfully!",
+          status: true,
+        });
+        appDispatch({ type: "login", data: res.data.token });
+        navigate("/");
+      } else {
+        console.log(res.data.message);
+        appDispatch({
+          type: "flashMessage",
+          value: res.data.message,
+          status: false,
+        });
+        window.location.reload();
+      }
     } catch (err) {
       appDispatch({
         type: "flashMessage",
         value: "There was an error!",
         status: false,
       });
+      window.location.reload();
       console.log(err.message);
     }
   };
@@ -46,10 +70,17 @@ export default function RegisterForm() {
     <>
       <div className="d-flex row g-0">
         <div className="form_details col">
-          {/* <button className="btn">
-						Sign in with
-						<img src="https://cdn-icons-png.flaticon.com/128/2875/2875331.png" alt="google_logo" className="img-fluid" />
-					</button> */}
+          <a href={`${process.env.REACT_APP_BASE_URL}/api/auth/google`}>
+            <button className="btn">
+              Sign in with
+              <img
+                src="https://cdn-icons-png.flaticon.com/128/2875/2875331.png"
+                alt="google_logo"
+                className="img-fluid"
+              />
+            </button>
+          </a>
+
           <p className="separate">Sign up with Email</p>
           <form className="login-form" action="">
             <div className="form__group form_item">
@@ -101,4 +132,6 @@ export default function RegisterForm() {
       </div>
     </>
   );
-}
+};
+
+export default RegisterForm;

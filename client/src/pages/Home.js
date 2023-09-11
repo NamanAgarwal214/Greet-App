@@ -1,13 +1,11 @@
-import React, { useContext } from 'react'
-import StateContext from '../context/StateContext'
-import HomeLoggedOut from '../components/home-LoggedOut/HomeLoggedOut'
-import HomeLoggedIn from '../components/home-LoggedIn/HomeLoggedIn'
+import React, { useContext } from "react";
+import HomeLoggedOut from "../components/home-LoggedOut/HomeLoggedOut";
+import HomeLoggedIn from "../components/home-LoggedIn/HomeLoggedIn";
+import { StateContext } from "../context/Context";
 
-export default function Home() {
-  const appState = useContext(StateContext)
-  return (
-    <>
-      {(!appState.loggedIn) ? <HomeLoggedOut /> : <HomeLoggedIn />}
-    </>
-  )
-}
+const Home = () => {
+  const appState = useContext(StateContext);
+  return <>{!appState.loggedIn ? <HomeLoggedOut /> : <HomeLoggedIn />}</>;
+};
+
+export default Home;

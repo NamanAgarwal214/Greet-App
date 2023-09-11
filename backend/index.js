@@ -21,6 +21,8 @@ require("./config/passport");
 connectDB();
 
 // middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
@@ -36,10 +38,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(cors());
-app.use(passport.initialize());
+
 app.use("/public", express.static(path.join(__dirname, "public")));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 
 cron.schedule("0 0 * * *", function () {

@@ -26,7 +26,8 @@ function issueJWT(res, user) {
 
 exports.signup = async (req, res) => {
   const { name, email, password, phone } = req.body;
-  if (!name || !email || !password || !phone) {
+  console.log(req.body);
+  if (!name || !email || !password) {
     throw new Error("Missing Credentials");
   }
   try {

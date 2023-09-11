@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function HomeLoggedOut() {
+const HomeLoggedOut = () => {
   return (
     <div className="landing-main">
       <div className="landing-header d-flex align-items-center">
@@ -16,7 +16,7 @@ export default function HomeLoggedOut() {
             lifetime. <br />
             Still here? Join now….
           </h6>
-          <Link className="btn" to="/login">
+          <Link className="btn" to="/register">
             Get Started
           </Link>
         </div>
@@ -26,4 +26,6 @@ export default function HomeLoggedOut() {
       </div>
     </div>
   );
-}
+};
+
+export default HomeLoggedOut;

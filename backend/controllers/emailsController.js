@@ -1,5 +1,4 @@
 const Friend = require("../models/friendModel");
-const { sendSMS } = require("../utils/sms");
 const User = require("./../models/userModel");
 const email = require("./../utils/email");
 

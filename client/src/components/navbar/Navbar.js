@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import DispatchContext from "../../context/DispatchContext";
-import StateContext from "../../context/StateContext";
+import { DispatchContext } from "../../context/Context";
+import { StateContext } from "../../context/Context";
 
-export default function Navbar() {
+const Navbar = () => {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
-  const logout = () => {
+
+  const logoutHandler = () => {
     appDispatch({
       type: "flashMessage",
-      value: "You logged out successfully!",
+      value: "Logged out successfully!",
       status: true,
     });
     appDispatch({ type: "logout" });
@@ -23,7 +24,8 @@ export default function Navbar() {
           </Link>
         </h1>
       </nav>
-      {appState.loggedIn && (
+
+      {appState.loggedIn ? (
         <div className="nav--user">
           <Link to="/me" className="nav__el">
             <img
@@ -37,15 +39,14 @@ export default function Navbar() {
             />
             <span>{appState.user.username}</span>
           </Link>
-          <Link to="/login" onClick={logout} className="nav__el">
+          <Link to="/login" onClick={logoutHandler} className="nav__el">
             {/* <img src={userimg} alt="User" className="nav__user-img" /> */}
             <span className="mb-2">Logout</span>
           </Link>
         </div>
-      )}
-      {!appState.loggedIn && (
+      ) : (
         <div className="nav--user">
-          <Link to="/signup" className="nav__el">
+          <Link to="/register" className="nav__el">
             Sign Up
           </Link>
           <Link to="/login" className="nav__el">
@@ -55,4 +56,6 @@ export default function Navbar() {
       )}
     </div>
   );
-}
+};
+
+export default Navbar;

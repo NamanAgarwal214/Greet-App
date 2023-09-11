@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import StateContext from "../../context/StateContext";
-import DispatchContext from "../../context/DispatchContext";
+import { StateContext } from "../../context/Context";
+import { DispatchContext } from "../../context/Context";
 
 export default function Profile() {
   const appState = useContext(StateContext);

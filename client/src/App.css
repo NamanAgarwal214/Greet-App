@@ -16,7 +16,7 @@ body {
   font-weight: 300;
   font-family: "Lato", sans-serif;
   color: #777;
-  min-height: 100vh;
+  max-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -381,9 +381,9 @@ h4 {
   color: #fff;
 }
 
-.landing-main .row{
-  min-height: 100vh;
-  padding: 50px 0 0 0;
+.landing-main .row {
+  /* min-height: 100vh; */
+  padding: 25px 0 0 0;
 }
 
 .landing-header {
@@ -539,7 +539,7 @@ h4 {
   background-color: #f8f8f8;
   outline: none;
   color: #3a3161;
-  border: 1px solid #3a3161;
+  border-color: #3a3161;
 }
 
 /* Profile page */

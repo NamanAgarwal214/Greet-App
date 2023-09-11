@@ -3,13 +3,13 @@ import axios from "axios";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 
-export default function EventList() {
+const EventList = () => {
   const [occasions, setOccasions] = useState([]);
-  // let occasions;
+
   const getFriend = async () => {
     const token = localStorage.getItem("GreetToken");
     try {
-      const res = await axios.get("/api/friend", {
+      const res = await axios.get("/api/friend/", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -36,6 +36,7 @@ export default function EventList() {
   };
 
   useEffect(() => getFriend(), []);
+
   return occasions.length ? (
     <Fragment>
       <div className="user-view">
@@ -81,6 +82,8 @@ export default function EventList() {
       </div>
     </Fragment>
   ) : (
-    <Link>{/* <button>Create events</button> */}</Link>
+    <p>No friends added so far</p>
   );
-}
+};
+
+export default EventList;

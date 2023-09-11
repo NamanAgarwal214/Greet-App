@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import DispatchContext from "../../context/DispatchContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { DispatchContext, StateContext } from "../../context/Context";
 
 export default function CreateEvent() {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const [display, setDisplay] = useState(false);
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ export default function CreateEvent() {
 
   const submit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("GreetToken");
+    const token = appState.token;
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -45,11 +46,39 @@ export default function CreateEvent() {
         { name, dateOfEvent, event },
         config
       );
-      history.push("/");
-      console.log(res.data);
+
+      if (res.data.status === "success") {
+        appDispatch({
+          type: "flashMessage",
+          value: "Event added successfully!",
+          status: true,
+        });
+        // appDispatch({ type: "login", data: res.data.token });
+        navigate("/");
+      } else {
+        console.log(res.data.message);
+        appDispatch({
+          type: "flashMessage",
+          value: res.data.message,
+          status: false,
+        });
+        window.location.reload();
+      }
     } catch (err) {
-      console.log(err);
+      appDispatch({
+        type: "flashMessage",
+        value: "There was an error!",
+        status: false,
+      });
+      window.location.reload();
+      console.log(err.message);
     }
+  };
+
+  const minDate = () => {
+    const today = new Date().toISOString().split("T")[0];
+    console.log(today);
+    return today;
   };
 
   return (
@@ -82,6 +111,7 @@ export default function CreateEvent() {
               name="dateOfEvent"
               className="inputField"
               value={dateOfEvent}
+              min={minDate()}
               onChange={(e) => change(e)}
             />
           </div>

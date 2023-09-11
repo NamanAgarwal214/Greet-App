@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import DispatchContext from "../../context/DispatchContext";
+import { useNavigate } from "react-router-dom";
+import { DispatchContext } from "../../context/Context";
 
-export default function LoginForm({ setForgotPassword }) {
+const LoginForm = ({ setForgotPassword }) => {
   const appDispatch = useContext(DispatchContext);
-  const history = useHistory();
-  // const dispatch = useDispatch()
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -29,7 +28,7 @@ export default function LoginForm({ setForgotPassword }) {
           status: true,
         });
         appDispatch({ type: "login", data: res.data.token });
-        history.push("/");
+        navigate.push("/");
       } else {
         appDispatch({
           type: "flashMessage",
@@ -77,10 +76,16 @@ export default function LoginForm({ setForgotPassword }) {
   return (
     <div className="d-flex row g-0 mt-4">
       <div className="form_details col">
-        {/* <a href="http://localhost:8000/auth/google"><button className="btn">
-						Sign in with
-						<img src="https://cdn-icons-png.flaticon.com/128/2875/2875331.png" alt="google_logo" className="img-fluid" />
-					</button></a> */}
+        <a href={`${process.env.REACT_APP_BASE_URL}/api/auth/google`}>
+          <button className="btn">
+            Sign in with
+            <img
+              src="https://cdn-icons-png.flaticon.com/128/2875/2875331.png"
+              alt="google_logo"
+              className="img-fluid"
+            />
+          </button>
+        </a>
         <p className="separate">Sign in with Email</p>
         <form className="login-form" action="">
           <div className="form__group">
@@ -121,4 +126,6 @@ export default function LoginForm({ setForgotPassword }) {
       </div>
     </div>
   );
-}
+};
+
+export default LoginForm;

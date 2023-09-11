@@ -1,26 +1,10 @@
-import React from 'react'
-import {Route, Redirect} from 'react-router-dom'
+import React, { useContext } from "react";
+import { Navigate } from "react-router-dom";
+import { StateContext } from "../context/Context";
 
-export function IsUserRedirect({ loggedInPath, loggedIn, children, ...rest}) {
-  
-  return (
-    <Route {...rest}
-      render = {() => {
-        if(!loggedIn){
-          return children
-        }
+const IsUserRedirect = ({ children }) => {
+  const appState = useContext(StateContext);
+  return <>{!appState.loggedIn ? children : <Navigate to="/" replace />}</>;
+};
 
-        if(loggedIn){
-          return (
-            <Redirect
-            to={{
-              pathname: loggedInPath
-            }}
-            />
-          )
-        }
-        return null
-      }}
-    />
-  )
-}
+export default IsUserRedirect;

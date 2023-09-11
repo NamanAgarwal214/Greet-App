@@ -2,8 +2,9 @@ import React from "react";
 import Navbar from "../navbar/Navbar";
 import EventList from "../eventList/EventList";
 import { Link } from "react-router-dom";
+import Footer from "../footer/Footer";
 
-export default function HomeLoggedIn() {
+const HomeLoggedIn = () => {
   return (
     <>
       <Navbar />
@@ -30,15 +31,9 @@ export default function HomeLoggedIn() {
         </div>
       </div>
       <EventList />
-      <footer>
-        <div class="foo">
-          <i class="footer-icon fab fa-facebook-f fa-2x"></i>
-          <i class="footer-icon fab fa-twitter fa-2x"></i>
-          <i class="footer-icon fab fa-instagram fa-2x"></i>
-          <i class="footer-icon fas fa-envelope fa-2x"></i>
-          <p>© Copyright 2021 Greetings</p>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
-}
+};
+
+export default HomeLoggedIn;
