@@ -43,11 +43,11 @@ app.use(cors());
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.use(cookieParser());
-sendEmails();
-// cron.schedule("0 0 * * *", function () {
-//   // console.log("Hello");
-//   sendEmails();
-// });
+// sendEmails();
+cron.schedule("0 0 * * *", function () {
+  // console.log("Hello");
+  sendEmails();
+});
 
 //Routes
 app.use("/api", googleAuthRoutes);
