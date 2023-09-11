@@ -41,6 +41,7 @@ export default function CreateEvent() {
       });
     }
     try {
+      console.log(dateOfEvent);
       const res = await axios.post(
         "/api/friend",
         { name, dateOfEvent, event },

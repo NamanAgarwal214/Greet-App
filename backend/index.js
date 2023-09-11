@@ -9,12 +9,13 @@ const passport = require("passport");
 const cors = require("cors");
 const cron = require("node-cron");
 const app = express();
-const sendEmails = require("./controllers/emailsController");
+// const sendEmails = require("./controllers/emailsController");
 const authRoutes = require("./routes/authRoutes");
 // const adminRoutes = require("./routes/adminRoutes");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendRoutes");
 const googleAuthRoutes = require("./routes/googleAuthRoutes");
+const { sendEmails } = require("./controllers/emailsController");
 require("./config/passport");
 
 // mongo connect
@@ -42,11 +43,11 @@ app.use(cors());
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.use(cookieParser());
-
-cron.schedule("0 0 * * *", function () {
-  // console.log("Hello");
-  sendEmails();
-});
+sendEmails();
+// cron.schedule("0 0 * * *", function () {
+//   // console.log("Hello");
+//   sendEmails();
+// });
 
 //Routes
 app.use("/api", googleAuthRoutes);

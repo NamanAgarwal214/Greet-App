@@ -26,6 +26,10 @@ const sendEmails = async () => {
               });
               console.log("email sent");
             }
+          } else if (curr > date) {
+            date.setFullYear(date.getFullYear() + 1);
+            friend.dateOfEvent = date;
+            await friend.save();
           }
         });
       } else {
