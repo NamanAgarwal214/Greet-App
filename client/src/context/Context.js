@@ -26,6 +26,9 @@ const ContextProvider = ({ children }) => {
         return;
       case "logout":
         draft.loggedIn = false;
+        draft.user.username = null;
+        draft.user.email = null;
+        draft.user.photo = null;
         return;
       case "flashMessage":
         draft.flashMessages.push({
@@ -53,6 +56,7 @@ const ContextProvider = ({ children }) => {
       localStorage.removeItem("GreetUsername");
       localStorage.removeItem("GreetEmail");
       localStorage.removeItem("GreetPhoto");
+      console.log(state.user);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.loggedIn, state.user]);

@@ -2,18 +2,32 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { DispatchContext } from "../../context/Context";
 import { StateContext } from "../../context/Context";
+import axios from "axios";
 
 const Navbar = () => {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
 
-  const logoutHandler = () => {
-    appDispatch({
-      type: "flashMessage",
-      value: "Logged out successfully!",
-      status: true,
+  const logoutHandler = async () => {
+    const res = await axios.get("/api/auth/logout", {
+      headers: {
+        Authorization: `Bearer ${appState.token}`,
+      },
     });
-    appDispatch({ type: "logout" });
+    if (res.data.status === "success") {
+      appDispatch({
+        type: "flashMessage",
+        value: "Logged out successfully!",
+        status: true,
+      });
+      appDispatch({ type: "logout" });
+    } else {
+      appDispatch({
+        type: "flashMessage",
+        value: res.data.message,
+        status: false,
+      });
+    }
   };
   return (
     <div className="header">

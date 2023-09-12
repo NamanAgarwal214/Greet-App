@@ -131,14 +131,21 @@ exports.protect = async (req, res, next) => {
 };
 
 exports.logout = (req, res) => {
-  res.cookie("jwt", "logged out", {
-    expires: new Date(Date.now() + 10 * 1000), //expires in 10 seconds
-    httpOnly: true,
-  });
+  try {
+    res.cookie("jwt", "logged out", {
+      expires: new Date(Date.now() + 10 * 1000), //expires in 10 seconds
+      httpOnly: true,
+    });
 
-  res.status(200).json({
-    status: "success",
-  });
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (error) {
+    res.json({
+      status: "error",
+      message: error.message,
+    });
+  }
 };
 
 exports.forgotPassword = async (req, res, next) => {

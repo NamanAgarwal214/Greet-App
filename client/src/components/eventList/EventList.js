@@ -1,16 +1,17 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Moment from "react-moment";
+import { StateContext } from "../../context/Context";
 
 const EventList = () => {
   const [occasions, setOccasions] = useState([]);
+  const appState = useContext(StateContext);
 
   const getFriend = async () => {
-    const token = localStorage.getItem("GreetToken");
     try {
       const res = await axios.get("/api/friend/", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${appState.token}`,
         },
       });
       // console.log(res.data.friends);
@@ -22,10 +23,9 @@ const EventList = () => {
 
   const handleDelete = async (id) => {
     try {
-      const token = localStorage.getItem("GreetToken");
       await axios.delete(`/api/friend/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${appState.token}`,
         },
       });
       setOccasions(occasions.filter((el) => el._id !== id));

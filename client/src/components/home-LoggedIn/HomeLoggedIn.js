@@ -1,13 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import Navbar from "../navbar/Navbar";
 import EventList from "../eventList/EventList";
 import { Link } from "react-router-dom";
 import Footer from "../footer/Footer";
-import { StateContext } from "../../context/Context";
 
 const HomeLoggedIn = () => {
-  const appState = useContext(StateContext);
-  console.log(appState.user);
   return (
     <>
       <Navbar />

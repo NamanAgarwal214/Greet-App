@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { StateContext } from "../../context/Context";
 import { DispatchContext } from "../../context/Context";
+import UpdateProfile from "./UpdateProfile";
 
 const Profile = () => {
   const appState = useContext(StateContext);
@@ -25,28 +26,6 @@ const Profile = () => {
     // console.log(image);
     setImage({ photo: e.target.files[0] });
   };
-
-  // const getUser = async () => {
-  //   try {
-  //     const res = await axios.get("/api/user/getUser", {
-  //       headers: {
-  //         Authorization: `Bearer ${appState.token}`,
-  //       },
-  //     });
-  //     if (res.data.status === "success") {
-  //       appState.user = res.data.user;
-  //     } else {
-  //       appDispatch({
-  //         type: "flashMessage",
-  //         value: res.data.message,
-  //         status: false,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log(error.message);
-  //     console.log("error while fetching user");
-  //   }
-  // };
 
   const getFriends = async () => {
     try {
@@ -151,73 +130,17 @@ const Profile = () => {
             )}
 
             {updateprofileView && (
-              <div className="user-view__form-container">
-                <h2 className="heading-secondary ma-bt-md">
-                  Your account settings
-                </h2>
-                <form className="form form-user-data" onSubmit={submitHandler}>
-                  <div className="form__group">
-                    <label className="form__label" htmlFor="name">
-                      Name
-                    </label>
-                    <input
-                      onChange={(e) => setNewName(e.target.value)}
-                      className="form__input"
-                      id="name"
-                      type="text"
-                      defaultValue={newName}
-                      required="required"
-                    />
-                  </div>
-                  <div className="form__group ma-bt-md">
-                    <label className="form__label" htmlFor="email">
-                      Email address
-                    </label>
-                    <input
-                      onChange={(e) => setNewEmail(e.target.value)}
-                      className="form__input"
-                      id="email"
-                      type="email"
-                      defaultValue={newEmail}
-                      required="required"
-                    />
-                  </div>
-                  <div className="form__group form__photo-upload">
-                    <img
-                      className="form__user-photo"
-                      src={
-                        preview
-                          ? URL.createObjectURL(image.photo)
-                          : appState.user.photo
-                          ? appState.user.photo
-                          : "/images/misc/default.png"
-                      }
-                      alt="User"
-                    />
-                    <input
-                      onChange={(e) => handleInputFile(e)}
-                      className="form__upload"
-                      type="file"
-                      accept="image/*"
-                      id="photo"
-                      name="photo"
-                    />
-                    <label className="form__label" htmlFor="photo">
-                      Choose new photo
-                    </label>
-                  </div>
-                  <div className="form__group right">
-                    <button className="btn btn--small btn--green">
-                      Update Photo
-                    </button>
-                  </div>
-                </form>
-                <div className="mt-5 text-center updateProfile">
-                  <span onClick={() => setUpdateProfileView(false)}>
-                    Go back to Profile?
-                  </span>
-                </div>
-              </div>
+              <UpdateProfile
+                newName={newName}
+                setNewName={setNewName}
+                newEmail={newEmail}
+                setNewEmail={setNewEmail}
+                image={image}
+                preview={preview}
+                setUpdateProfileView={setUpdateProfileView}
+                submitHandler={submitHandler}
+                handleInputFile={handleInputFile}
+              />
             )}
           </div>
         </div>
