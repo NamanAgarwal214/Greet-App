@@ -17,17 +17,6 @@ axios.defaults.baseURL = "http://localhost:8000";
 
 function App() {
   const state = useContext(StateContext);
-  // useEffect(() => {
-  //   if (state.loggedIn) {
-  //     localStorage.setItem("GreetToken", state.token);
-  //   } else {
-  //     localStorage.removeItem("GreetToken");
-  //     localStorage.removeItem("GreetAppUsername");
-  //     localStorage.removeItem("GreetAppEmail");
-  //     localStorage.removeItem("GreetAppPhoto");
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [state.loggedIn]);
 
   // useEffect(() => {
   //   if (state.token) {
@@ -77,7 +66,7 @@ function App() {
             </IsUserRedirect>
           }
         />
-        <Route path="/me" exact element={<ProfilePage />} />
+        <Route path="/profile" exact element={<ProfilePage />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </>

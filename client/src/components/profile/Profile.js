@@ -3,17 +3,18 @@ import axios from "axios";
 import { StateContext } from "../../context/Context";
 import { DispatchContext } from "../../context/Context";
 
-export default function Profile() {
+const Profile = () => {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const [updateprofileView, setUpdateProfileView] = useState(false);
-
   const [newName, setNewName] = useState(appState.user.username);
   const [newEmail, setNewEmail] = useState(appState.user.email);
   const [image, setImage] = useState({ photo: "" });
   const [friends, setFriends] = useState(0);
+  const [preview, setPreview] = useState(false);
 
   const handleInputFile = (e) => {
+    setPreview(true);
     // console.log(e.target.files[0]);
     // const file = e.target.files[0];
     // const reader = new FileReader();
@@ -25,7 +26,51 @@ export default function Profile() {
     setImage({ photo: e.target.files[0] });
   };
 
-  const handleProfileSubmit = async (e) => {
+  const getUser = async () => {
+    try {
+      const res = await axios.get("/api/user/getUser", {
+        headers: {
+          Authorization: `Bearer ${appState.token}`,
+        },
+      });
+      if (res.data.status === "success") {
+        appState.user = res.data.user;
+      } else {
+        appDispatch({
+          type: "flashMessage",
+          value: res.data.message,
+          status: false,
+        });
+      }
+    } catch (error) {
+      console.log(error.message);
+      console.log("error while fetching user");
+    }
+  };
+
+  const getFriends = async () => {
+    try {
+      const res = await axios.get("/api/user/getFriends", {
+        headers: {
+          Authorization: `Bearer ${appState.token}`,
+        },
+      });
+      if (res.data.status === "success") {
+        setFriends(res.data.friends);
+      } else {
+        appDispatch({
+          type: "flashMessage",
+          value: res.data.message,
+          status: false,
+        });
+      }
+    } catch (error) {
+      console.log(error.message, "friends");
+      console.log("error ... Please refresh the page");
+    }
+  };
+
+  const submitHandler = async (e) => {
     e.preventDefault();
     const data = new FormData();
     data.append("email", newEmail);
@@ -33,7 +78,7 @@ export default function Profile() {
     data.append("photo", image.photo);
     console.log(data);
     try {
-      const res = await axios.patch("/api/user/updateMe", data, {
+      const res = await axios.patch("/api/user/updateProfile", data, {
         headers: {
           Authorization: `Bearer ${appState.token}`,
         },
@@ -41,10 +86,10 @@ export default function Profile() {
       if (res.data && res.data.photo !== "") {
         appDispatch({
           type: "flashMessage",
-          value: "You profile was updated successfully!",
+          value: "Profile updated successfully!",
           status: true,
         });
-        appDispatch({ type: "updateProfile", value: res.data });
+        appDispatch({ type: "updateProfile", value: res.data.user });
       } else {
         appDispatch({
           type: "flashMessage",
@@ -58,18 +103,8 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    axios
-      .get("/api/user/getFriends", {
-        headers: {
-          Authorization: `Bearer ${appState.token}`,
-        },
-      })
-      .then((res) => {
-        setFriends(res.data.friends);
-      })
-      .catch((e) => {
-        console.log("Error");
-      });
+    getUser();
+    getFriends();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -121,10 +156,7 @@ export default function Profile() {
                 <h2 className="heading-secondary ma-bt-md">
                   Your account settings
                 </h2>
-                <form
-                  className="form form-user-data"
-                  onSubmit={handleProfileSubmit}
-                >
+                <form className="form form-user-data" onSubmit={submitHandler}>
                   <div className="form__group">
                     <label className="form__label" htmlFor="name">
                       Name
@@ -155,7 +187,9 @@ export default function Profile() {
                     <img
                       className="form__user-photo"
                       src={
-                        appState.user.photo
+                        preview
+                          ? URL.createObjectURL(image.photo)
+                          : appState.user.photo
                           ? appState.user.photo
                           : "/images/misc/default.png"
                       }
@@ -191,4 +225,6 @@ export default function Profile() {
       </main>
     </>
   );
-}
+};
+
+export default Profile;

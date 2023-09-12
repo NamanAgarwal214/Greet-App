@@ -19,7 +19,7 @@ const LoginForm = ({ setForgotPassword }) => {
       });
     }
     try {
-      const res = await axios.post("/api/user/login", { email, password });
+      const res = await axios.post("/api/auth/login", { email, password });
       if (res.data && res.data.token) {
         console.log(res.data);
         appDispatch({

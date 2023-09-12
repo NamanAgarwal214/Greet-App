@@ -12,6 +12,7 @@ const ContextProvider = ({ children }) => {
     user: {
       username: localStorage.getItem("GreetUsername"),
       email: localStorage.getItem("GreetEmail"),
+      photo: localStorage.getItem("GreetPhoto"),
     },
   };
 

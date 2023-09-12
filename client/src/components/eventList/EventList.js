@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import Moment from "react-moment";
-import { Link } from "react-router-dom";
 
 const EventList = () => {
   const [occasions, setOccasions] = useState([]);
@@ -14,7 +13,7 @@ const EventList = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res.data.friends);
+      // console.log(res.data.friends);
       setOccasions(res.data.friends);
     } catch (err) {
       console.log(err);

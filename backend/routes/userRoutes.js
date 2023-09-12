@@ -6,10 +6,10 @@ const router = express.Router();
 
 //  Authorization
 router.patch(
-  "/updateMe",
+  "/updateProfile",
   authController.protect,
   userController.upload.single("photo"),
-  userController.updateMe
+  userController.updateProfile
 );
 
 router.get("/getUser", authController.protect, userController.getUser);

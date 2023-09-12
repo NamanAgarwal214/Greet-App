@@ -22,12 +22,13 @@ const Navbar = () => {
           <Link className="header__logo" to="/">
             <img className="" src="/images/misc/logo.png" alt="logo" />
           </Link>
+          {/* <span>Greetings</span> */}
         </h1>
       </nav>
 
       {appState.loggedIn ? (
         <div className="nav--user">
-          <Link to="/me" className="nav__el">
+          <Link to="/profile" className="nav__el">
             <img
               src={
                 appState.user.photo

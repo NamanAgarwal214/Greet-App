@@ -17,7 +17,7 @@ exports.upload = multer({
 });
 
 //Update User
-exports.updateMe = async (req, res, next) => {
+exports.updateProfile = async (req, res, next) => {
   try {
     if (req.body && req.body.password) {
       throw new Error("You cannot update password here.");
@@ -40,12 +40,18 @@ exports.updateMe = async (req, res, next) => {
     });
 
     res.status(200).json({
-      username: updatedUser.name,
-      photo: updatedUser.photo,
-      email: updatedUser.email,
+      status: "success",
+      user: {
+        username: updatedUser.name,
+        photo: updatedUser.photo,
+        email: updatedUser.email,
+      },
     });
   } catch (error) {
-    res.json(error.message);
+    res.json({
+      status: "error",
+      message: error.message,
+    });
   }
 };
 
@@ -54,9 +60,12 @@ exports.getUser = async (req, res) => {
     // console.log(req.user)
     const user = req.user;
     res.status(200).json({
-      username: user.name,
-      photo: user.photo,
-      email: user.email,
+      status: "success",
+      user: {
+        username: user.name,
+        photo: user.photo,
+        email: user.email,
+      },
     });
   } catch (error) {
     console.log(error);
@@ -72,6 +81,7 @@ exports.getFriends = async (req, res, next) => {
     // console.log(req.user)
     const user = req.user;
     res.status(200).json({
+      status: "success",
       friends: user.friends.length,
       data: user.friends,
     });
