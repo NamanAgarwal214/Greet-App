@@ -18,9 +18,11 @@ const ContextProvider = ({ children }) => {
 
   function ourReducer(draft, action) {
     switch (action.type) {
+      case "register":
       case "login":
         draft.loggedIn = true;
-        draft.token = action.data;
+        draft.token = action.token;
+        draft.user = action.user;
         return;
       case "logout":
         draft.loggedIn = false;
@@ -43,14 +45,17 @@ const ContextProvider = ({ children }) => {
   useEffect(() => {
     if (state.loggedIn) {
       localStorage.setItem("GreetToken", state.token);
+      localStorage.setItem("GreetUsername", state.user.username);
+      localStorage.setItem("GreetEmail", state.user.email);
+      localStorage.setItem("GreetPhoto", state.user.photo);
     } else {
       localStorage.removeItem("GreetToken");
-      localStorage.removeItem("GreetAppUsername");
-      localStorage.removeItem("GreetAppEmail");
-      localStorage.removeItem("GreetAppPhoto");
+      localStorage.removeItem("GreetUsername");
+      localStorage.removeItem("GreetEmail");
+      localStorage.removeItem("GreetPhoto");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.loggedIn]);
+  }, [state.loggedIn, state.user]);
 
   return (
     <StateContext.Provider value={state}>

@@ -30,7 +30,7 @@ exports.updateProfile = async (req, res, next) => {
     });
 
     const url = `${req.protocol}://${req.get("host")}/public/img/users/${
-      req.file.filename
+      req?.file?.filename
     }`;
     if (req.file) newObj.photo = url;
 

@@ -45,6 +45,11 @@ exports.signup = async (req, res) => {
     return res.status(200).json({
       status: "success",
       token,
+      user: {
+        username: user.name,
+        photo: user.photo,
+        email: user.email,
+      },
     });
   } catch (error) {
     return res.json({
@@ -72,6 +77,11 @@ exports.login = async (req, res, next) => {
     return res.status(200).json({
       status: "success",
       token,
+      user: {
+        username: user.name,
+        photo: user.photo,
+        email: user.email,
+      },
     });
   } catch (error) {
     res.json({

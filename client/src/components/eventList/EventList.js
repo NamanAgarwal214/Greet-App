@@ -50,7 +50,7 @@ const EventList = () => {
               <div className="row">
                 {occasions.map((occasion) => {
                   return (
-                    <div className="col-md-4 col-sm-6">
+                    <div className="col-md-4 col-sm-6" key={occasion._id}>
                       <div className="feature-text text-center  wow  slideInLeft animated">
                         <div>
                           <img

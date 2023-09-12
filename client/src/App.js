@@ -18,32 +18,6 @@ axios.defaults.baseURL = "http://localhost:8000";
 function App() {
   const state = useContext(StateContext);
 
-  // useEffect(() => {
-  //   if (state.token) {
-  //     axios
-  //       .get("/api/user/getUser", {
-  //         headers: {
-  //           Authorization: `Bearer ${state.token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         state.user = res.data;
-  //         localStorage.setItem("GreetAppUsername", state.user.username);
-  //         localStorage.setItem("GreetAppEmail", state.user.email);
-  //         localStorage.setItem("GreetAppPhoto", state.user.photo);
-  //         console.log(res.data);
-  //       })
-  //       .catch((e) => {
-  //         console.log("There was an error");
-  //       });
-  //   } else {
-  //     localStorage.removeItem("GreetAppUsername");
-  //     localStorage.removeItem("GreetAppEmail");
-  //     localStorage.removeItem("GreetAppPhoto");
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [state.token, state.user]);
-
   return (
     <>
       <FlashMessage flashMessages={state.flashMessages} />

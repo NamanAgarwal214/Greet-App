@@ -44,7 +44,11 @@ const RegisterForm = () => {
           value: "Signed in successfully!",
           status: true,
         });
-        appDispatch({ type: "login", data: res.data.token });
+        appDispatch({
+          type: "register",
+          token: res.data.token,
+          user: res.data.user,
+        });
         navigate("/");
       } else {
         console.log(res.data.message);

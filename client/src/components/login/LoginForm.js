@@ -27,7 +27,11 @@ const LoginForm = ({ setForgotPassword }) => {
           value: "You logged in successfully!",
           status: true,
         });
-        appDispatch({ type: "login", data: res.data.token });
+        appDispatch({
+          type: "login",
+          token: res.data.token,
+          user: res.data.user,
+        });
         navigate.push("/");
       } else {
         appDispatch({

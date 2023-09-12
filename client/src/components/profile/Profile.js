@@ -9,7 +9,7 @@ const Profile = () => {
   const [updateprofileView, setUpdateProfileView] = useState(false);
   const [newName, setNewName] = useState(appState.user.username);
   const [newEmail, setNewEmail] = useState(appState.user.email);
-  const [image, setImage] = useState({ photo: "" });
+  const [image, setImage] = useState({ photo: appState.user.photo });
   const [friends, setFriends] = useState(0);
   const [preview, setPreview] = useState(false);
 
@@ -26,27 +26,27 @@ const Profile = () => {
     setImage({ photo: e.target.files[0] });
   };
 
-  const getUser = async () => {
-    try {
-      const res = await axios.get("/api/user/getUser", {
-        headers: {
-          Authorization: `Bearer ${appState.token}`,
-        },
-      });
-      if (res.data.status === "success") {
-        appState.user = res.data.user;
-      } else {
-        appDispatch({
-          type: "flashMessage",
-          value: res.data.message,
-          status: false,
-        });
-      }
-    } catch (error) {
-      console.log(error.message);
-      console.log("error while fetching user");
-    }
-  };
+  // const getUser = async () => {
+  //   try {
+  //     const res = await axios.get("/api/user/getUser", {
+  //       headers: {
+  //         Authorization: `Bearer ${appState.token}`,
+  //       },
+  //     });
+  //     if (res.data.status === "success") {
+  //       appState.user = res.data.user;
+  //     } else {
+  //       appDispatch({
+  //         type: "flashMessage",
+  //         value: res.data.message,
+  //         status: false,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     console.log("error while fetching user");
+  //   }
+  // };
 
   const getFriends = async () => {
     try {
@@ -83,7 +83,7 @@ const Profile = () => {
           Authorization: `Bearer ${appState.token}`,
         },
       });
-      if (res.data && res.data.photo !== "") {
+      if (res.data.status === "success") {
         appDispatch({
           type: "flashMessage",
           value: "Profile updated successfully!",
@@ -93,7 +93,7 @@ const Profile = () => {
       } else {
         appDispatch({
           type: "flashMessage",
-          value: "There was an error!",
+          value: res.data.message,
           status: false,
         });
       }
@@ -103,7 +103,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    getUser();
     getFriends();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
