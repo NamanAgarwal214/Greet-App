@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const { issueJWT } = require("../controllers/authController");
-const CLIENT_HOME_PAGE_URL = "http://localhost:3000";
+// const CLIENT_HOME_PAGE_URL = "http://localhost:3000";
 
 router.get(
   "/auth/google",
@@ -10,7 +10,7 @@ router.get(
 
 router.get(
   "/auth/google/callback",
-  passport.authenticate("google", { successRedirect: CLIENT_HOME_PAGE_URL })
+  passport.authenticate("google", { successRedirect: process.env.CLIENT_URL })
 );
 
 module.exports = router;
