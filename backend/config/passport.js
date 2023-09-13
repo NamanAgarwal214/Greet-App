@@ -13,7 +13,7 @@ passport.use(
     },
     async function (request, accessToken, refreshToken, profile, done) {
       try {
-        const user = await User.findOne({ googleId: profile.id });
+        const user = await User.findOne({ email: profile.email });
         if (!user) {
           const password = crypto
             .createHash("sha256")
@@ -29,6 +29,10 @@ passport.use(
           await User.create(newUser);
           return done(null, newUser);
         } else {
+          if (user.googleId === undefined) {
+            user.googleId = profile.id;
+            await user.save();
+          }
           return done(null, user);
         }
       } catch (err) {

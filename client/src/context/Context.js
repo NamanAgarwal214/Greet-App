@@ -1,14 +1,17 @@
 import { createContext, useEffect } from "react";
 import { useImmerReducer } from "use-immer";
-
+import { useCookies } from "react-cookie";
 export const StateContext = createContext();
 export const DispatchContext = createContext();
 
 const ContextProvider = ({ children }) => {
+  const [cookies, setCookie] = useCookies();
+
   const initialState = {
-    loggedIn: Boolean(localStorage.getItem("GreetToken")),
+    loggedIn:
+      Boolean(localStorage.getItem("GreetToken")) || Boolean(cookies.jwt),
     flashMessages: [],
-    token: localStorage.getItem("GreetToken"),
+    token: localStorage.getItem("GreetToken") || cookies.jwt,
     user: {
       username: localStorage.getItem("GreetUsername"),
       email: localStorage.getItem("GreetEmail"),
