@@ -8,7 +8,8 @@ const Navbar = () => {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
 
-  const logoutHandler = async () => {
+  const logoutHandler = async (e) => {
+    e.preventDefault();
     const res = await axios.get("/api/auth/logout", {
       headers: {
         Authorization: `Bearer ${appState.token}`,
