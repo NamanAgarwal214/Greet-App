@@ -12,8 +12,7 @@ import EventList from "./components/eventList/EventList";
 import IsUserRedirect from "./helpers/routes";
 import ProfilePage from "./pages/Profile";
 import { StateContext } from "./context/Context";
-// axios.defaults.baseURL = "https://greeting-twro.onrender.com";
-axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 function App() {
   const state = useContext(StateContext);

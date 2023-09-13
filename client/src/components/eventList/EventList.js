@@ -34,7 +34,10 @@ const EventList = () => {
     }
   };
 
-  useEffect(() => getFriend(), []);
+  useEffect(
+    () => getFriend(), // eslint-disable-next-line
+    []
+  );
 
   return occasions.length ? (
     <Fragment>
