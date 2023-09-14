@@ -20,6 +20,16 @@ function issueJWT(res, user) {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
   });
+  const newUser = {
+    username: user.name,
+    email: user.email,
+    photo: user.photo,
+  };
+  res.cookie("user", newUser, {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+  });
   // console.log(signedToken);
   return signedToken;
 }
@@ -136,6 +146,9 @@ exports.logout = (req, res) => {
       expires: new Date(Date.now() + 10 * 1000), //expires in 10 seconds
       httpOnly: true,
     });
+
+    req.cookies["google-auth-session"] = null;
+    // console.log("req", req, "request");
 
     res.status(200).json({
       status: "success",

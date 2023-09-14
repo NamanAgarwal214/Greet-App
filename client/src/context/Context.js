@@ -5,17 +5,17 @@ export const StateContext = createContext();
 export const DispatchContext = createContext();
 
 const ContextProvider = ({ children }) => {
-  const [cookies, setCookie] = useCookies();
+  const [cookies, setCookies, removeCookies] = useCookies();
+  // const [cookie, setCookie, removeCookie] = useCookies(["google-auth-session"]);
 
   const initialState = {
-    loggedIn:
-      Boolean(localStorage.getItem("GreetToken")) || Boolean(cookies.jwt),
+    loggedIn: Boolean(cookies?.jwt),
     flashMessages: [],
-    token: localStorage.getItem("GreetToken") || cookies.jwt,
+    token: cookies?.jwt,
     user: {
-      username: localStorage.getItem("GreetUsername"),
-      email: localStorage.getItem("GreetEmail"),
-      photo: localStorage.getItem("GreetPhoto"),
+      username: cookies?.user?.username,
+      email: cookies?.user?.email,
+      photo: cookies?.user?.photo,
     },
   };
 
@@ -40,7 +40,9 @@ const ContextProvider = ({ children }) => {
         });
         return;
       case "updateProfile":
-        draft.user = action.value;
+        draft.user.username = action.value.username;
+        draft.user.email = action.value.email;
+        draft.user.photo = action.value.photo;
         return;
       default:
         return;
@@ -50,19 +52,26 @@ const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (state.loggedIn) {
-      localStorage.setItem("GreetToken", state.token);
-      localStorage.setItem("GreetUsername", state.user.username);
-      localStorage.setItem("GreetEmail", state.user.email);
-      localStorage.setItem("GreetPhoto", state.user.photo);
+      setCookies("user", state.user);
+      // localStorage.setItem("GreetToken", state.token);
+      // localStorage.setItem("GreetUsername", state.user.username);
+      // localStorage.setItem("GreetEmail", state.user.email);
+      // localStorage.setItem("GreetPhoto", state.user.photo);
     } else {
-      localStorage.removeItem("GreetToken");
-      localStorage.removeItem("GreetUsername");
-      localStorage.removeItem("GreetEmail");
-      localStorage.removeItem("GreetPhoto");
-      console.log(state.user);
+      // localStorage.removeItem("GreetToken");
+      // localStorage.removeItem("GreetUsername");
+      // localStorage.removeItem("GreetEmail");
+      // localStorage.removeItem("GreetPhoto");
+
+      removeCookies("jwt");
+      removeCookies("user");
+      removeCookies("google-auth-session");
+      // console.log(state.user);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.loggedIn, state.user]);
+
+  // console.log(state.user);
 
   return (
     <StateContext.Provider value={state}>
