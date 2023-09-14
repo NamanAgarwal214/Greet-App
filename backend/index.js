@@ -39,7 +39,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: "include",
+  })
+);
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
