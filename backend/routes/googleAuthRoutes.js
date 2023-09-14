@@ -11,12 +11,13 @@ router.get(
 router.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect: process.env.REDIRECT_URL,
+    failureRedirect: process.env.PROD_REDIRECT_URL,
+    failureMessage: true,
   }),
   function (req, res) {
     console.log(req);
     issueJWT(res, req.user);
-    res.redirect(process.env.REDIRECT_URL);
+    res.redirect(process.env.PROD_REDIRECT_URL);
   }
 );
 
