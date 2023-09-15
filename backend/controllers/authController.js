@@ -21,7 +21,7 @@ function issueJWT(res, user) {
     ),
     secure: true,
     httpOnly: true,
-    sameSite: "None",
+    sameSite: "lax",
   });
   const newUser = {
     username: user.name,

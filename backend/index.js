@@ -22,6 +22,7 @@ require("./config/passport");
 connectDB();
 
 // middlewares
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 if (process.env.NODE_ENV === "development") {
@@ -39,8 +40,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.set("trust proxy", 1);
 app.use(
   cors({
+    origin: process.env.PROD_REDIRECT_URL,
     credentials: "include",
   })
 );
