@@ -22,17 +22,18 @@ function issueJWT(res, user) {
     path: "/",
     secure: true,
     httpOnly: true,
+    domain: ".netlify.app",
   });
-  const newUser = {
-    username: user.name,
-    email: user.email,
-    photo: user.photo,
-  };
-  res.cookie("user", newUser, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-  });
+  // const newUser = {
+  //   username: user.name,
+  //   email: user.email,
+  //   photo: user.photo,
+  // };
+  // res.cookie("user", newUser, {
+  //   expires: new Date(
+  //     Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+  //   ),
+  // });
   // console.log(signedToken);
   return signedToken;
 }
