@@ -15,7 +15,7 @@ router.get(
     failureMessage: true,
   }),
   function (req, res) {
-    console.log(req);
+    // console.log(req);
     issueJWT(res, req.user);
     res.redirect(process.env.PROD_REDIRECT_URL);
   }
