@@ -26,7 +26,7 @@ app.set("trust proxy", 1);
 app.use(
   cors({
     origin: process.env.PROD_REDIRECT_URL,
-    credentials: "include",
+    credentials: true,
   })
 );
 app.use(express.json());
