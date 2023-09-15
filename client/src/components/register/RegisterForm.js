@@ -36,6 +36,7 @@ const RegisterForm = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
       if (res.data.status === "success") {
