@@ -22,7 +22,13 @@ require("./config/passport");
 connectDB();
 
 // middlewares
-
+app.set("trust proxy", 1);
+app.use(
+  cors({
+    origin: process.env.PROD_REDIRECT_URL,
+    credentials: "include",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 if (process.env.NODE_ENV === "development") {
@@ -34,19 +40,14 @@ app.use(
     name: "google-auth-session",
     keys: [process.env.KEY_1, process.env.KEY_2],
     maxAge: 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    sameSite: "lax",
+    secure: true,
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.set("trust proxy", 1);
-app.use(
-  cors({
-    origin: process.env.PROD_REDIRECT_URL,
-    credentials: "include",
-  })
-);
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
