@@ -15,14 +15,14 @@ function issueJWT(res, user) {
     expiresIn: expiresIn,
   });
 
-  res.cookie("jwt", signedToken, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-    secure: true,
-    httpOnly: true,
-    sameSite: "none",
-  });
+  // res.cookie("jwt", signedToken, {
+  //   expires: new Date(
+  //     Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+  //   ),
+  //   secure: true,
+  //   httpOnly: true,
+  //   sameSite: "none",
+  // });
   // const newUser = {
   //   username: user.name,
   //   email: user.email,
@@ -55,15 +55,25 @@ exports.signup = async (req, res) => {
     const token = issueJWT(res, user);
 
     await sendEmail("welcome", user, { title: "Welcome to the family!" });
-    return res.status(200).json({
-      status: "success",
-      token,
-      user: {
-        username: user.name,
-        photo: user.photo,
-        email: user.email,
-      },
-    });
+    return res
+      .cookie("jwt", token, {
+        expires: new Date(
+          Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+        ),
+        secure: true,
+        httpOnly: true,
+        sameSite: "none",
+      })
+      .status(200)
+      .json({
+        status: "success",
+        token,
+        user: {
+          username: user.name,
+          photo: user.photo,
+          email: user.email,
+        },
+      });
   } catch (error) {
     return res.json({
       status: "error",
