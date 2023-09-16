@@ -25,20 +25,11 @@ const RegisterForm = () => {
       // data.append("email", email);
       // data.append("password", password);
 
-      const res = await axios.post(
-        "/api/auth/register",
-        {
-          name,
-          email,
-          password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const res = await axios.post("/api/auth/register", {
+        name,
+        email,
+        password,
+      });
 
       if (res.data.status === "success") {
         appDispatch({
