@@ -22,13 +22,14 @@ require("./config/passport");
 connectDB();
 
 // middlewares
-app.use(cookieParser());
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://letusgreet.netlify.app"],
     credentials: true,
   })
 );
+app.use(cookieParser());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 if (process.env.NODE_ENV === "development") {
