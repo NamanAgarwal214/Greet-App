@@ -75,7 +75,7 @@ const RegisterForm = () => {
     <>
       <div className="d-flex row g-0">
         <div className="form_details col">
-          <a href={`${process.env.REACT_APP_PROD_BASE_URL}/api/auth/google`}>
+          <a href={`${process.env.REACT_APP_DEV_BASE_URL}/api/auth/google`}>
             <button className="btn">
               Sign in with
               <img
