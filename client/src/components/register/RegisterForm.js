@@ -39,6 +39,7 @@ const RegisterForm = () => {
           withCredentials: true,
         }
       );
+
       if (res.data.status === "success") {
         appDispatch({
           type: "flashMessage",

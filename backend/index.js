@@ -22,10 +22,10 @@ require("./config/passport");
 connectDB();
 
 // middlewares
-app.set("trust proxy", 1);
+app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.PROD_REDIRECT_URL,
+    origin: ["http://localhost:3000", "https://letusgreet.netlify.app"],
     credentials: true,
   })
 );
@@ -50,7 +50,6 @@ app.use(passport.session());
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-app.use(cookieParser());
 // sendEmails();
 cron.schedule("0 0 * * *", function () {
   // console.log("Hello");

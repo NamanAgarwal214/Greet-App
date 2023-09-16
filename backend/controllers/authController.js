@@ -19,11 +19,9 @@ function issueJWT(res, user) {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    path: "/",
     secure: true,
     httpOnly: true,
-    sameSite: "None",
-    domain: ".netlify.app",
+    sameSite: "none",
   });
   // const newUser = {
   //   username: user.name,
