@@ -1,21 +1,17 @@
 import { createContext, useEffect } from "react";
 import { useImmerReducer } from "use-immer";
-import { useCookies } from "react-cookie";
 export const StateContext = createContext();
 export const DispatchContext = createContext();
 
 const ContextProvider = ({ children }) => {
-  const [cookies, setCookies, removeCookies] = useCookies();
-  // const [cookie, setCookie, removeCookie] = useCookies(["google-auth-session"]);
-
   const initialState = {
-    loggedIn: Boolean(cookies?.jwt),
+    loggedIn: Boolean(localStorage.getItem("GreetToken")),
     flashMessages: [],
-    token: cookies?.jwt,
+    token: localStorage.getItem("GreetToken"),
     user: {
-      username: cookies?.user?.username,
-      email: cookies?.user?.email,
-      photo: cookies?.user?.photo,
+      username: localStorage.getItem("GreetUsername"),
+      email: localStorage.getItem("GreetEmail"),
+      photo: localStorage.getItem("GreetPhoto"),
     },
   };
 
@@ -52,26 +48,18 @@ const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (state.loggedIn) {
-      setCookies("user", state.user);
-      // localStorage.setItem("GreetToken", state.token);
-      // localStorage.setItem("GreetUsername", state.user.username);
-      // localStorage.setItem("GreetEmail", state.user.email);
-      // localStorage.setItem("GreetPhoto", state.user.photo);
+      localStorage.setItem("GreetToken", state.token);
+      localStorage.setItem("GreetUsername", state.user.username);
+      localStorage.setItem("GreetEmail", state.user.email);
+      localStorage.setItem("GreetPhoto", state.user.photo);
     } else {
-      // localStorage.removeItem("GreetToken");
-      // localStorage.removeItem("GreetUsername");
-      // localStorage.removeItem("GreetEmail");
-      // localStorage.removeItem("GreetPhoto");
-
-      removeCookies("jwt");
-      removeCookies("user");
-      removeCookies("google-auth-session");
-      // console.log(state.user);
+      localStorage.removeItem("GreetToken");
+      localStorage.removeItem("GreetUsername");
+      localStorage.removeItem("GreetEmail");
+      localStorage.removeItem("GreetPhoto");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.loggedIn, state.user]);
-
-  // console.log(state.user);
+  }, [state.loggedIn, state.user, state.token]);
 
   return (
     <StateContext.Provider value={state}>

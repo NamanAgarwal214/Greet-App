@@ -16,8 +16,8 @@ router.get(
   }),
   function (req, res) {
     // console.log(req);
-    issueJWT(res, req.user);
-    res.redirect(process.env.DEV_REDIRECT_URL);
+    const { token } = issueJWT(res, req.user);
+    res.redirect(`${process.env.DEV_REDIRECT_URL}/${token}`);
   }
 );
 

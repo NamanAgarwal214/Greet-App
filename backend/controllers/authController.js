@@ -15,28 +15,7 @@ function issueJWT(res, user) {
     expiresIn: expiresIn,
   });
 
-  res.cookie("jwt", signedToken, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-    secure: true,
-    httpOnly: true,
-    sameSite: "None",
-    path: "/",
-    domain: ".netlify.app",
-  });
-  // const newUser = {
-  //   username: user.name,
-  //   email: user.email,
-  //   photo: user.photo,
-  // };
-  // res.cookie("user", newUser, {
-  //   expires: new Date(
-  //     Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-  //   ),
-  // });
-  // console.log(signedToken);
-  return signedToken;
+  return { email: user.email, token: signedToken };
 }
 
 exports.signup = async (req, res) => {
@@ -54,7 +33,7 @@ exports.signup = async (req, res) => {
     });
 
     await user.save();
-    const token = issueJWT(res, user);
+    const { token } = issueJWT(res, user);
 
     await sendEmail("welcome", user, { title: "Welcome to the family!" });
     return res.status(200).json({
@@ -88,7 +67,7 @@ exports.login = async (req, res, next) => {
 
     user.password = undefined;
 
-    const token = issueJWT(res, user);
+    const { token } = issueJWT(res, user);
     return res.status(200).json({
       status: "success",
       token,
