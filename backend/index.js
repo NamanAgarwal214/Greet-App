@@ -1,4 +1,5 @@
 require("dotenv").config();
+const fs = require("fs/promises");
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
@@ -51,7 +52,15 @@ app.use(passport.session());
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-// sendEmails();
+// cron jobs
+cron.schedule("*/5 * * * *", async function () {
+  let directory = "./public/img/users";
+  const files = await fs.readdir(directory);
+  if (files.length)
+    for (const file of files) {
+      await fs.unlink(path.join(directory, file));
+    }
+});
 cron.schedule("0 0 * * *", function () {
   // console.log("Hello");
   sendEmails();

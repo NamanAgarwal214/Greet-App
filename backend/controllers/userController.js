@@ -1,6 +1,13 @@
 const multer = require("multer");
 const User = require("./../models/userModel");
 const Friend = require("../models/friendModel");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -29,16 +36,24 @@ exports.updateProfile = async (req, res, next) => {
       }
     });
 
-    const url = `${req.protocol}://${req.get("host")}/public/img/users/${
-      req?.file?.filename
-    }`;
-    if (req.file) newObj.photo = url;
+    if (req.file) {
+      const res = await cloudinary.uploader.upload(req.file.path, {
+        public_id: `${req.body.name}-${Date.now()}`,
+        folder: "user",
+        filename_override: req.body.name,
+      });
+      if (res.error) {
+        throw new Error(res.error);
+      }
+
+      newObj.photo = res.secure_url;
+    }
 
     const updatedUser = await User.findByIdAndUpdate(req.user._id, newObj, {
       new: true,
       runValidators: true,
     });
-
+    console.log(updatedUser);
     res.status(200).json({
       status: "success",
       user: {
@@ -99,7 +114,9 @@ exports.unsubscribe = async (req, res) => {
     const user = req.user;
     user.emailSubscribed = false;
     await user.save();
-    return res.status(204).json();
+    return res.status(204).json({
+      status: "success",
+    });
   } catch (error) {
     res.json({
       status: "error",

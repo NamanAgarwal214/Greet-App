@@ -12,7 +12,8 @@ import EventList from "./components/eventList/EventList";
 import IsUserRedirect from "./helpers/routes";
 import ProfilePage from "./pages/Profile";
 import { StateContext } from "./context/Context";
-axios.defaults.baseURL = process.env.REACT_APP_PROD_BASE_URL;
+import Unsubscribe from "./components/unsubscribe/Unsubscribe";
+axios.defaults.baseURL = process.env.REACT_APP_DEV_BASE_URL;
 
 function App() {
   const state = useContext(StateContext);
@@ -39,7 +40,22 @@ function App() {
             </IsUserRedirect>
           }
         />
-        <Route path="/profile" exact element={<ProfilePage />} />
+        <Route
+          path="/profile"
+          element={
+            <IsUserRedirect internal={true}>
+              <ProfilePage />
+            </IsUserRedirect>
+          }
+        />
+        <Route
+          path="/email/unsubscribe"
+          element={
+            <IsUserRedirect internal={true}>
+              <Unsubscribe />
+            </IsUserRedirect>
+          }
+        />
         <Route path="/:token?" element={<Home />} />
       </Routes>
     </>

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DispatchContext } from "../../context/Context";
 import { StateContext } from "../../context/Context";
 import axios from "axios";
@@ -7,6 +7,7 @@ import axios from "axios";
 const Navbar = () => {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
+  const navigate = useNavigate();
 
   const logoutHandler = async (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ const Navbar = () => {
         status: true,
       });
       appDispatch({ type: "logout" });
+      navigate("/login");
     } else {
       appDispatch({
         type: "flashMessage",
@@ -55,7 +57,7 @@ const Navbar = () => {
             />
             <span>{appState.user.username}</span>
           </Link>
-          <Link to="/login" onClick={logoutHandler} className="nav__el">
+          <Link onClick={logoutHandler} className="nav__el">
             {/* <img src={userimg} alt="User" className="nav__user-img" /> */}
             <span className="mb-2">Logout</span>
           </Link>
