@@ -2,12 +2,14 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { DispatchContext } from "../../context/Context";
+import Loader from "../loader/Loader";
 
 const LoginForm = ({ setForgotPassword }) => {
   const appDispatch = useContext(DispatchContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,11 +19,12 @@ const LoginForm = ({ setForgotPassword }) => {
         value: "Please fill the form completely!",
         status: false,
       });
+      return;
     }
     try {
+      setLoading(true);
       const res = await axios.post("/api/auth/login", { email, password });
       if (res.data && res.data.token) {
-        console.log(res.data);
         appDispatch({
           type: "flashMessage",
           value: "You logged in successfully!",
@@ -32,6 +35,7 @@ const LoginForm = ({ setForgotPassword }) => {
           token: res.data.token,
           user: res.data.user,
         });
+        setLoading(false);
         navigate.push("/");
       } else {
         appDispatch({
@@ -39,10 +43,16 @@ const LoginForm = ({ setForgotPassword }) => {
           value: "Incorrect Email or Password!",
           status: false,
         });
-        console.log(res.data);
+        setLoading(false);
       }
     } catch (e) {
-      console.log("There was an error");
+      appDispatch({
+        type: "flashMessage",
+        value: "Something went wrong",
+        status: false,
+      });
+      setLoading(false);
+      return;
     }
   };
 
@@ -50,6 +60,7 @@ const LoginForm = ({ setForgotPassword }) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const res = await axios.post("/api/user/forgotpassword", { email });
       if (!email) {
         appDispatch({
@@ -57,6 +68,8 @@ const LoginForm = ({ setForgotPassword }) => {
           value: "Please enter your email!",
           status: false,
         });
+        setLoading(false);
+        return;
       } else if (res.data && res.data.status === "success") {
         setForgotPassword(true);
         appDispatch({
@@ -64,16 +77,23 @@ const LoginForm = ({ setForgotPassword }) => {
           value: "A mail has been sent to you with a token!",
           status: true,
         });
-        console.log(res.data);
+        setLoading(false);
       } else {
         appDispatch({
           type: "flashMessage",
           value: "This email is not registered with us!",
           status: false,
         });
+        setLoading(false);
       }
     } catch (e) {
-      console.log("There was an error");
+      appDispatch({
+        type: "flashMessage",
+        value: "Something went wrong",
+        status: false,
+      });
+      setLoading(false);
+      return;
     }
   };
 
@@ -124,7 +144,7 @@ const LoginForm = ({ setForgotPassword }) => {
           </div>
           <br />
           <button className="btn" onClick={handleSubmit}>
-            Login
+            {!loading ? "Login" : <Loader width={35} height={35} />}
           </button>
         </form>
       </div>

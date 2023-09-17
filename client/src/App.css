@@ -327,13 +327,14 @@ h4 {
 }
 
 .right_span {
-  cursor: pointer;
+  
   text-align: end;
   margin-top: 10px;
   font-size: 0.8rem;
 }
 
 .right_span span:hover {
+  cursor: pointer;
   text-decoration: underline;
 }
 
@@ -836,4 +837,10 @@ h4 {
 .logo_create {
   height: 4rem;
   margin: 34px -2px -22px 27px;
+}
+
+/* loader */
+.blocks-wrapper{
+  display: block;
+  margin: auto;
 }

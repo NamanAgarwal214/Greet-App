@@ -4,6 +4,7 @@ import HomeLoggedIn from "../components/home-LoggedIn/HomeLoggedIn";
 import { DispatchContext, StateContext } from "../context/Context";
 import { useNavigate, useParams } from "react-router";
 import getUser from "../helpers/getUser";
+import Loader from "../components/loader/Loader";
 
 const Home = () => {
   const { token } = useParams();
@@ -37,7 +38,7 @@ const Home = () => {
       {!appState.loggedIn ? (
         <HomeLoggedOut />
       ) : loading ? (
-        <p>loading</p>
+        <Loader width={220} height={220} />
       ) : (
         <HomeLoggedIn />
       )}

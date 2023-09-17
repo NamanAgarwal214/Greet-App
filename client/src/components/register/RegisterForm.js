@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { DispatchContext } from "../../context/Context";
+import Loader from "../loader/Loader";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ const RegisterForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,13 +20,14 @@ const RegisterForm = () => {
         value: "Please fill the form completely!",
         status: false,
       });
+      return;
     }
     try {
       // const data = new FormData();
       // data.append("name", name);
       // data.append("email", email);
       // data.append("password", password);
-
+      setLoading(true);
       const res = await axios.post("/api/auth/register", {
         name,
         email,
@@ -42,15 +45,17 @@ const RegisterForm = () => {
           token: res.data.token,
           user: res.data.user,
         });
+        setLoading(false);
         navigate("/");
       } else {
-        console.log(res.data.message);
         appDispatch({
           type: "flashMessage",
           value: res.data.message,
           status: false,
         });
-        window.location.reload();
+        setLoading(false);
+        return;
+        // window.location.reload();
       }
     } catch (err) {
       appDispatch({
@@ -58,8 +63,9 @@ const RegisterForm = () => {
         value: "There was an error!",
         status: false,
       });
-      window.location.reload();
-      console.log(err.message);
+      setLoading(false);
+      return;
+      // window.location.reload();
     }
   };
 
@@ -122,7 +128,7 @@ const RegisterForm = () => {
             </div>
             <br />
             <button className="btn" onClick={handleSubmit}>
-              Register
+              {!loading ? "Register" : <Loader width={35} height={35} />}
             </button>
           </form>
         </div>
