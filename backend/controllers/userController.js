@@ -114,7 +114,7 @@ exports.unsubscribe = async (req, res) => {
     const user = req.user;
     user.emailSubscribed = false;
     await user.save();
-    return res.status(204).json({
+    return res.status(200).json({
       status: "success",
     });
   } catch (error) {
