@@ -152,6 +152,7 @@ exports.forgotPassword = async (req, res, next) => {
       throw new Error("Missing Credentials");
     }
     const user = await User.findOne({ email });
+    console.log(user);
     if (!user) {
       throw new Error("There is no user with that email. Please signup.");
     }
@@ -160,12 +161,12 @@ exports.forgotPassword = async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
 
     try {
-      await email("resetPassword", user, {
+      await sendEmail("resetPassword", user, {
         title: "Reset Password",
         resetToken,
       });
 
-      res.status(200).json({
+      return res.status(200).json({
         status: "success",
         user,
       });
@@ -183,7 +184,7 @@ exports.forgotPassword = async (req, res, next) => {
   }
 };
 
-exports.resetPassword = async (req, res, next) => {
+exports.resetPassword = async (req, res) => {
   try {
     const hashedToken = crypto
       .createHash("sha256")
@@ -198,12 +199,18 @@ exports.resetPassword = async (req, res, next) => {
     user.passwordResetExpires = undefined;
     await user.save();
 
-    const token = issueJWT(res, user);
+    const { token } = issueJWT(res, user);
     return res.status(200).json({
+      status: "success",
       token,
+      user: {
+        username: user.name,
+        photo: user.photo,
+        email: user.email,
+      },
     });
   } catch (error) {
-    res.json({
+    return res.json({
       status: "error",
       message: error.message,
     });

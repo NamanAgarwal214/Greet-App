@@ -58,26 +58,25 @@ const LoginForm = ({ setForgotPassword }) => {
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-
+    if (!email) {
+      appDispatch({
+        type: "flashMessage",
+        value: "Please enter your email!",
+        status: false,
+      });
+      return;
+    }
     try {
       setLoading(true);
-      const res = await axios.post("/api/user/forgotpassword", { email });
-      if (!email) {
-        appDispatch({
-          type: "flashMessage",
-          value: "Please enter your email!",
-          status: false,
-        });
-        setLoading(false);
-        return;
-      } else if (res.data && res.data.status === "success") {
-        setForgotPassword(true);
+      const res = await axios.post("/api/auth/forgotPassword", { email });
+      if (res.data.status === "success") {
         appDispatch({
           type: "flashMessage",
           value: "A mail has been sent to you with a token!",
           status: true,
         });
         setLoading(false);
+        setForgotPassword(true);
       } else {
         appDispatch({
           type: "flashMessage",

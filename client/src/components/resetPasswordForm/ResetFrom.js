@@ -2,39 +2,60 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { DispatchContext } from "../../context/Context";
+import Loader from "../loader/Loader";
 
 export default function ResetFrom() {
   const appDispatch = useContext(DispatchContext);
   const navigate = useNavigate();
   const [token, setToken] = useState("");
   const [newPassword, setNewpassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-
+    if (!token || !newPassword) {
+      appDispatch({
+        type: "flashMessage",
+        value: "Please enter all details",
+        status: false,
+      });
+      return;
+    }
     try {
-      const res = await axios.patch("/api/user/resetPassword", {
+      setLoading(true);
+      const res = await axios.patch("/api/auth/resetPassword", {
         token,
         password: newPassword,
       });
-      if (res.data && res.data.token) {
+
+      if (res.data.status === "success") {
         appDispatch({
           type: "flashMessage",
-          value: "Your password was reseted!",
+          value: "Your password was reseted successfully!",
           status: true,
         });
-        appDispatch({ type: "login", data: res.data.token });
-
-        navigate.push("/");
+        appDispatch({
+          type: "login",
+          token: res.data.token,
+          user: res.data.user,
+        });
+        setLoading(false);
+        navigate("/");
       } else {
         appDispatch({
           type: "flashMessage",
-          value: "There was an error!",
+          value: res.data.message,
           status: false,
         });
+        return;
       }
     } catch (e) {
-      console.log("There was an error");
+      appDispatch({
+        type: "flashMessage",
+        value: "Something went wrong",
+        status: false,
+      });
+      return;
     }
   };
 
@@ -51,8 +72,8 @@ export default function ResetFrom() {
               onChange={(e) => setToken(e.target.value)}
               id="token"
               type="text"
-              placeholder="you@example.com"
               required
+              autoComplete="off"
               className="form__input"
             />
           </div>
@@ -71,7 +92,7 @@ export default function ResetFrom() {
             />
           </div>
           <button className="btn" onClick={handleResetPassword}>
-            Reset Password
+            {loading ? <Loader width={35} height={35} /> : "Reset Password"}
           </button>
         </form>
       </div>

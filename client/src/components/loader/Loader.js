@@ -10,7 +10,7 @@ const Loader = ({ width, height }) => {
       ariaLabel="blocks-loading"
       wrapperStyle={{}}
       wrapperClass="blocks-wrapper"
-      colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+      colors={["#fb527a", "#3a3161", "#fb527a", "#3a3161", "#fb527a"]}
     />
   );
 };
