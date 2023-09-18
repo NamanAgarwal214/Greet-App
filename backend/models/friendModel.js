@@ -20,6 +20,10 @@ const friendSchema = new mongoose.Schema({
     type: String,
     // required: [true, "Please provide your phone number"],
   },
+  description: {
+    type: String,
+    maxlength: 100,
+  },
 });
 
 const Friend =

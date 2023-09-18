@@ -1,11 +1,12 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Moment from "react-moment";
-import { StateContext } from "../../context/Context";
+import { DispatchContext, StateContext } from "../../context/Context";
 
 const EventList = () => {
   const [occasions, setOccasions] = useState([]);
   const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
 
   const getFriend = async () => {
     try {
@@ -14,23 +15,51 @@ const EventList = () => {
           Authorization: `Bearer ${appState.token}`,
         },
       });
-      // console.log(res.data.friends);
-      setOccasions(res.data.friends);
+      if (res.data.status === "success") {
+        setOccasions(res.data.friends);
+      } else {
+        appDispatch({
+          type: "flashMessage",
+          value: res.data.message,
+          status: false,
+        });
+      }
     } catch (err) {
-      console.log(err);
+      appDispatch({
+        type: "flashMessage",
+        value: "Something went wrong",
+        status: false,
+      });
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/friend/${id}`, {
+      const res = await axios.delete(`/api/friend/${id}`, {
         headers: {
           Authorization: `Bearer ${appState.token}`,
         },
       });
-      setOccasions(occasions.filter((el) => el._id !== id));
+      if (res.data.status === "success") {
+        setOccasions(occasions.filter((el) => el._id !== id));
+        appDispatch({
+          type: "flashMessage",
+          value: "Deleted Successfully",
+          status: true,
+        });
+      } else {
+        appDispatch({
+          type: "flashMessage",
+          value: res.data.message,
+          status: false,
+        });
+      }
     } catch (err) {
-      console.log(err);
+      appDispatch({
+        type: "flashMessage",
+        value: "Something went wrong",
+        status: false,
+      });
     }
   };
 
@@ -63,7 +92,7 @@ const EventList = () => {
                           ></img>{" "}
                         </div>
                         <h4>{occasion.name}</h4>
-                        <Moment format="YYYY/MM/DD">
+                        <Moment format="DD/MM/YYYY">
                           {occasion.dateOfEvent}
                         </Moment>
                         <p>{occasion.event}</p>

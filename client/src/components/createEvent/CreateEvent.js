@@ -3,19 +3,22 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { DispatchContext, StateContext } from "../../context/Context";
+import Loader from "../loader/Loader";
 
 export default function CreateEvent() {
   const navigate = useNavigate();
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const [display, setDisplay] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     dateOfEvent: "",
     event: "",
+    desc: "",
   });
 
-  const { name, dateOfEvent, event } = formData;
+  const { name, dateOfEvent, event, desc } = formData;
 
   const change = (e) => {
     setFormData({
@@ -41,10 +44,10 @@ export default function CreateEvent() {
       });
     }
     try {
-      console.log(dateOfEvent);
+      setLoading(true);
       const res = await axios.post(
         "/api/friend",
-        { name, dateOfEvent, event },
+        { name, dateOfEvent, event, desc },
         config
       );
 
@@ -54,16 +57,16 @@ export default function CreateEvent() {
           value: "Event added successfully!",
           status: true,
         });
-        // appDispatch({ type: "login", data: res.data.token });
+        setLoading(false);
         navigate("/");
       } else {
-        console.log(res.data.message);
         appDispatch({
           type: "flashMessage",
           value: res.data.message,
           status: false,
         });
-        window.location.reload();
+        setLoading(false);
+        return;
       }
     } catch (err) {
       appDispatch({
@@ -71,14 +74,12 @@ export default function CreateEvent() {
         value: "There was an error!",
         status: false,
       });
-      window.location.reload();
-      console.log(err.message);
+      return;
     }
   };
 
   const minDate = () => {
     const today = new Date().toISOString().split("T")[0];
-    console.log(today);
     return today;
   };
 
@@ -135,23 +136,26 @@ export default function CreateEvent() {
             >
               Add Additional information
             </button>
+            {display && (
+              <>
+                <div className="form-group">
+                  <small className="form-text">Tell us more about Event</small>
+                  <textarea
+                    placeholder="..."
+                    rows="5"
+                    cols="50"
+                    value={desc}
+                    onChange={(e) => change(e)}
+                    maxLength={100}
+                    name="desc"
+                  ></textarea>
+                </div>
+              </>
+            )}
             <button onClick={(e) => submit(e)} type="button" className="btn-1">
-              CREATE
+              {loading ? <Loader width={35} height={35} /> : "CREATE"}
             </button>
           </div>
-          {display && (
-            <>
-              <div className="form-group">
-                <small className="form-text">Tell us more about Event</small>
-                <textarea
-                  placeholder="..."
-                  rows="5"
-                  cols="50"
-                  name="bio"
-                ></textarea>
-              </div>
-            </>
-          )}
         </form>
       </div>
     </>

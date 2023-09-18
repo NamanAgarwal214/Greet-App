@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { StateContext } from "../../context/Context";
+import Loader from "../loader/Loader";
 
 const UpdateProfile = ({
+  loading,
   newName,
   setNewName,
   newEmail,
@@ -69,7 +71,9 @@ const UpdateProfile = ({
           </label>
         </div>
         <div className="form__group right">
-          <button className="btn btn--small btn--green">Update Photo</button>
+          <button className="btn btn--small btn--green">
+            {!loading ? "Update Photo" : <Loader width={35} height={35} />}
+          </button>
         </div>
       </form>
       <div className="mt-5 text-center updateProfile">

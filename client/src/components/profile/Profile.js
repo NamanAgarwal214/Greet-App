@@ -8,6 +8,7 @@ const Profile = () => {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const [updateprofileView, setUpdateProfileView] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [newName, setNewName] = useState(appState.user.username);
   const [newEmail, setNewEmail] = useState(appState.user.email);
   const [image, setImage] = useState({ photo: appState.user.photo });
@@ -51,12 +52,14 @@ const Profile = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
     const data = new FormData();
     data.append("email", newEmail);
     data.append("name", newName);
     data.append("photo", image.photo);
     console.log(data);
     try {
+      setLoading(true);
       const res = await axios.patch("/api/user/updateProfile", data, {
         headers: {
           Authorization: `Bearer ${appState.token}`,
@@ -69,15 +72,21 @@ const Profile = () => {
           status: true,
         });
         appDispatch({ type: "updateProfile", value: res.data.user });
+        setLoading(false);
       } else {
         appDispatch({
           type: "flashMessage",
           value: res.data.message,
           status: false,
         });
+        setLoading(false);
       }
     } catch (err) {
-      console.log(err.message);
+      appDispatch({
+        type: "flashMessage",
+        value: "Something went wrong",
+        status: false,
+      });
     }
   };
 
@@ -131,6 +140,7 @@ const Profile = () => {
 
             {updateprofileView && (
               <UpdateProfile
+                loading={loading}
                 newName={newName}
                 setNewName={setNewName}
                 newEmail={newEmail}
