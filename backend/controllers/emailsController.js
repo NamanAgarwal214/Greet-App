@@ -52,7 +52,7 @@ const checkForEmail = async (user, id) => {
     if (date.getDate() === currDate && date.getMonth() === currMonth) {
       console.log(`Today is the ${friend.event} of the friend ${friend.name}.`);
       if (user.emailSubscribed) {
-        await email("Wish", user, {
+        await SendEmail("Wish", user, {
           title: `Friend's ${friend.event}`,
           friend,
         });
