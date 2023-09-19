@@ -1,6 +1,6 @@
 const Friend = require("../models/friendModel");
 const User = require("./../models/userModel");
-const email = require("./../utils/email");
+const SendEmail = require("./../utils/email");
 
 const sendEmails = async () => {
   try {
@@ -20,7 +20,7 @@ const sendEmails = async () => {
               `Today is the ${friend.event} of the friend ${friend.name}.`
             );
             if (user.emailSubscribed) {
-              await email("Wish", user, {
+              await SendEmail("Wish", user, {
                 title: `Friend's ${friend.event}`,
                 friend,
               });
