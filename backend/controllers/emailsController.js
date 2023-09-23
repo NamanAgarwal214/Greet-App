@@ -9,7 +9,7 @@ const sendEmails = async () => {
       if (user.friends.length > 0) {
         const friends = user.friends;
         friends.map(async (friend) => {
-          console.log(friend);
+          // console.log(friend);
           const date = new Date(friend.dateOfEvent);
           const curr = new Date();
           const currDate = curr.getDate();

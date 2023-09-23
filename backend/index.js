@@ -61,9 +61,9 @@ cron.schedule("*/5 * * * *", async function () {
       await fs.unlink(path.join(directory, file));
     }
 });
-cron.schedule("0 0 * * *", function () {
+cron.schedule("0 0 * * *", async function () {
   // console.log("Hello");
-  sendEmails();
+  await sendEmails();
 });
 
 //Routes
