@@ -13,7 +13,7 @@ import IsUserRedirect from "./helpers/routes";
 import ProfilePage from "./pages/Profile";
 import { StateContext } from "./context/Context";
 import Unsubscribe from "./components/unsubscribe/Unsubscribe";
-axios.defaults.baseURL = process.env.REACT_APP_PROD_BASE_URL;
+axios.defaults.baseURL = process.env.REACT_APP_DEV_BASE_URL;
 
 function App() {
   const state = useContext(StateContext);

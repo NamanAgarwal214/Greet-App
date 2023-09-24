@@ -38,16 +38,6 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-let redisClient;
-
-(async () => {
-  redisClient = createClient();
-
-  redisClient.on("error", (error) => console.error(`Error : ${error}`));
-
-  await redisClient.connect();
-})();
-
 app.use(
   cookieSession({
     name: "google-auth-session",
@@ -97,4 +87,4 @@ process.on("unhandledRejection", (err) => {
   });
 });
 
-module.exports = redisClient;
+// module.exports = redisClient;

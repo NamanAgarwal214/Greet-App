@@ -16,6 +16,7 @@ const Home = () => {
   useEffect(() => {
     if (Boolean(token)) {
       getUser(token).then((user) => {
+        console.log(user);
         setLoading(!loading);
         appDispatch({
           type: "login",

@@ -5,7 +5,17 @@ const { promisify } = require("util");
 const jsonwebtoken = require("jsonwebtoken");
 const User = require("./../models/userModel");
 const sendEmail = require("./../utils/email");
-const redisClient = require("..");
+const { createClient } = require("redis");
+let redisClient;
+
+// (async () => {
+//   redisClient = createClient();
+
+//   redisClient.on("error", (error) => console.error(`Error : ${error}`));
+
+//   await redisClient.connect();
+//   console.log("heelo");
+// })();
 
 function issueJWT(res, user) {
   const id = user._id;
@@ -61,6 +71,7 @@ exports.login = async (req, res, next) => {
     if (!email || !password) {
       throw new Error("Missing Credentials");
     }
+
     const user = await User.findOne({ email }).select("+password");
 
     if (!user || !(await user.verifyPassword(password, user.password))) {
@@ -70,7 +81,7 @@ exports.login = async (req, res, next) => {
     user.password = undefined;
 
     const { token } = issueJWT(res, user);
-    await redisClient.set(`${user._id}`, JSON.stringify(user));
+    await redisClient.set(`${user._id}`, JSON.stringify(user), "EX", 3);
     return res.status(200).json({
       status: "success",
       token,
@@ -117,7 +128,11 @@ exports.protect = async (req, res, next) => {
     let user;
     if (data) {
       user = JSON.parse(data);
-    } else user = await User.findOne({ _id: decodedUser.sub });
+      console.log("cached");
+    } else {
+      user = await User.findOne({ _id: decodedUser.sub });
+      console.log("not cached");
+    }
     // console.log(user)
     if (!user) {
       throw new Error("The user belonging to this token does no longer exist.");
@@ -131,7 +146,7 @@ exports.protect = async (req, res, next) => {
   }
 };
 
-exports.logout = (req, res) => {
+exports.logout = async (req, res) => {
   try {
     res.cookie("jwt", "logged out", {
       expires: new Date(Date.now() + 10 * 1000), //expires in 10 seconds
@@ -139,8 +154,7 @@ exports.logout = (req, res) => {
     });
 
     req.cookies["google-auth-session"] = null;
-    // console.log("req", req, "request");
-
+    await redisClient.del(req.user._id);
     res.status(200).json({
       status: "success",
     });

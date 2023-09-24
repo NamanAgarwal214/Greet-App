@@ -8,7 +8,7 @@ const getUser = async (token) => {
       },
     });
     if (data.status === "success") {
-      console.log(data.user);
+      // console.log(data.user);
       return data.user;
     } else {
       console.log(data.message);
