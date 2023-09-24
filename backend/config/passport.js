@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const User = require("./../models/userModel");
+const SendEmail = require("../utils/email");
 
 passport.use(
   new GoogleStrategy(
@@ -27,6 +28,7 @@ passport.use(
           });
           //   console.log(newUser, "user");
           await User.create(newUser);
+          await SendEmail("welcome", user, { title: "Welcome to the family!" });
           return done(null, newUser);
         } else {
           if (user.googleId === undefined) {

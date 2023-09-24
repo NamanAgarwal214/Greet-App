@@ -14,7 +14,7 @@ router.get(
     failureRedirect: process.env.PROD_REDIRECT_URL,
     failureMessage: true,
   }),
-  function (req, res) {
+  async function (req, res) {
     // console.log(req);
     const { token } = issueJWT(res, req.user);
     res.redirect(`${process.env.PROD_REDIRECT_URL}/${token}`);

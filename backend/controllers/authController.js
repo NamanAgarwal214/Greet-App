@@ -5,6 +5,7 @@ const { promisify } = require("util");
 const jsonwebtoken = require("jsonwebtoken");
 const User = require("./../models/userModel");
 const sendEmail = require("./../utils/email");
+const redisClient = require("..");
 
 function issueJWT(res, user) {
   const id = user._id;
@@ -36,6 +37,7 @@ exports.signup = async (req, res) => {
     const { token } = issueJWT(res, user);
 
     await sendEmail("welcome", user, { title: "Welcome to the family!" });
+    await redisClient.set(`${user._id}`, JSON.stringify(user));
     return res.status(200).json({
       status: "success",
       token,
@@ -68,6 +70,7 @@ exports.login = async (req, res, next) => {
     user.password = undefined;
 
     const { token } = issueJWT(res, user);
+    await redisClient.set(`${user._id}`, JSON.stringify(user));
     return res.status(200).json({
       status: "success",
       token,
@@ -110,7 +113,11 @@ exports.protect = async (req, res, next) => {
     // console.log(decodedUser);
 
     // finding user from the database with the decoded id
-    const user = await User.findOne({ _id: decodedUser.sub });
+    const data = await redisClient.get(decodedUser.sub);
+    let user;
+    if (data) {
+      user = JSON.parse(data);
+    } else user = await User.findOne({ _id: decodedUser.sub });
     // console.log(user)
     if (!user) {
       throw new Error("The user belonging to this token does no longer exist.");

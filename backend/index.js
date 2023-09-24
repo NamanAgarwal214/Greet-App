@@ -3,6 +3,7 @@ const fs = require("fs/promises");
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
+const { createClient } = require("redis");
 const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const connectDB = require("./config/mongo");
@@ -36,6 +37,16 @@ app.use(express.urlencoded({ extended: false }));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+let redisClient;
+
+(async () => {
+  redisClient = createClient();
+
+  redisClient.on("error", (error) => console.error(`Error : ${error}`));
+
+  await redisClient.connect();
+})();
 
 app.use(
   cookieSession({
@@ -85,3 +96,5 @@ process.on("unhandledRejection", (err) => {
     process.exit(1);
   });
 });
+
+module.exports = redisClient;
