@@ -7,9 +7,9 @@ const SendEmail = require("../utils/email");
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_DEV_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_DEV_CLIENT_SECRET,
-      callbackURL: `${process.env.DEV_CLIENT_URL}/api/auth/google/callback`,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: `${process.env.PROD_CLIENT_URL}/api/auth/google/callback`,
       passReqToCallback: true,
     },
     async function (request, accessToken, refreshToken, profile, done) {
