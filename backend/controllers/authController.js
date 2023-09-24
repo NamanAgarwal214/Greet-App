@@ -11,7 +11,10 @@ let redisClient;
 (async () => {
   redisClient = createClient();
 
-  redisClient.on("error", (error) => console.error(`Error : ${error}`));
+  redisClient.on("error", (error) => {
+    console.error(`Error : ${error}`);
+    return;
+  });
 
   await redisClient.connect();
   console.log("heelo");
