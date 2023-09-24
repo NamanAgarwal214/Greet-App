@@ -8,14 +8,14 @@ const sendEmail = require("./../utils/email");
 const { createClient } = require("redis");
 let redisClient;
 
-// (async () => {
-//   redisClient = createClient();
+(async () => {
+  redisClient = createClient();
 
-//   redisClient.on("error", (error) => console.error(`Error : ${error}`));
+  redisClient.on("error", (error) => console.error(`Error : ${error}`));
 
-//   await redisClient.connect();
-//   console.log("heelo");
-// })();
+  await redisClient.connect();
+  console.log("heelo");
+})();
 
 function issueJWT(res, user) {
   const id = user._id;
