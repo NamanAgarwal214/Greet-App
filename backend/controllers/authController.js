@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const path = require("path");
 const crypto = require("crypto");
@@ -6,8 +7,8 @@ const jsonwebtoken = require("jsonwebtoken");
 const User = require("./../models/userModel");
 const sendEmail = require("./../utils/email");
 const { createClient } = require("redis");
-let redisClient;
 
+let redisClient;
 (async () => {
   redisClient = createClient({
     url: process.env.REDIS_URL,
