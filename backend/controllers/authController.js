@@ -10,11 +10,11 @@ const { createClient } = require("redis");
 
 let redisClient;
 (async () => {
-  // redisClient = createClient({
-  //   url: process.env.REDIS_URL,
-  // });
+  redisClient = createClient({
+    url: process.env.REDIS_URL,
+  });
 
-  redisClient = createClient();
+  // redisClient = createClient();
   redisClient.on("error", (error) => {
     console.error(`Error : ${error}`);
     return;
