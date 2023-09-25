@@ -10,10 +10,11 @@ const { createClient } = require("redis");
 
 let redisClient;
 (async () => {
-  redisClient = createClient({
-    url: process.env.REDIS_URL,
-  });
+  // redisClient = createClient({
+  //   url: process.env.REDIS_URL,
+  // });
 
+  redisClient = createClient();
   redisClient.on("error", (error) => {
     console.error(`Error : ${error}`);
     return;
@@ -160,7 +161,7 @@ exports.logout = async (req, res) => {
     });
 
     req.cookies["google-auth-session"] = null;
-    await redisClient.del(req.user._id);
+    await redisClient.del(req.user._id.toString());
     res.status(200).json({
       status: "success",
     });
